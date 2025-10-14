@@ -5,6 +5,10 @@ import Navbar from './components/Navbar'
 function App() {
   return (
 
+    <Typography>tes 1</Typography>,
+    <Typography>tes 2</Typography>,
+    <Typography>tes 3</Typography>
+
   )
 }
 
