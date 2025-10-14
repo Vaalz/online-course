@@ -1,9 +1,12 @@
 import { Typography } from '@mui/material'
 import React from 'react'
+import Navbar from './components/Navbar'
 
 function App() {
   return (
-    <Typography>tes 2</Typography>
+    <>
+     <Navbar />
+    </>
   )
 }
 
