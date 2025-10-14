@@ -3,7 +3,7 @@ import React from 'react'
 
 function App() {
   return (
-    <Typography>tes</Typography>
+    <Typography>tes 1</Typography>
   )
 }
 
