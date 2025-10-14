@@ -5,7 +5,7 @@ function App() {
   return (
     <Typography>tes 1</Typography>,
     <Typography>tes 2</Typography>,
-    <Typography>thhhhhhhhhh</Typography>
+    <Typography>tes 3</Typography>
   )
 }
 
