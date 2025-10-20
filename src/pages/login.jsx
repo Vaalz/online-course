@@ -1,44 +1,37 @@
 import * as React from "react";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
+import { Box, Grid, Paper, Typography, Divider } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
+import { useNavigate } from "react-router-dom";
 import AuthButton from "../components/ButtonAuth";
-import { Typography, Divider } from "@mui/material";
 import InputField from "../components/InputField";
 import GradientButton from "../components/GradientButton";
-import ForgotPasswordDialog from "../components/ForgotPasswordDialog";
 
-const Item = styled(Paper)(({ theme }) => ({
+const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
+  padding: "1rem",
   textAlign: "center",
-  color: (theme.vars ?? theme).palette.text.secondary,
-  ...theme.applyStyles("dark", {
-    backgroundColor: "#1A2027",
-  }),
+  boxShadow: "none",
 }));
 
-export default function RowAndColumnSpacing() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({ username: "", password: "" });
-  const [openForgot, setOpenForgot] = useState(false); 
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    let newErrors = { username: "", password: "" };
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-    if (!username.trim()) newErrors.username = "Username tidak boleh kosong";
-    if (!password.trim()) newErrors.password = "Password tidak boleh kosong";
+  const handleSendCode = () => {
+    if (!email.trim()) return setError("Email tidak boleh kosong");
+    if (!validateEmail(email)) return setError("Format email tidak valid");
 
-    setErrors(newErrors);
+    // Simpan email ke sessionStorage agar halaman verify tahu siapa yang login
+    sessionStorage.setItem("userEmail", email);
+    console.log("Mengirim kode ke backend:", email);
 
-    if (!newErrors.username && !newErrors.password) {
-      alert("Login berhasil ");
-    }
+    // Arahkan ke halaman verifikasi
+    navigate("/verify");
   };
 
   return (
@@ -56,126 +49,59 @@ export default function RowAndColumnSpacing() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Item
             sx={{
-              height: "100vh",
+              height: "100%",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
               px: { xs: 4, md: 8 },
-              gap: 2,
+              gap: 1,
               backgroundColor: "#fff",
             }}
           >
-            {/* Judul dan Deskripsi */}
-            <Box
-              sx={{
-                width: "100%",
-                maxWidth: 480,
-                textAlign: "left",
-              }}
+            <Typography
+              variant="h5"
+              fontWeight={600}
+              textAlign="center"
+              sx={{ color: "#010E0A", mb: 3 }}
             >
-              <Typography
-                fontSize={36}
-                fontWeight={500}
-                textAlign={"center"}
-                sx={{ mb: 1, alignSelf: "center", color: "#010E0A" }}
-              >
-                Halaman Login
-              </Typography>
+              Masuk untuk mulai belajar
+            </Typography>
 
-              <Typography
-                fontWeight={0}
-                fontSize={20}
-                sx={{
-                  mt: 2,  
-                  color: "#010E0A",
-                  lineHeight: 1.4,
-                  maxWidth: 480,
-                }}
-              >
-                Masukkan username dan password anda untuk melakukan login
-              </Typography>
-            </Box>
-
-            {/* Inputan */}
             <Box
               sx={{
                 width: "100%",
                 maxWidth: 480,
                 display: "flex",
                 flexDirection: "column",
-                gap: 1,
+                alignItems: "center",
+                gap: 2.5,
               }}
             >
-              <Typography
-                sx={{
-                  mt: 2,
-                  color: "#010E0A",
-                  fontSize: "14px",
-                  alignSelf: "flex-start",
-                }}
-              >
-                Username
-              </Typography>
               <InputField
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                error={!!errors.username}
-                helperText={errors.username}
+                label="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={!!error}
+                helperText={error}
               />
 
-              <Typography
-                sx={{
-                  mt: 2,
-                  color: "#010E0A",
-                  fontSize: "14px",
-                  alignSelf: "flex-start",
-                }}
-              >
-                Password
-              </Typography>
-              <InputField
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                error={!!errors.password}
-                helperText={errors.password}
+              <GradientButton
+                text="Dapatkan Kode"
+                onClick={handleSendCode}
+                sx={{ width: "100%", maxWidth: 480, mt: 3 }}
               />
-
-              {/* 🔹 Tambah teks “Lupa password?” rata kanan */}
-              <Typography
-                      sx={{
-                        mt: 1,
-                        cursor: "pointer",
-                        background: "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        alignSelf: "flex-end",
-                        fontWeight: 550,
-                      }}
-                      onClick={() => setOpenForgot(true)} 
-                    >
-                      Lupa password?
-              </Typography>
-              <ForgotPasswordDialog
-        open={openForgot}
-        onClose={() => setOpenForgot(false)}
-      />
             </Box>
 
-            {/* Tombol Masuk */}
-            <Box sx={{ width: "100%", maxWidth: 480, mt: 2 }}>
-              <GradientButton text="Masuk" onClick={handleLogin} />
-            </Box>
-
-            {/* Garis Pembatas */}
             <Box
               sx={{
                 width: "100%",
                 maxWidth: 480,
                 display: "flex",
                 alignItems: "center",
-                mt: 2,
+                mt: 3,
+                mb: 1,
               }}
             >
               <Divider sx={{ flex: 1 }} />
@@ -185,12 +111,10 @@ export default function RowAndColumnSpacing() {
               <Divider sx={{ flex: 1 }} />
             </Box>
 
-            {/* Login dengan Google */}
             <Box sx={{ width: "100%", maxWidth: 480 }}>
               <AuthButton text="Login dengan Google" icon={<GoogleIcon />} />
             </Box>
 
-            {/* Sudah punya akun */}
             <Typography sx={{ mt: 3, color: "#010E0A", fontSize: "14px" }}>
               Belum punya akun?{" "}
               <Typography
