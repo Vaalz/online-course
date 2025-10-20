@@ -1,15 +1,15 @@
-import { Typography } from '@mui/material'
-import React from 'react'
-import Navbar from './components/Navbar'
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/login";
+import Register from "./pages/register";
 
 function App() {
   return (
-
-    <Typography>tes 1</Typography>,
-    <Typography>tes 2</Typography>,
-    <Typography>tes 3</Typography>
-
-  )
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" />} /> {/* redirect ke login */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
