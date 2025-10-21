@@ -17,16 +17,14 @@ export default function VerifyPage() {
   const [code, setCode] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
-    const [seconds, setSeconds] = useState(30);
+  const [seconds, setSeconds] = useState(30);
   const [canResend, setCanResend] = useState(false);
 
   const source = sessionStorage.getItem("verifySource");
-const titleText =
-  source === "register"
-    ? "Cek email anda untuk aktivasi akun"
-    : "Cek email anda untuk masuk";
-
-
+  const titleText =
+    source === "register"
+      ? "Cek email anda untuk aktivasi akun"
+      : "Cek email anda untuk masuk";
 
   useEffect(() => {
     const storedEmail = sessionStorage.getItem("userEmail");
@@ -36,7 +34,7 @@ const titleText =
     }
     setEmail(storedEmail);
   }, [navigate]);
-    useEffect(() => {
+  useEffect(() => {
     if (seconds > 0) {
       setCanResend(false);
       const timerId = setTimeout(() => {
@@ -47,7 +45,7 @@ const titleText =
       setCanResend(true);
     }
   }, [seconds]);
-// ...existing code...
+  // ...existing code...
 
   const handleVerify = () => {
     if (code.trim().length !== 6) {
@@ -58,17 +56,17 @@ const titleText =
     // TODO: panggil API verifikasi OTP
   };
 
-const handleResend = () => {
-  console.log(`Kirim ulang kode ke ${email}`);
-  setSeconds(30);
-  setCanResend(false);
-  // TODO: panggil API resend OTP
-};
+  const handleResend = () => {
+    console.log(`Kirim ulang kode ke ${email}`);
+    setSeconds(30);
+    setCanResend(false);
+    // TODO: panggil API resend OTP
+  };
 
   if (!email) return null;
 
   return (
-   <Box sx={{ width: "100%", height: "100vh" }}>
+    <Box sx={{ width: "100%", height: "100vh" }}>
       <Grid
         container
         rowSpacing={1}
@@ -88,25 +86,43 @@ const handleResend = () => {
               justifyContent: "center",
               alignItems: "center",
               px: { xs: 4, md: 8 },
-              gap: 1,
+              gap: "30px",
               backgroundColor: "#fff",
+              padding: "50px",
             }}
           >
-            <Typography variant="h5" fontWeight={600} textAlign="center" sx={{ color: "#010E0A" }}>
-              Cek email anda
-            </Typography>
+            <Box 
+            sx={{
+              gap: "20px",
+            }}>
+              <Typography
+                fontSize={36}
+                fontStyle={"semibold"}
+                fontWeight={600}
+                textAlign="center"
+                sx={{ color: "#010E0A" }}
+              >
+                Cek email anda
+              </Typography>
 
-            <Typography variant="body2" textAlign="center" sx={{ color: "#010E0A", maxWidth: 400 }}>
-              Masukkan kode 6 digit yang telah dikirim ke <b>{email}</b> untuk masuk
-            </Typography>
+              <Typography
+                fontSize={24}
+                fontStyle={"regular"}
+                textAlign="center"
+                sx={{ color: "#010E0A", maxWidth: 560 }}
+              >
+                Masukkan kode 6 digit yang telah dikirim ke <b>{email}</b> untuk
+                masuk
+              </Typography>
+            </Box>
 
             <Box
               sx={{
                 width: "100%",
-                maxWidth: 480,
+                maxWidth: "560px",
                 display: "flex",
                 flexDirection: "column",
-                gap: 1,
+                gap: "30px",
               }}
             >
               <InputField
@@ -116,41 +132,52 @@ const handleResend = () => {
                 type="text"
               />
             </Box>
-            <Box sx={{ width: "100%", maxWidth: 480, mt: 2}}>
-                <GradientButton
-                text="Masuk"
-                onClick={handleVerify}
-                />
+
+            <Box
+              sx={{
+                width: "100%",
+                maxWidth: 560,
+              }}
+            >
+              <GradientButton text="Masuk" onClick={handleVerify} />
             </Box>
 
-
-            <Typography variant="body2" sx={{ mt: 2, color: "gray" }}>
-            Belum mendapat kode?{" "}
-            {seconds > 0 ? (
-                <Typography component="span" sx={{                    
-                  background:
-                    "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
+            <Typography variant="body2" sx={{ 
+              fontSize: "20px",
+              fontStyle: "regular",
+              color: "gray" 
+              }}>
+              Belum mendapat kode?{" "}
+              {seconds > 0 ? (
+                <Typography
+                  component="span"
+                  fontSize={"20px"}
+                  sx={{
+                    background:
+                      "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
-                    fontWeight: 600,}}>
-                Kirim ulang kode dalam <b>{seconds}s</b>
+                    fontWeight: 400,
+                  }}
+                >
+                  Kirim ulang kode dalam <b>{seconds}s</b>
                 </Typography>
-            ) : (
+              ) : (
                 <Typography
-                component="span"
-                onClick={handleResend}
-                sx={{
+                  component="span"
+                  onClick={handleResend}
+                  sx={{
                     cursor: "pointer",
                     background:
-                    "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
+                      "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     fontWeight: 600,
-                }}
+                  }}
                 >
-                Kirim ulang kode
+                  Kirim ulang kode
                 </Typography>
-            )}
+              )}
             </Typography>
           </Item>
         </Grid>

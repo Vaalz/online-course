@@ -57,6 +57,9 @@ export default function InputField({
           zIndex: 1,
         },
         "& .MuiInputLabel-root": {
+          fontSize: "20px",
+          fontStyle: "regular",
+          fontWeight: 400,
           color: error ? "#f44336" : "#657575",
           backgroundColor: "white",
           px: 1,
