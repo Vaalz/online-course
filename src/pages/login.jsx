@@ -55,71 +55,101 @@ export default function LoginPage() {
               justifyContent: "center",
               alignItems: "center",
               px: { xs: 4, md: 8 },
-              gap: 1,
+              gap: "30px",
               backgroundColor: "#fff",
+              padding: "50px",
             }}
           >
+            {/* Judul */}
             <Typography
-              variant="h5"
+              fontSize={36}
               fontWeight={600}
+              fontStyle={"semibold"}
               textAlign="center"
-              sx={{ color: "#010E0A", mb: 3 }}
+              sx={{ mb: 1, color: "#010E0A" }}
             >
               Masuk untuk mulai belajar
             </Typography>
-
+            {/* Input Fields */}
             <Box
               sx={{
                 width: "100%",
-                maxWidth: 480,
+                maxWidth: "560px",
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
-                gap: 2.5,
+                gap: "30px",
               }}
             >
-              <InputField
-                label="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                error={!!error}
-                helperText={error}
-              />
-
-              <GradientButton
-                text="Dapatkan Kode"
-                onClick={handleSendCode}
-                sx={{ width: "100%", maxWidth: 480, mt: 3 }}
-              />
+              <Box>
+                <InputField
+                  label="Email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  error={!!error}
+                  helperText={error}
+                />
+              </Box>
             </Box>
-
+            {/* Tombol masuk */}
             <Box
               sx={{
                 width: "100%",
-                maxWidth: 480,
+                maxWidth: 560,
+              }}
+            >
+              <GradientButton text="Daftar" onClick={handleSendCode} />
+            </Box>
+            {/* Pembatas */}
+            <Box
+              sx={{
+                width: "100%",
+                maxWidth: 560,
                 display: "flex",
                 alignItems: "center",
-                mt: 3,
-                mb: 1,
               }}
             >
               <Divider sx={{ flex: 1 }} />
-              <Typography sx={{ mx: 2, color: "gray", fontSize: "14px" }}>
+              <Typography
+                sx={{
+                  mx: 2,
+                  color: "gray",
+                  fontSize: "20px",
+                }}
+              >
                 Atau
               </Typography>
-              <Divider sx={{ flex: 1 }} />
+              <Divider
+                sx={{
+                  flex: 1,
+                }}
+              />
             </Box>
-
-            <Box sx={{ width: "100%", maxWidth: 480 }}>
-              <AuthButton text="Login dengan Google" icon={<GoogleIcon />} />
+            {/* Login dengan Google */}
+            <Box
+              sx={{
+                width: "100%",
+                maxWidth: 560,
+              }}
+            >
+              <AuthButton
+                text="Login dengan Google"
+                icon={<GoogleIcon fontSize="25px" />}
+              />
             </Box>
-
-            <Typography sx={{ mt: 3, color: "#010E0A", fontSize: "14px" }}>
+            {/* register */}
+            <Typography
+              sx={{
+                color: "#010E0A",
+                fontSize: "20px",
+                fontStyle: "regular",
+              }}
+            >
               Belum punya akun?{" "}
               <Typography
                 component="span"
-                fontWeight={600}
+                fontWeight={400}
+                fontSize={"20px"}
                 sx={{
                   cursor: "pointer",
                   background:

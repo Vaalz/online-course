@@ -5,7 +5,6 @@ export default function AuthButton({ text, icon }) {
     <Box
       sx={{
         width: "100%", // Tombol responsif mengikuti pembungkusnya
-        maxWidth: 480, // agar tidak terlalu lebar di layar besar
         border: "1px solid transparent",
         borderRadius: "10px",
         background:
@@ -23,9 +22,11 @@ export default function AuthButton({ text, icon }) {
         startIcon={icon}
         sx={{
           width: "100%",
+          height: "70px",
+          maxHeight: "70px",
           textTransform: "none",
-          fontWeight: 900,
-          fontSize: { xs: "15px", sm: "16px", md: "17px" },
+          fontWeight: 600,
+          fontSize: { xs: "18px", sm: "19px", md: "20px" },
           py: 1.3,
           border: "1px solid transparent",
           borderRadius: "8px",

@@ -28,6 +28,9 @@ export default function InputField({
           position: "relative",
           borderRadius: "10px",
           overflow: "hidden",
+          fontStyle: "regular",
+          fontWeight: 400,
+          fontSize: "20px",
           "& fieldset": {
             borderColor: error ? "#f44336" : "#D9D9D9",
             transition: "border 0.2s ease-in-out",

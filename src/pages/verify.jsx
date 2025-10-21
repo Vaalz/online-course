@@ -17,8 +17,17 @@ export default function VerifyPage() {
   const [code, setCode] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+    const [seconds, setSeconds] = useState(30);
+  const [canResend, setCanResend] = useState(false);
 
-  // ✅ Cegah akses langsung ke /verify tanpa email
+  const source = sessionStorage.getItem("verifySource");
+const titleText =
+  source === "register"
+    ? "Cek email anda untuk aktivasi akun"
+    : "Cek email anda untuk masuk";
+
+
+
   useEffect(() => {
     const storedEmail = sessionStorage.getItem("userEmail");
     if (!storedEmail) {
@@ -27,6 +36,18 @@ export default function VerifyPage() {
     }
     setEmail(storedEmail);
   }, [navigate]);
+    useEffect(() => {
+    if (seconds > 0) {
+      setCanResend(false);
+      const timerId = setTimeout(() => {
+        setSeconds((s) => s - 1);
+      }, 1000);
+      return () => clearTimeout(timerId);
+    } else {
+      setCanResend(true);
+    }
+  }, [seconds]);
+// ...existing code...
 
   const handleVerify = () => {
     if (code.trim().length !== 6) {
@@ -37,10 +58,12 @@ export default function VerifyPage() {
     // TODO: panggil API verifikasi OTP
   };
 
-  const handleResend = () => {
-    console.log(`Kirim ulang kode ke ${email}`);
-    // TODO: panggil API resend OTP
-  };
+const handleResend = () => {
+  console.log(`Kirim ulang kode ke ${email}`);
+  setSeconds(30);
+  setCanResend(false);
+  // TODO: panggil API resend OTP
+};
 
   if (!email) return null;
 
@@ -102,18 +125,32 @@ export default function VerifyPage() {
 
 
             <Typography variant="body2" sx={{ mt: 2, color: "gray" }}>
-              Belum mendapat kode?{" "}
-              <Typography
+            Belum mendapat kode?{" "}
+            {seconds > 0 ? (
+                <Typography component="span" sx={{                    
+                  background:
+                    "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    fontWeight: 600,}}>
+                Kirim ulang kode dalam <b>{seconds}s</b>
+                </Typography>
+            ) : (
+                <Typography
                 component="span"
-                sx={{
-                  cursor: "pointer",
-                  color: "#0072FF",
-                  fontWeight: 500,
-                }}
                 onClick={handleResend}
-              >
+                sx={{
+                    cursor: "pointer",
+                    background:
+                    "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    fontWeight: 600,
+                }}
+                >
                 Kirim ulang kode
-              </Typography>
+                </Typography>
+            )}
             </Typography>
           </Item>
         </Grid>
