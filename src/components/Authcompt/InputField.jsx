@@ -9,21 +9,19 @@ export default function InputField({
   helperText = "",
   ...props
 }) {
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleTogglePassword = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <TextField
       fullWidth
       label={label}
-      type={type === "password" && !showPassword ? "password" : "text"}
       variant="outlined"
       error={error}
+      autoComplete="off"
       helperText={helperText}
       sx={{
+        autoComplete: "new-email",
+        form: {
+          autoComplete: "off",
+        },
         "& .MuiOutlinedInput-root": {
           position: "relative",
           borderRadius: "10px",
@@ -39,9 +37,7 @@ export default function InputField({
             borderColor: error ? "#f44336" : "#7AC2F5",
           },
           "&.Mui-focused fieldset": {
-            border: error
-              ? "2px solid #f44336"
-              : "2px solid transparent",
+            border: error ? "2px solid #f44336" : "2px solid transparent",
             background: error
               ? "none"
               : "linear-gradient(white, white) padding-box, linear-gradient(90deg, #7AC2F5) border-box",

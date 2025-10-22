@@ -1,12 +1,13 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Grid, Paper, Typography, Divider } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import { useNavigate } from "react-router-dom";
-import AuthButton from "../components/ButtonAuth";
-import InputField from "../components/InputField";
-import GradientButton from "../components/GradientButton";
+import AuthButton from "../components/Authcompt/ButtonAuth";
+import InputField from "../components/Authcompt/InputField";
+import GradientButton from "../components/Authcompt/GradientButton";
+import LoginAuth from "../services/auth";
+import { Login } from "@mui/icons-material";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -98,7 +99,10 @@ export default function LoginPage() {
                 maxWidth: 560,
               }}
             >
-              <GradientButton text="Daftar" onClick={handleSendCode} />
+              <GradientButton
+                text="Dapatkan Kode"
+                onClick={() => alert("Login email belum diaktifkan")}
+              />
             </Box>
             {/* Pembatas */}
             <Box
@@ -134,6 +138,7 @@ export default function LoginPage() {
             >
               <AuthButton
                 text="Login dengan Google"
+                onClick={LoginAuth}
                 icon={<GoogleIcon fontSize="25px" />}
               />
             </Box>
@@ -158,6 +163,7 @@ export default function LoginPage() {
                   WebkitTextFillColor: "transparent",
                   display: "inline-block",
                 }}
+                onClick={() => navigate("/login")}
               >
                 Register Disini
               </Typography>

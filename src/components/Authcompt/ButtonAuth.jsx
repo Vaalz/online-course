@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 
-export default function AuthButton({ text, icon }) {
+export default function AuthButton({ text, icon, onClick }) {
   return (
     <Box
       sx={{
@@ -20,6 +20,7 @@ export default function AuthButton({ text, icon }) {
       <Button
         variant="outlined"
         startIcon={icon}
+        onClick={onClick}
         sx={{
           width: "100%",
           height: "70px",
