@@ -1,13 +1,13 @@
-import { Typography } from '@mui/material'
 import React from 'react'
+import LandingPage from './pages/LandingPage'
+import { CssBaseline } from '@mui/material';
 
 function App() {
   return (
-    <Typography>tes 1</Typography>,
-    <Typography>tes 2</Typography>,
-    <Typography>tes 3</Typography>
-
-
+    <>
+    <CssBaseline />
+    <LandingPage />
+    </>
   )
 }
 

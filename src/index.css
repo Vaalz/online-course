@@ -1,0 +1,32 @@
+html, body {
+  overflow-x: hidden;
+}
+
+/* ==== Scrollbar Modern Style ==== */
+::-webkit-scrollbar {
+  width: 10px; /* lebar scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* warna area belakang scrollbar */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #11DF9E, #466EF1); /* warna scrollbar */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #0dc88d, #365cd8); /* warna saat hover */
+}
+
+/* Untuk Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #466EF1 #f1f1f1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
