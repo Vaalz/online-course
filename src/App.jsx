@@ -6,6 +6,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import VerifyPage from "./pages/verify";
 import "./App.css";
+import DashboardUser from "./pages/DashboardUser";
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/verify" element={<VerifyPage />} />
         <Route path="/LandingPage" element={<LandingPage />} />
+                <Route path="/DashboardUser" element={<DashboardUser />} />
+
       </Routes>
     </>
   );
