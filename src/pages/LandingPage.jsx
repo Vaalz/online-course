@@ -22,7 +22,7 @@ import spotify from '../assets/image/Spotify.png'
 import mailchimp from '../assets/image/Mailchimp.png'
 import airbnb from '../assets/image/Airbnb.png'
 import uber from '../assets/image/Uber.png'
-import StarIcon from '@mui/icons-material/Star';
+import StarIcon from '@mui/icons-material/Star'
 import CardKelas from '../components/CardKelas.jsx'
 import Gambar1 from '../assets/image/Gambar1.png'
 import Gambar2 from '../assets/image/Gambar2.png'
@@ -33,8 +33,12 @@ import Siti from '../assets/image/Siti.png'
 import Budi from '../assets/image/Budi.png'
 import Testi2 from '../components/Testi2.jsx'
 import CardPay from '../components/CardPay.jsx'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import FAQ from '../components/Faq.jsx'
+import Github from '../assets/image/github.png'
+import Twitter from '../assets/image/twitter.png'
+import Dribbble from '../assets/image/dribbble.png'
+import Facebook from '../assets/image/facebook.png'
 
 function LandingPage() {
   return (
@@ -342,7 +346,7 @@ function LandingPage() {
        </Box>
 
        {/* Trial */}
-        <Box>
+        <Box sx={{pb: 16}}>
           <Box
             sx={{
               p: '32px',
@@ -395,6 +399,50 @@ function LandingPage() {
           </Box>
         </Box>
 
+       {/* Footer */}
+       <Box
+          sx={{
+            background: 'linear-gradient(180deg, #1A3FB9 0%, #0C1C53 100%)',
+            color: 'white',
+            p: 4,
+            justifyContent: 'space-between',
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: { xs: 'column', md: 'row' },
+            textAlign: { xs: 'center', md: 'left' },
+            gap: { xs: 2, md: 0 },
+          }}
+        >
+
+        <Box sx={{px: '64px'}}>
+          <Typography sx={{
+            fontWeight: 600,
+            fontSize: '40px',
+
+          }}>
+            LOGO
+          </Typography>
+        </Box>
+        <Box>
+          <Typography>
+            © 2025 Oemah Solution Indonesia, lnc. All rights reserved.
+          </Typography>
+        </Box>
+        <Box sx={{width: '156px', height: '24px', display: 'flex', justifyContent: 'space-between'}}>
+          <Box>
+            <img src={Github} alt="GitHub" />
+          </Box>
+          <Box>
+            <img src={Twitter} alt="Twitter" />
+          </Box>
+          <Box>
+            <img src={Dribbble} alt="Dribbble" />
+          </Box>
+          <Box>
+            <img src={Facebook} alt="Facebook" />
+          </Box>
+        </Box>
+       </Box>
 
     </>
   )
