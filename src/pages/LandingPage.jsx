@@ -40,15 +40,30 @@ import Twitter from '../assets/image/twitter.png'
 import Dribbble from '../assets/image/dribbble.png'
 import Facebook from '../assets/image/facebook.png'
 
+
+const icons = [
+  { src: Github, width: 17, height: 17 },
+  { src: Twitter, width: 17, height: 14 },
+  { src: Dribbble, width: 17, height: 17 },
+  { src: Facebook, width: 10, height: 18 },
+];
+
 function LandingPage() {
   return (
     <>
       <Navbar />
 
       {/* Hero Section */}
-      <Box sx={{ py: 8 }}>
-        <Box sx={{ pl: 10 }}>
-          <Typography sx={{ fontSize: '3rem', fontWeight: 'bold' }}>
+      <Box sx={{ py: 3 }}>
+        <Box sx={{
+          py: { xs: 6, md: 8 },
+          px: { xs: 3, md: 10 },
+          textAlign: { xs: 'center', md: 'left' },
+        }}>
+          <Typography sx={{
+            fontWeight: 600,
+            fontSize: { xs: '28px', md: '40px' },
+          }}>
             Tingkatkan Skill<br />Di Industri Digital
           </Typography>
 
@@ -56,61 +71,72 @@ function LandingPage() {
             Akses lebih dari 100+ kelas online dengan tutor <br /> profesional. Belajar kapan saja dan dimana saja,<br /> ikuti kelas online dengan Live Q&A dan dapatkan <br /> sertifikat resmi untuk portofolio anda.
           </Typography>
 
-          <Grid container spacing={2}>
-            <Grid item>
-              <Button
-                variant="contained"
-                sx={{
-                  background: "linear-gradient(90deg, #11DF9E, #466EF1)",
-                  fontWeight: 500,
-                  color: "white",
-                  animation: "gradientMove 3s linear infinite",
-                  "@keyframes gradientMove": {
-                    "0%": { backgroundPosition: "0% center" },
-                    "100%": { backgroundPosition: "200% center" },
-                  },
-                  my: 3,
-                  textTransform: 'none'
-                }}
-              >
-                Cari kelas
-              </Button>
-            </Grid>
-
-            <Grid item>
-              <Button
-                sx={{
-                  textTransform: 'none',
-                  fontSize: '500',
-                  color: "#000",
-                  border: '1px solid #E5E7EB',
-                  my: 3
-                }}
-              >
-                Pricing & FAQ
-              </Button>
-            </Grid>
+          <Grid
+          container
+          spacing={2}
+          justifyContent={{ xs: 'center', md: 'flex-start' }}
+        >
+          <Grid item>
+            <Button
+              variant="contained"
+              sx={{
+                background: 'linear-gradient(90deg, #11DF9E, #466EF1)',
+                fontWeight: 500,
+                color: 'white',
+                textTransform: 'none',
+                px: 4,
+                py: 1.5,
+              }}
+            >
+              Cari kelas
+            </Button>
           </Grid>
+
+          <Grid item>
+            <Button
+              sx={{
+                textTransform: 'none',
+                color: '#000',
+                border: '1px solid #E5E7EB',
+                px: 4,
+                py: 1.5,
+              }}
+            >
+              Pricing & FAQ
+            </Button>
+          </Grid>
+        </Grid>
         </Box>
       </Box>
 
       {/* Partner Logos */}
       <Grid
         container
-        spacing={2}
+        spacing={3}
         justifyContent="space-between"
-        sx={{ px: 8, py: 3, alignItems: 'center' }}
+        alignItems="center"
+        sx={{
+          px: { xs: 2, md: 8 },
+          py: 4,
+        }}
       >
-        {[google, microsoft, spotify, mailchimp, airbnb, uber].map((logo, index) => (
-          <Grid item key={index}>
-            <Box
-              component="img"
-              src={logo}
-              alt={`Logo ${index}`}
-              sx={{ objectFit: "cover" }}
-            />
-          </Grid>
-        ))}
+        {[google, microsoft, spotify, mailchimp, airbnb, uber].map(
+          (logo, index) => (
+            <Grid item xs={4} sm={2} key={index}>
+              <Box
+                component="img"
+                src={logo}
+                alt={`Logo ${index}`}
+                sx={{
+                  width: '100%',
+                  maxWidth: 120,
+                  mx: 'auto',
+                  display: 'block',
+                }}
+              />
+            </Grid>
+          )
+        )}
       </Grid>
 
       {/* Section: Mengapa Memilih Learning Center */}
@@ -208,52 +234,63 @@ function LandingPage() {
       </Box>
 
       {/* Coba Kelas */}
-      <Box sx={{py: 5}}>
-        <Box sx={{ pt: 1, px: 5}}>
-          <Typography sx={{fontWeight: 'bold', fontSize: '2.5rem', }}>
+      <Box sx={{ py: { xs: 4, md: 8 }, px: { xs: 2, md: 5 } }}>
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+            fontSize: { xs: '1.75rem', md: '2.5rem' },
+            textAlign: { xs: 'center', md: 'left' },
+            mb: { xs: 3, md: 4 },
+          }}
+        >
           Coba Kelas
         </Typography>
-        <Grid container spacing={1} justifyContent='space-between' sx={{mt: 1, pb: 3 }}>
-          <Grid item>
-            <Button sx={{textTransform: 'none', border: '1px solid #E5E7EB', color: '#000', fontSize: '1.5rem', borderRadius: 5, width: 240, fontWeight: 500}}>
-              Programing
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button sx={{textTransform: 'none', border: '1px solid #E5E7EB', color: '#000', fontSize: '1.5rem', borderRadius: 5, width: 240, fontWeight: 500}}>
-              UI/UX
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button sx={{textTransform: 'none', border: '1px solid #E5E7EB', color: '#000', fontSize: '1.5rem', borderRadius: 5, width: 240, fontWeight: 500}}>
-              Infrastuktur
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button sx={{textTransform: 'none', border: '1px solid #E5E7EB', color: '#000', fontSize: '1.5rem', borderRadius: 5, width: 240, fontWeight: 500}}>
-              Backend
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button sx={{textTransform: 'none', border: '1px solid #E5E7EB', color: '#000', fontSize: '1.5rem', borderRadius: 5, width: 240, fontWeight: 500}}>
-              Cyber Security
-            </Button>
-          </Grid>
+
+        {/* Tombol kategori */}
+        <Grid
+          container
+          spacing={2}
+          justifyContent="center"
+          sx={{
+            mb: 4,
+          }}
+        >
+          {['Programing', 'UI/UX', 'Infrastruktur', 'Backend', 'Cyber Security'].map((label, i) => (
+            <Grid item xs={12} sm={6} md="auto" key={i}>
+              <Button
+                fullWidth
+                sx={{
+                  textTransform: 'none',
+                  border: '1px solid #E5E7EB',
+                  color: '#000',
+                  fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
+                  borderRadius: 5,
+                  fontWeight: 500,
+                  py: { xs: 1, sm: 1.5 },
+                  width: { md: 240 },
+                }}
+              >
+                {label}
+              </Button>
+            </Grid>
+          ))}
         </Grid>
 
-        <Grid container spacing={2} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <Grid item>
-            <CardKelas image={Gambar1}/>
-          </Grid>
-          <Grid item>
-            <CardKelas image={Gambar2} />
-          </Grid>
-          <Grid item>
-            <CardKelas image={Gambar3}/>
-          </Grid>
+        {/* Card kelas */}
+        <Grid
+          container
+          spacing={2}
+          justifyContent="center"
+          alignItems="center"
+        >
+          {[Gambar1, Gambar2, Gambar3].map((img, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <CardKelas image={img} />
+            </Grid>
+          ))}
         </Grid>
-        </Box>
       </Box>
+
 
        {/* Testimoni */}
         <Box sx={{pb: '96px'}}>
@@ -287,57 +324,71 @@ function LandingPage() {
         </Box>
 
        {/* pay as u grow */}
-          <Box sx={{pb: '96px'}}>
-            <Box sx={{
-              textAlign: 'center'
-            }}>
-              <Typography sx={{fontSize: '36px', fontWeight: '800', pb: 2}}>
+          <Box sx={{ pb: '96px' }}>
+            {/* Bagian judul */}
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography sx={{ fontSize: '36px', fontWeight: '800', pb: 2 }}>
                 Pay as you grow
               </Typography>
-              <Typography sx={{fontSize: '20px', color: '#657575',}}>
-                Here at flowbite we focus on markets where technology, innovation, and capital<br/> can unlock long-term value and drive economic growth.
+              <Typography sx={{ fontSize: '20px', color: '#657575' }}>
+                Here at flowbite we focus on markets where technology, innovation, and capital<br />
+                can unlock long-term value and drive economic growth.
               </Typography>
             </Box>
 
-            <Box sx={{py: 5, px: 5, display: 'flex', gap: '40px'}}>
-              <CardPay 
-                Pack='Starter'
-                Description='Great for personal use and for your side projects.'
+            {/* Bagian card */}
+            <Box
+              sx={{
+                py: 5,
+                px: 5,
+                display: 'flex',
+                gap: '40px',
+                justifyContent: 'center',
+                flexWrap: 'wrap', // biar otomatis turun saat sempit
+                flexDirection: { xs: 'column', sm: 'column', md: 'row' }, // responsive
+                alignItems: 'center',
+              }}
+            >
+              <CardPay
+                Pack="Starter"
+                Description="Great for personal use and for your side projects."
                 Price="$49"
-                  Benefit={[
-                    "Individual configuration",
-                    "No setup, monthly, or hidden fees",
-                    "Team size: 1 developer",
-                    "Premium support: 6 months",
-                    "Free updates: 6 months"
-                  ]}
+                Benefit={[
+                  "Individual configuration",
+                  "No setup, monthly, or hidden fees",
+                  "Team size: 1 developer",
+                  "Premium support: 6 months",
+                  "Free updates: 6 months",
+                ]}
               />
-              <CardPay 
-                Pack='Company'
-                Description='Best for large scale uses and extended redistribution rights.'
+              <CardPay
+                Pack="Company"
+                Description="Best for large scale uses and extended redistribution rights."
                 Price="$99"
-                  Benefit={[
-                    "Individual configuration",
-                    "No setup, monthly, or hidden fees",
-                    "Team size: 10 developer",
-                    "Premium support: 24 months",
-                    "Free updates: 24 months"
-                  ]}
+                Benefit={[
+                  "Individual configuration",
+                  "No setup, monthly, or hidden fees",
+                  "Team size: 10 developer",
+                  "Premium support: 24 months",
+                  "Free updates: 24 months",
+                ]}
               />
-              <CardPay 
-                Pack='Enterprise'
-                Description='Best for large scale uses and extended redistribution rights.'
+              <CardPay
+                Pack="Enterprise"
+                Description="Best for large scale uses and extended redistribution rights."
                 Price="$499"
-                  Benefit={[
-                    "Individual configuration",
-                    "No setup, monthly, or hidden fees",
-                    "Team size: 100+ developer",
-                    "Premium support: 36 months",
-                    "Free updates: 36 months"
-                  ]}
+                Benefit={[
+                  "Individual configuration",
+                  "No setup, monthly, or hidden fees",
+                  "Team size: 100+ developer",
+                  "Premium support: 36 months",
+                  "Free updates: 36 months",
+                ]}
               />
             </Box>
           </Box>
+
+
        {/* question */}
        <Box>
           <Box sx={{p: '32px'}}>
@@ -401,48 +452,64 @@ function LandingPage() {
 
        {/* Footer */}
        <Box
+        sx={{
+          background: 'linear-gradient(180deg, #1A3FB9 0%, #0C1C53 100%)',
+          color: 'white',
+          p: { xs: 3, md: 4 },
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          textAlign: { xs: 'center', md: 'left' },
+          gap: { xs: 2, md: 0 },
+        }}
+      >
+        {/* Logo */}
+        <Typography
           sx={{
-            background: 'linear-gradient(180deg, #1A3FB9 0%, #0C1C53 100%)',
-            color: 'white',
-            p: 4,
-            justifyContent: 'space-between',
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: { xs: 'column', md: 'row' },
-            textAlign: { xs: 'center', md: 'left' },
-            gap: { xs: 2, md: 0 },
+            fontWeight: 600,
+            fontSize: { xs: '28px', md: '40px' },
           }}
         >
+          LOGO
+        </Typography>
 
-        <Box sx={{px: '64px'}}>
-          <Typography sx={{
-            fontWeight: 600,
-            fontSize: '40px',
+        {/* Hak Cipta */}
+        <Typography
+          sx={{
+            fontSize: { xs: '0.875rem', md: '1rem' },
+            maxWidth: { xs: '90%', md: '100%' },
+          }}
+        >
+          © 2025 Oemah Solution Indonesia, Inc. All rights reserved.
+        </Typography>
 
-          }}>
-            LOGO
-          </Typography>
+        {/* Icon Sosial */}
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 2,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {icons.map((icon, i) => (
+            <Box
+              key={i}
+              component="img"
+              src={icon.src}
+              alt={`Icon-${i}`}
+              sx={{
+                width: `${icon.width}px`,
+                height: `${icon.height}px`,
+                cursor: 'pointer',
+                transition: '0.3s',
+                '&:hover': { transform: 'scale(1.1)' },
+              }}
+            />
+          ))}
         </Box>
-        <Box>
-          <Typography>
-            © 2025 Oemah Solution Indonesia, lnc. All rights reserved.
-          </Typography>
-        </Box>
-        <Box sx={{width: '156px', height: '24px', display: 'flex', justifyContent: 'space-between'}}>
-          <Box>
-            <img src={Github} alt="GitHub" />
-          </Box>
-          <Box>
-            <img src={Twitter} alt="Twitter" />
-          </Box>
-          <Box>
-            <img src={Dribbble} alt="Dribbble" />
-          </Box>
-          <Box>
-            <img src={Facebook} alt="Facebook" />
-          </Box>
-        </Box>
-       </Box>
+      </Box>
 
     </>
   )

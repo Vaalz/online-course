@@ -19,52 +19,68 @@ function FAQ() {
     {
       id: 'panel1',
       question: 'Can I use FlowBite in open-source projects?',
-      answer: 'Generally, it is accepted to use FlowBite in open-source projects, as long as it is not a UI library, a theme, a template, a page-builder that would be considered as an alternative to FlowBite itself. \n With that being said, feel free to use this design kit for your open-source projects. \nFind out more information by reading the license.',
+      answer: 'Generally, it is accepted to use FlowBite in open-source projects, as long as it is not a UI library, a theme, a template, a page-builder that would be considered as an alternative to FlowBite itself. \nWith that being said, feel free to use this design kit for your open-source projects.\nFind out more information by reading the license.',
     },
     {
       id: 'panel2',
       question: 'Where can I access my download files?',
-      answer: 'Generally, it is accepted to use FlowBite in open-source projects, as long as it is not a UI library, a theme, a template, a page-builder that would be considered as an alternative to FlowBite itself. \n With that being said, feel free to use this design kit for your open-source projects. \nFind out more information by reading the license.',
+      answer: 'You can access your files directly from your account dashboard under the “Downloads” section after logging in.',
     },
     {
       id: 'panel3',
       question: 'Can I use FlowBite for commercial purposes?',
-      answer: 'Generally, it is accepted to use FlowBite in open-source projects, as long as it is not a UI library, a theme, a template, a page-builder that would be considered as an alternative to FlowBite itself. \n With that being said, feel free to use this design kit for your open-source projects. \nFind out more information by reading the license.',
+      answer: 'Yes, FlowBite can be used for commercial projects as long as you follow the license terms provided with your purchase.',
     },
     {
       id: 'panel4',
       question: 'What about browser support?',
-      answer: 'Generally, it is accepted to use FlowBite in open-source projects, as long as it is not a UI library, a theme, a template, a page-builder that would be considered as an alternative to FlowBite itself. \n With that being said, feel free to use this design kit for your open-source projects. \nFind out more information by reading the license.',
+      answer: 'FlowBite supports all modern browsers including Chrome, Firefox, Safari, and Edge. Older browsers might have limited compatibility.',
     },
   ];
 
   return (
-    <Box sx={{ textAlign: 'center', py: 4, }}>
+    <Box sx={{ textAlign: 'center', py: 4 }}>
       <Typography sx={{ fontWeight: 800, fontSize: '36px', pb: 2 }}>
         Frequently asked questions
       </Typography>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 0.5,
+          px: { xs: 2, sm: 3, md: 0 }, // ✅ kasih padding sisi untuk HP biar gak nempel tepi
+        }}
+      >
         {faqs.map((faq, index) => (
           <Accordion
             key={faq.id}
             expanded={expanded === faq.id}
             onChange={handleChange(faq.id)}
             sx={{
-              width: '695px',
+              width: { xs: '100%', sm: '90%', md: '695px' }, // ✅ otomatis lebar penuh di HP
               boxShadow: 'none',
               border: 'none',
               borderBottom:
-                index !== faqs.length - 1 ? '1px solid #E5E7EB' : 'none', // ❗ hanya tampil kalau bukan terakhir
+                index !== faqs.length - 1 ? '1px solid #E5E7EB' : 'none',
               '&:before': { display: 'none' },
+              textAlign: 'left',
             }}
           >
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              sx={{
+                '& .MuiAccordionSummary-content': {
+                  margin: 0,
+                },
+              }}
+            >
               <Typography
                 component="span"
                 variant="inherit"
                 sx={{
-                  fontSize: '18px',
+                  fontSize: { xs: '16px', sm: '17px', md: '18px' }, // ✅ font sedikit lebih kecil di HP
                   fontWeight: 500,
                   color: expanded === faq.id ? '#000' : '#6B7280',
                   transition: 'color 0.3s ease',
@@ -76,11 +92,11 @@ function FAQ() {
 
             <AccordionDetails
               sx={{
-                fontSize: '16px',
+                fontSize: { xs: '15px', sm: '16px' },
                 fontWeight: 400,
                 color: '#6B7280',
-                textAlign: 'left',
                 whiteSpace: 'pre-line',
+                lineHeight: 1.6,
               }}
             >
               {faq.answer}
