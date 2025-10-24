@@ -11,6 +11,15 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
         border: '1px solid #E5E7EB',
         borderRadius: '8px',
         boxShadow: '0px 2px 4px -2px #0000000D, 0px 4px 6px -1px #0000001A',
+        mx: 'auto',
+        transition: 'all 0.3s ease',
+
+        // 🔹 Responsif di HP
+        '@media (max-width:600px)': {
+          width: '100%',
+          height: 'auto',
+          p: 2,
+        },
       }}
     >
       <CardContent
@@ -21,34 +30,106 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
           height: '100%',
           textAlign: 'center',
           p: '32px',
+
+          '@media (max-width:600px)': {
+            p: '20px',
+          },
         }}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <Typography sx={{ fontWeight: 'bold', fontSize: '24px' }}>
+        {/* 🧱 Header */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+            mb: 2,
+          }}
+        >
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+              fontSize: { xs: '20px', sm: '24px' },
+            }}
+          >
             {Pack}
           </Typography>
-          <Typography sx={{ fontSize: '18px', fontWeight: 400, color: '#657575', mb: 2 }}>
+
+          <Typography
+            sx={{
+              fontSize: { xs: '16px', sm: '18px' },
+              fontWeight: 400,
+              color: '#657575',
+              mb: 2,
+            }}
+          >
             {Description}
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1, mb: 2 }}>
-          <Typography sx={{ fontSize: '48px', fontWeight: 800 }}>{Price}</Typography>
-          <Typography sx={{ fontSize: '18px', fontWeight: 500, color: '#657575' }}>
+        {/* 💸 Harga */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: 1,
+            mb: 2,
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: { xs: '36px', sm: '48px' },
+              fontWeight: 800,
+            }}
+          >
+            {Price}
+          </Typography>
+
+          <Typography
+            sx={{
+              fontSize: { xs: '16px', sm: '18px' },
+              fontWeight: 500,
+              color: '#657575',
+            }}
+          >
             /month
           </Typography>
         </Box>
 
-        {/* ✅ Map benefit dari props */}
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px', mb: 8 }}>
+        {/* ✅ Benefit list */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+            mb: 8,
+            width: '100%',
+            '@media (max-width:600px)': {
+              mb: 4,
+              gap: '12px',
+              alignItems: 'center',
+            },
+          }}
+        >
           {Benefit.map((item, index) => (
-            <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <Box
+              key={index}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                justifyContent: { xs: 'center', sm: 'flex-start' },
+                flexWrap: 'wrap',
+              }}
+            >
               <CentangIcon />
-              <Typography>{item}</Typography>
+              <Typography sx={{ fontSize: { xs: '15px', sm: '16px' } }}>
+                {item}
+              </Typography>
             </Box>
           ))}
         </Box>
 
+        {/* 🔘 Tombol */}
         <Button
           variant="contained"
           sx={{
@@ -62,13 +143,15 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
               "100%": { backgroundPosition: "200% center" },
             },
             width: '100%',
+            fontSize: { xs: '14px', sm: '16px' },
+            py: { xs: 1, sm: 1.5 },
           }}
         >
           Get started
         </Button>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default CardPay;
