@@ -13,11 +13,11 @@ function App() {
       <CssBaseline />
 
       <Routes>
-        <Route path="/" element={<Navigate to="/LandingPage" />} />{" "}
+        <Route path="/" element={<Navigate to="/landing-page" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify" element={<VerifyPage />} />
-        <Route path="/LandingPage" element={<LandingPage />} />
+        <Route path="/landing-page" element={<LandingPage />} />
       </Routes>
     </>
   );
