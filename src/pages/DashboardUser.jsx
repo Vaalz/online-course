@@ -10,13 +10,14 @@ import {
   Paper,
   useTheme,
 } from "@mui/material";
+import NavbarDashboard from "../layout/DashboardLayout ";
 
 function DashboardUser() {
   const theme = useTheme();
 
   return (
     <>
-      <Navbar />
+      <NavbarDashboard />
 
       <Box
         sx={{
@@ -28,7 +29,7 @@ function DashboardUser() {
         {/* === Bagian Progres Belajar === */}
         <Box sx={{ mb: 6 }}>
           <Typography
-            variant="h5"
+            fontSize={"48px"}
             sx={{ fontWeight: 700, mb: 2, textAlign: "center" }}
           >
             Progres belajar kamu
@@ -37,16 +38,17 @@ function DashboardUser() {
           <Paper
             elevation={3}
             sx={{
-              p: { xs: 2, sm: 3 },
+              height: "250px",
+              p: { xs: 3, sm: 5 },
               borderRadius: "16px",
               backgroundColor: "#E5E7EB",
               display: "flex",
               flexDirection: "column",
-              gap: 2,
+              gap: 5,
             }}
           >
             <Typography
-              variant="h6"
+              fontSize={"48px"}
               sx={{
                 fontWeight: 600,
                 color: "#333",
@@ -74,9 +76,9 @@ function DashboardUser() {
         {/* === Bagian Mulai Belajar === */}
         <Box>
           <Typography
-            variant="h5"
+            fontSize={"48px"}
             sx={{
-              fontWeight: 700,
+              fontWeight: 600,
               mb: 3,
             }}
           >
