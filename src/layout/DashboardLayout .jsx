@@ -18,7 +18,7 @@ function NavbarDashboard() {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: "#F5FFFB", // warna soft putih kehijauan
+        backgroundColor: "#fff",
         boxShadow: "none",
         borderBottom: "1px solid #E5E5E5",
         py: 1.2,
