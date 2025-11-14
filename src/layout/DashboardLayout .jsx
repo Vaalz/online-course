@@ -18,7 +18,7 @@ function NavbarDashboard() {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: "#fff",
+        backgroundColor: "#F6FEFD",
         boxShadow: "none",
         borderBottom: "1px solid #E5E5E5",
         py: 1.2,
@@ -31,6 +31,7 @@ function NavbarDashboard() {
             alignItems: "center",
             justifyContent: "space-between",
             width: "100%",
+            height: "50px",
             px: 5,
           }}
         >
@@ -39,8 +40,10 @@ function NavbarDashboard() {
             {/* LOGO */}
             <Typography
               sx={{
-                fontWeight: "bold",
-                fontSize: 26,
+                fontStyle: "semibold",
+                height: "full",
+                fontWeight: 600,
+                fontSize: "40px",
                 background: "linear-gradient(90deg, #11DF9E, #466EF1, #11DF9E)",
                 backgroundSize: "200% auto",
                 backgroundClip: "text",
@@ -60,13 +63,14 @@ function NavbarDashboard() {
             {/* SEARCH BAR */}
             <Box
               sx={{
+                height: "full",
                 display: "flex",
                 alignItems: "center",
                 gap: 1,
                 px: 2,
                 py: 0.5,
                 border: "1px solid #ccc",
-                borderRadius: 2,
+                borderRadius: "40px",
                 backgroundColor: "#fff",
                 boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
               }}
@@ -87,8 +91,8 @@ function NavbarDashboard() {
                   <Typography
                     sx={{
                       color: "#6C757D",
-                      fontWeight: 500,
-                      fontSize: 15,
+                      fontWeight: 400,
+                      fontSize: "20px",
                       cursor: "pointer",
                       "&:hover": {
                         color: "#466EF1",
@@ -118,7 +122,7 @@ function NavbarDashboard() {
               }}
             >
               <ShoppingCartOutlinedIcon
-                sx={{ color: "#11DF9E", fontSize: 22 }}
+                sx={{ color: "#11DF9E", fontSize: "25px" }}
               />
             </IconButton>
 
@@ -134,7 +138,7 @@ function NavbarDashboard() {
               }}
             >
               <FavoriteBorderOutlinedIcon
-                sx={{ color: "#466EF1", fontSize: 22 }}
+                sx={{ color: "#466EF1", fontSize: "25px" }}
               />
             </IconButton>
 
@@ -143,8 +147,8 @@ function NavbarDashboard() {
               alt="User Profile"
               src="https://i.pravatar.cc/40"
               sx={{
-                width: 36,
-                height: 36,
+                width: "42px",
+                height: "42px",
                 cursor: "pointer",
                 border: "2px solid #E0E0E0",
               }}
