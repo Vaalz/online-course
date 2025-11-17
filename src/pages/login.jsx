@@ -8,6 +8,7 @@ import InputField from "../components/Authcompt/InputField";
 import GradientButton from "../components/Authcompt/GradientButton";
 import LoginAuth from "../services/auth";
 import { Login } from "@mui/icons-material";
+import GambarLogin from "../assets/image/Gambar.png";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -44,7 +45,13 @@ export default function LoginPage() {
         sx={{ height: "100%" }}
       >
         <Grid size={6}>
-          <Item sx={{ height: "100%" }}>1</Item>
+          <Item sx={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <img
+              src={GambarLogin}
+              alt="Gambar Login"
+              style={{ width: "720px", height: "760px", objectFit: "cover" }}
+            />
+          </Item>
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
