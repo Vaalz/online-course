@@ -1,3 +1,5 @@
+// src/components/CategoryButtons.jsx (Perbaikan)
+
 import React, { useState } from "react";
 import { Button, Box, useTheme } from "@mui/material";
 
@@ -18,9 +20,9 @@ export default function CategoryButtons() {
       sx={{
         justifyContent: "space-between",
         display: "flex",
-        gap: 2,
-        flexWrap: "wrap",
+        gap: 2,        
         mt: 2,
+        width: '100%', 
       }}
     >
       {categories.map((category) => {
@@ -34,11 +36,14 @@ export default function CategoryButtons() {
               borderRadius: "20px",
               textTransform: "none",
               fontWeight: 600,
-              fontSize: { xs: "18px", sm: "19px", md: "20px" },
-              maxWidth: "400px",
-              minWidth: "250px",
-              height: "65px",
-              flexShrink: 1,
+              
+              // >>> PERBAIKAN LEBAR & FLEX <<<
+              minWidth: "150px", // Cukup minWidth, jangan gunakan max/fixed width
+              height: "50px", // Tinggi lebih realistis
+              whiteSpace: 'nowrap', // PENTING: Mencegah teks turun baris
+              flexShrink: 0, // PENTING: MENCEGAH TOMBOL MENYUSUT
+              // >>> AKHIR PERBAIKAN LEBAR & FLEX <<<
+
               color: isActive ? "#000" : "#444",
               background: isActive
                 ? "linear-gradient(white, white) padding-box, linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF) border-box"
@@ -53,17 +58,8 @@ export default function CategoryButtons() {
                 border: "2px solid transparent",
               },
 
-              // ✅ Responsif di layar kecil
-              [theme.breakpoints.down("md")]: {
-                width: "260px",
-                height: "70px",
-                fontSize: "1rem",
-              },
-              [theme.breakpoints.down("sm")]: {
-                width: "100%", // full width di mobile
-                height: "60px",
-                fontSize: "0.95rem",
-              },
+              // Hapus semua custom breakpoints width, biarkan flexShrink: 0 dan minWidth yang bekerja
+              fontSize: { xs: "0.9rem", md: "1rem" },
             }}
           >
             {category}
