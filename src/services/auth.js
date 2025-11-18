@@ -11,7 +11,7 @@ const LoginAuth = async () => {
     console.log("ID Token Firebase:", idToken);
 
     const response = await axios.post(
-      "http://192.168.100.247:7070/api/auth/firebase-login",
+      "http://192.168.100.247:8080/api/auth/firebase-login",
       {},
       {
         headers: {

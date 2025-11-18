@@ -1,19 +1,20 @@
 // src/components/layout/UserSidebar.jsx
 
-import React from "react";
 import { Box, List, ListItem, ListItemText, ListItemIcon } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
-import HomeIcon from "@mui/icons-material/Home";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PersonIcon from "@mui/icons-material/Person";
-// Tambahkan import icon lain jika diperlukan, misalnya QuizIcon
+import HomeOutlinedIcon from '@mui/icons-material/HomeRounded';
+
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined';
 
 // Data Menu Sidebar
 const menuItems = [
-  { icon: <HomeIcon />, text: "Home", path: "/" },
-  { icon: <DashboardIcon />, text: "Dashboard", path: "/DashboardUser" },
-  { icon: <PersonIcon />, text: "Edit Profile", path: "/profile" },
-  // { icon: <QuizIcon />, text: "Quiz", path: "/quiz" }, // Contoh menu tambahan
+  { icon: <HomeOutlinedIcon  sx={{fontSize:"30px", mr: "20px"}}/>, text: "HOME", path: "/" },
+  { icon: <GridViewOutlinedIcon sx={{fontSize:"30px", mr: "20px"}}/>, text: "DASHBOARD", path: "/DashboardStudent" },
+  { icon: <AccountCircleOutlinedIcon sx={{fontSize:"30px", mr: "20px"}}/>, text: "EDIT PROFILE", path: "/profile" },
+  { icon: <QuizOutlinedIcon sx={{fontSize:"30px", mr: "20px"}}/>, text: "QUIZ", path: "/Quiz" },
+
 ];
 
 export default function UserSidebar() {
@@ -29,9 +30,9 @@ export default function UserSidebar() {
         py: 4,
         px: 2,
         flexShrink: 0,
-        position: "sticky",
         top: 0,
         height: "full",
+        
       }}
     >
       <List>
@@ -48,13 +49,13 @@ export default function UserSidebar() {
                 border: isActive
                   ? "1px solid #00E0A8"
                   : "1px solid transparent",
-                color: isActive ? "#00E0A8" : "#6C757D",
+                color: isActive ? "#00E0A8" : "#466EF1",
                 "&:hover": { bgcolor: "#E6FBF6" },
               }}
             >
               <ListItemIcon
                 sx={{
-                  color: isActive ? "#00E0A8" : "#6C757D",
+                  color: isActive ? "#00E0A8" : "#466EF1",
                   minWidth: 40,
                 }}
               >

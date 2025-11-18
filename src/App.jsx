@@ -6,7 +6,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import VerifyPage from "./pages/verify";
 import "./App.css";
-import DashboardUser from "./pages/DashboardUser";
+import DashboardStudent from "./pages/DashboardStudent";
 
 function App() {
   return (
@@ -14,12 +14,12 @@ function App() {
       <CssBaseline />
 
       <Routes>
-        <Route path="/" element={<Navigate to="/landing-page" />} />
+        <Route path="/" element={<Navigate to="/LandingPage" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify" element={<VerifyPage />} />
         <Route path="/LandingPage" element={<LandingPage />} />
-        <Route path="/DashboardUser" element={<DashboardUser />} />
+        <Route path="/DashboardStudent" element={<DashboardStudent />} />
       </Routes>
     </>
   );
