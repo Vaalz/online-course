@@ -5,25 +5,28 @@ import axios from "axios";
 
 const LoginAuth = async () => {
   try {
+    // 1. Login Google
     const result = await signInWithPopup(auth, provider);
     const idToken = await result.user.getIdToken();
+    console.log("ID Token Firebase:", idToken);
 
-    const API_URL = import.meta.env.VITE_API_URL;
-    console.log("API_URL:", API_URL);
-
-    // sesuai swagger:
-    // POST /api/auth/firebase/login
+    // 2. Panggil backend sesuai swagger
     const response = await axios.post(
-      `${API_URL}/api/auth/firebase/login`,
+      "http://192.168.100.247:8080/api/auth/firebase-login",
       {
-        token: idToken, // BE expects this
+        idToken: idToken, // BODY
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
       }
     );
 
     console.log("Backend Response:", response.data);
 
-    return response.data;  // kembalikan data sesuai BE
-
+    // 3. WAJIB return
+    return response.data;
   } catch (error) {
     console.error("Login error:", error);
     throw error;
