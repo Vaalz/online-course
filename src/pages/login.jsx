@@ -36,26 +36,6 @@ export default function LoginPage() {
     navigate("/verify");
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      const res = await LoginAuth();
-      const role = res.data?.roles?.name;
-
-      console.log("ROLE:", role);
-
-      if (role === "student") {
-        navigate("/Dashboardstudent");
-      } else if (role === "teacher") {
-        navigate("/dashboard-teacher");
-      } else {
-        navigate("/");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Login Google gagal");
-    }
-  };
-
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
       <Grid
@@ -65,14 +45,7 @@ export default function LoginPage() {
         sx={{ height: "100%" }}
       >
         <Grid size={6}>
-          <Item
-            sx={{
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+          <Item sx={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
             <img
               src={GambarLogin}
               alt="Gambar Login"
@@ -172,7 +145,7 @@ export default function LoginPage() {
             >
               <AuthButton
                 text="Login dengan Google"
-                onClick={handleGoogleLogin}
+                onClick={LoginAuth}
                 icon={<GoogleIcon fontSize="25px" />}
               />
             </Box>
