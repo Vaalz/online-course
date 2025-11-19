@@ -40,8 +40,12 @@ export default function LoginPage() {
     try {
       const res = await LoginAuth();
 
-      const role = res.data?.roles?.[0]?.name;
-      console.log("ROLE:", role);
+      const role = res.roles?.[0]?.name;
+
+      // SIMPAN TOKEN DAN ROLE
+      localStorage.setItem("token", res.token);
+      localStorage.setItem("role", role);
+      localStorage.setItem("email", res.email);
 
       if (role === "student") {
         navigate("/DashboardStudent");
