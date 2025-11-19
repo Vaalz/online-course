@@ -7,31 +7,26 @@ const LoginAuth = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
     const idToken = await result.user.getIdToken();
+
     const API_URL = import.meta.env.VITE_API_URL;
+    console.log("API_URL:", API_URL);
 
-    console.log("ID Token Firebase:", idToken);
-
+    // sesuai swagger:
+    // POST /api/auth/firebase/login
     const response = await axios.post(
-      "http://API_URL/auth/firebase-login",
-      {},
+      `${API_URL}/api/auth/firebase/login`,
       {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
+        token: idToken, // BE expects this
       }
     );
 
     console.log("Backend Response:", response.data);
-    alert("Login berhasil!");
+
+    return response.data;  // kembalikan data sesuai BE
+
   } catch (error) {
     console.error("Login error:", error);
-    if (error.code === "auth/popup-blocked") {
-      alert("Popup diblokir oleh browser. Tolong izinkan popup untuk situs ini.");
-    } else if (error.code === "auth/cancelled-popup-request") {
-      console.log("Login dibatalkan karena popup sebelumnya masih terbuka.");
-    } else {
-      alert("Terjadi kesalahan saat login. Coba lagi.");
-    }
+    throw error;
   }
 };
 
