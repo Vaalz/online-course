@@ -36,6 +36,24 @@ export default function LoginPage() {
     navigate("/verify");
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const res = await LoginAuth();
+
+      const role = res.data?.roles?.[0]?.name;
+      console.log("ROLE:", role);
+
+      if (role === "student") {
+        navigate("/DashboardStudent");
+      } else if (role === "teacher") {
+        navigate("/dashboard-teacher");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Login Google gagal");
+    }
+  };
+
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
       <Grid
