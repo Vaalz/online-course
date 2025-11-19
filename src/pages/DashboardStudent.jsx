@@ -29,10 +29,24 @@ export default function DashboardStudent() {
   const notificationsData = [];
   const API_URL = import.meta.env.VITE_API_URL;
 
-
   // STATE DIBUAT DULU
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if (!token) {
+      window.location.href = "/login";
+      return;
+    }
+
+    if (role !== "student") {
+      window.location.href = "/forbidden";
+      return;
+    }
+  }, []);
 
   // AMBIL DATA API
   useEffect(() => {
@@ -46,12 +60,17 @@ export default function DashboardStudent() {
           },
         });
 
-        const json = await res.json();
-        console.log("Dashboard data:", json);
+        if (res.status === 401) {
+          // token invalid → logout user
+          localStorage.clear();
+          window.location.href = "/login";
+          return;
+        }
 
+        const json = await res.json();
         setStats(json.data);
       } catch (err) {
-        console.error(err);
+        console.error("Dashboard fetch error:", err);
       } finally {
         setLoading(false);
       }
