@@ -39,8 +39,8 @@ export default function LoginPage() {
   const handleGoogleLogin = async () => {
     try {
       const res = await LoginAuth();
-      const role = res.data?.roles?.name;
 
+      const role = res.data?.roles?.name; // sesuai swagger
       console.log("ROLE:", role);
 
       if (role === "student") {
