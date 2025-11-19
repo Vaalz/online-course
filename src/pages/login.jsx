@@ -54,6 +54,7 @@ export default function LoginPage() {
     }
   };
 
+
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
       <Grid
@@ -163,7 +164,7 @@ export default function LoginPage() {
             >
               <AuthButton
                 text="Login dengan Google"
-                onClick={LoginAuth}
+                onClick={handleGoogleLogin}
                 icon={<GoogleIcon fontSize="25px" />}
               />
             </Box>

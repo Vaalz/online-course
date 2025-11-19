@@ -25,18 +25,11 @@ const LoginAuth = async () => {
 
     console.log("Backend Response:", response.data);
 
-
     // 3. WAJIB return
     return response.data;
   } catch (error) {
     console.error("Login error:", error);
-    if (error.code === "auth/popup-blocked") {
-      alert("Popup diblokir oleh browser. Tolong izinkan popup untuk situs ini.");
-    } else if (error.code === "auth/cancelled-popup-request") {
-      console.log("Login dibatalkan karena popup sebelumnya masih terbuka.");
-    } else {
-      alert("Terjadi kesalahan saat login. Coba lagi.");
-    }
+    throw error;
   }
 };
 
