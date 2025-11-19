@@ -40,15 +40,13 @@ export default function LoginPage() {
     try {
       const res = await LoginAuth();
 
-      const role = res.data?.roles?.name; // sesuai swagger
+      const role = res.data?.roles?.[0]?.name;
       console.log("ROLE:", role);
 
       if (role === "student") {
-        navigate("/Dashboardstudent");
+        navigate("/DashboardStudent");
       } else if (role === "teacher") {
         navigate("/dashboard-teacher");
-      } else {
-        navigate("/");
       }
     } catch (err) {
       console.error(err);
