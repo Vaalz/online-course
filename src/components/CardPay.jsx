@@ -14,7 +14,6 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
         mx: 'auto',
         transition: 'all 0.3s ease',
 
-        // 🔹 Responsif di HP
         '@media (max-width:600px)': {
           width: '100%',
           height: 'auto',
@@ -27,12 +26,13 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          height: '100%',
           textAlign: 'center',
           p: '32px',
-
+          height: '100%',   // flexbox + flexGrow akan mengatur posisi
+          
           '@media (max-width:600px)': {
             p: '20px',
+            height: 'auto',
           },
         }}
       >
@@ -101,8 +101,10 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
             display: 'flex',
             flexDirection: 'column',
             gap: '16px',
-            mb: 8,
             width: '100%',
+            flexGrow: 1,                   // 🔥 membuat tombol turun ke bawah
+            justifyContent: 'flex-start',
+            
             '@media (max-width:600px)': {
               mb: 4,
               gap: '12px',
@@ -145,6 +147,7 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
             width: '100%',
             fontSize: { xs: '14px', sm: '16px' },
             py: { xs: 1, sm: 1.5 },
+            mt: 3,            // 🔥 margin bawah jelas terlihat
           }}
         >
           Get started

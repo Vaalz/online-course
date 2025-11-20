@@ -189,7 +189,7 @@ export default function LoginPage() {
                   WebkitTextFillColor: "transparent",
                   display: "inline-block",
                 }}
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/register")}
               >
                 Register Disini
               </Typography>
