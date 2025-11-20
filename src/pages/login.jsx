@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Grid, Paper, Typography, Divider } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import AuthButton from "../components/Authcompt/ButtonAuth";
 import InputField from "../components/Authcompt/InputField";
 import GradientButton from "../components/Authcompt/GradientButton";
@@ -39,18 +39,25 @@ export default function LoginPage() {
   const handleGoogleLogin = async () => {
     try {
       const res = await LoginAuth();
+      console.log("Login berhasil:", res);
 
-      const role = res.roles?.[0]?.name;
+      const backendData = res.data;
+
+      const token = res.idToken;
+      const role = backendData.roles?.[0]?.name;
+      const email = backendData.email;
 
       // SIMPAN TOKEN DAN ROLE
-      localStorage.setItem("token", res.token);
+      localStorage.setItem("token", token);
       localStorage.setItem("role", role);
-      localStorage.setItem("email", res.email);
+      localStorage.setItem("email", email);
 
       if (role === "student") {
         navigate("/DashboardStudent");
-      } else if (role === "teacher") {
-        navigate("/dashboard-teacher");
+      } else if (role === "teacher" || role === "instruktor") {
+        navigate("/DashboarTeacher");
+      } else {
+        navigate("/forbidden");
       }
     } catch (err) {
       console.error(err);
