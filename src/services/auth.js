@@ -7,7 +7,7 @@ const LoginAuth = async () => {
   try {
     // 1. Login Google
     const result = await signInWithPopup(auth, provider);
-    const API_URL = import.meta.env.VITE_API_URL_BASE;
+    const API_URL = import.meta.env.VITE_API_BASE_URL;
     const idToken = await result.user.getIdToken();
 
     // 2. Panggil backend sesuai swagger
