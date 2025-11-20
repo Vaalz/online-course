@@ -54,6 +54,7 @@ export default function LoginPage() {
     }
   };
 
+
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
       <Grid
@@ -63,14 +64,7 @@ export default function LoginPage() {
         sx={{ height: "100%" }}
       >
         <Grid size={6}>
-          <Item
-            sx={{
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+          <Item sx={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
             <img
               src={GambarLogin}
               alt="Gambar Login"
