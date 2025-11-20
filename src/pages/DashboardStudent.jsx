@@ -28,7 +28,7 @@ export default function DashboardStudent() {
 
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);
-  const API_URL = import.meta.env.VITE_API_URL;
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -44,21 +44,28 @@ export default function DashboardStudent() {
       return;
     }
 
-    // fetch dashboard
     async function fetchData() {
       try {
-        const res = await fetch(`${API_URL}/api/dashboard/student`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          "http://192.168.100.247:8080/api/dashboard/student",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!res.ok) {
+          console.log("STATUS:", res.status);
+          throw new Error("Unauthorized or invalid token");
+        }
 
         const json = await res.json();
         setStats(json.data);
       } catch (err) {
         console.error("Fetch dashboard error:", err);
       } finally {
-        setLoading(false); // WAJIB supaya halaman tampil
+        setLoading(false);
       }
     }
 
@@ -315,7 +322,7 @@ export default function DashboardStudent() {
                   </Box>
 
                   <Divider sx={{ mb: 2 }} />
-
+                  {/* 
                   {notificationsData.map((notif, i) => (
                     <Box
                       key={i}
@@ -342,7 +349,7 @@ export default function DashboardStudent() {
                         ✕
                       </Box>
                     </Box>
-                  ))}
+                  ))} */}
 
                   <Box
                     textAlign="end"
