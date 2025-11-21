@@ -5,6 +5,9 @@ export default function AuthButton({ text, icon, onClick }) {
     <Box
       sx={{
         width: "100%", // Tombol responsif mengikuti pembungkusnya
+        height: { xs: "72px", sm: "60px", md: "65px", lg: "70px" },
+        fontSize: { xs: "15px", sm: "17px", md: "19px", lg: "20px" },
+
         border: "1px solid transparent",
         borderRadius: "10px",
         background:
