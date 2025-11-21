@@ -39,6 +39,7 @@ import Github from '../assets/image/github.png'
 import Twitter from '../assets/image/twitter.png'
 import Dribbble from '../assets/image/dribbble.png'
 import Facebook from '../assets/image/facebook.png'
+import logo from "../assets/image/Logo.png"
 
 
 const icons = [
@@ -293,100 +294,130 @@ function LandingPage() {
 
 
        {/* Testimoni */}
-        <Box sx={{pb: '96px'}}>
-          <Box sx={{p: 8}}>
-            <Typography sx={{
-              fontWeight: 'bold',
-              fontSize: '48px',
-              textAlign: 'center',
-              pb: 8
-            }}>
-              Testimoni Pengguna
-            </Typography>
-          <Testi
-           image={Andi}
-           name= 'Andi Pratama'
-           message= '"Saya sangat puas dengan kursus online ini! Materinya sangat mudah dipahami dan instruktur yang berpengalaman membuat saya bisa menguasai topik dengan cepat. Saya sudah bisa menerapkan apa yang saya pelajari dalam pekerjaan saya."'
-           />
+      <Box sx={{ pb: "96px" }}>
+        <Box sx={{ p: { xs: 2, sm: 4, md: 8 } }}>
+          
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              fontSize: { xs: "32px", sm: "40px", md: "48px" },
+              textAlign: "center",
+              pb: { xs: 4, md: 8 }
+            }}
+          >
+            Testimoni Pengguna
+          </Typography>
 
-          <Testi2 
-            image={Siti}
-            name='Siti Rahayu'
-            message='"Kursus online ini benar-benar membantu saya meningkatkan keterampilan saya di bidang keamanan siber. Saya suka fleksibilitasnya yang memungkinkan saya belajar kapan saja dan di mana saja. Hasilnya sangat memuaskan!"'
-          />
+          {/* Wrapper Kolom */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: { xs: 4, md: 8 } // jarak antar testimoni
+            }}
+          >
+            <Box sx={{ width: "100%", maxWidth: "1000px" }}>
+              <Testi
+                image={Andi}
+                name="Andi Pratama"
+                message='"Saya sangat puas dengan kursus online ini! Materinya sangat mudah dipahami dan instruktur yang berpengalaman membuat saya bisa menguasai topik dengan cepat. Saya sudah bisa menerapkan apa yang saya pelajari dalam pekerjaan saya."'
+              />
+            </Box>
 
-            <Testi 
-              image={Budi}
-              name='Budi Santoso'
-              message='"Saya tidak pernah berpikir bisa belajar topik yang kompleks seperti ini dengan mudah, tapi kursus online ini membuktikan bahwa itu mungkin. Instruktur yang ramah dan materi yang terstruktur membuat pengalaman belajar saya sangat menyenangkan."'
-            />
+            <Box sx={{ width: "100%", maxWidth: "1000px" }}>
+              <Testi2
+                image={Siti}
+                name="Siti Rahayu"
+                message='"Kursus online ini benar-benar membantu saya meningkatkan keterampilan saya di bidang keamanan siber. Saya suka fleksibilitasnya yang memungkinkan saya belajar kapan saja dan di mana saja. Hasilnya sangat memuaskan!"'
+              />
+            </Box>
+
+            <Box sx={{ width: "100%", maxWidth: "1000px" }}>
+              <Testi
+                image={Budi}
+                name="Budi Santoso"
+                message='"Saya tidak pernah berpikir bisa belajar topik yang kompleks seperti ini dengan mudah, tapi kursus online ini membuktikan bahwa itu mungkin. Instruktur yang ramah dan materi yang terstruktur membuat pengalaman belajar saya sangat menyenangkan."'
+              />
+            </Box>
           </Box>
         </Box>
+      </Box>
+
+
 
        {/* pay as u grow */}
-          <Box sx={{ pb: '96px' }}>
-            {/* Bagian judul */}
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography sx={{ fontSize: '36px', fontWeight: '800', pb: 2 }}>
-                Pay as you grow
-              </Typography>
-              <Typography sx={{ fontSize: '20px', color: '#657575' }}>
-                Here at flowbite we focus on markets where technology, innovation, and capital<br />
-                can unlock long-term value and drive economic growth.
-              </Typography>
-            </Box>
+      <Box sx={{ pb: '96px' }}>
+        
+        {/* Bagian judul */}
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography sx={{ fontSize: '36px', fontWeight: '800', pb: 2 }}>
+            Pay as you grow
+          </Typography>
+          <Typography sx={{ fontSize: '20px', color: '#657575' }}>
+            Here at flowbite we focus on markets where technology, innovation, and capital<br />
+            can unlock long-term value and drive economic growth.
+          </Typography>
+        </Box>
 
-            {/* Bagian card */}
-            <Box
-              sx={{
-                py: 5,
-                px: 5,
-                display: 'flex',
-                gap: '40px',
-                justifyContent: 'center',
-                flexWrap: 'wrap', // biar otomatis turun saat sempit
-                flexDirection: { xs: 'column', sm: 'column', md: 'row' }, // responsive
-                alignItems: 'center',
-              }}
-            >
-              <CardPay
-                Pack="Starter"
-                Description="Great for personal use and for your side projects."
-                Price="$49"
-                Benefit={[
-                  "Individual configuration",
-                  "No setup, monthly, or hidden fees",
-                  "Team size: 1 developer",
-                  "Premium support: 6 months",
-                  "Free updates: 6 months",
-                ]}
-              />
-              <CardPay
-                Pack="Company"
-                Description="Best for large scale uses and extended redistribution rights."
-                Price="$99"
-                Benefit={[
-                  "Individual configuration",
-                  "No setup, monthly, or hidden fees",
-                  "Team size: 10 developer",
-                  "Premium support: 24 months",
-                  "Free updates: 24 months",
-                ]}
-              />
-              <CardPay
-                Pack="Enterprise"
-                Description="Best for large scale uses and extended redistribution rights."
-                Price="$499"
-                Benefit={[
-                  "Individual configuration",
-                  "No setup, monthly, or hidden fees",
-                  "Team size: 100+ developer",
-                  "Premium support: 36 months",
-                  "Free updates: 36 months",
-                ]}
-              />
-            </Box>
-          </Box>
+        {/* Grid Card */}
+        <Grid
+          container
+          spacing={3}
+          justifyContent="center"
+          sx={{ pt: 6, px: { xs: 2, sm: 4, md: 6 } }}
+        >
+          {/* Card 1 */}
+          <Grid item xs={12} sm={6} md={4}>
+            <CardPay
+              Pack="Starter"
+              Description="Great for personal use and for your side projects."
+              Price="$49"
+              Benefit={[
+                "Individual configuration",
+                "No setup, monthly, or hidden fees",
+                "Team size: 1 developer",
+                "Premium support: 6 months",
+                "Free updates: 6 months",
+              ]}
+            />
+          </Grid>
+
+          {/* Card 2 */}
+          <Grid item xs={12} sm={6} md={4}>
+            <CardPay
+              Pack="Company"
+              Description="Best for large scale uses and extended redistribution rights."
+              Price="$99"
+              Benefit={[
+                "Individual configuration",
+                "No setup, monthly, or hidden fees",
+                "Team size: 10 developer",
+                "Premium support: 24 months",
+                "Free updates: 24 months",
+              ]}
+            />
+          </Grid>
+
+          {/* Card 3 */}
+          <Grid item xs={12} sm={6} md={4}>
+            <CardPay
+              Pack="Enterprise"
+              Description="Best for large scale uses and extended redistribution rights."
+              Price="$499"
+              Benefit={[
+                "Individual configuration",
+                "No setup, monthly, or hidden fees",
+                "Team size: 100+ developer",
+                "Premium support: 36 months",
+                "Free updates: 36 months",
+              ]}
+            />
+          </Grid>
+        </Grid>
+
+      </Box>
+
 
 
        {/* question */}
