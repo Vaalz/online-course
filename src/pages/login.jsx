@@ -54,7 +54,6 @@ export default function LoginPage() {
     }
   };
 
-
   return (
     <Box sx={{ width: "100%", height: "100vh", overflow: "hidden" }}>
       <Grid
@@ -133,12 +132,6 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               error={!!error}
               helperText={error}
-        <Grid size={6}>
-          <Item sx={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <img
-              src={GambarLogin}
-              alt="Gambar Login"
-              style={{ width: "720px", height: "760px", objectFit: "cover" }}
             />
           </Box>
 
@@ -195,24 +188,6 @@ export default function LoginPage() {
               onClick={() => navigate("/register")}
             >
               Register Disini
-
-              Belum punya akun?{" "}
-              <Typography
-                component="span"
-                fontWeight={400}
-                fontSize={"20px"}
-                sx={{
-                  cursor: "pointer",
-                  background:
-                    "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  display: "inline-block",
-                }}
-                onClick={() => navigate("/register")}
-              >
-                Register Disini
-              </Typography>
             </Typography>
           </Typography>
         </Grid>
