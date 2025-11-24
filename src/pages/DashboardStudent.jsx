@@ -16,6 +16,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
+import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 
 import NavbarDashboard from "../components/layout/DashboardLayout ";
 import UserSidebar from "../components/layout/UserSidebar";
@@ -29,6 +30,13 @@ export default function DashboardStudent() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);
   const API_URL = import.meta.env.VITE_API_BASE_URL;
+
+  const notifications = [
+    "Saatnya melakukan sesi zoom hari ini",
+    "Anda telah menyelesaikan kuis",
+    "Kuis baru tersedia",
+    "Jadwal zoom telah diupdate",
+  ];
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -47,7 +55,7 @@ export default function DashboardStudent() {
     async function fetchData() {
       try {
         const res = await fetch(
-          "http://192.168.100.247:8080/api/dashboard/student",
+          `${API_URL}dashboard/student`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -140,7 +148,7 @@ export default function DashboardStudent() {
               borderRight: "1px solid #E0E0E0",
             }}
           >
-            <UserSidebar />
+            <UserSidebar menus={studentMenu} />
           </Box>
         )}
 
@@ -342,65 +350,7 @@ export default function DashboardStudent() {
                     ml: 4,
                   }}
                 >
-                  <Box
-                    sx={{
-                      p: 3,
-                      borderRadius: 4,
-                      width: "100%",
-                      height: "100%",
-                      border: "1px solid #B9C2C0",
-                      bgcolor: "#FFFFFF",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        gap: 1,
-                        mb: 2,
-                      }}
-                    >
-                      <NotificationsNoneIcon sx={{ fontSize: 20 }} />
-                      <Typography
-                        fontWeight={700}
-                        sx={{ textTransform: "uppercase", fontSize: 14 }}
-                      >
-                        Notifikasi
-                      </Typography>
-                    </Box>
-
-                    <Divider sx={{ mb: 2 }} />
-
-                    <Box
-                      textAlign="end"
-                      sx={{
-                        mt: 3,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-end",
-                      }}
-                    >
-                      <Button
-                        sx={{
-                          px: 4,
-                          py: 1,
-                          borderRadius: 20,
-                          fontWeight: 600,
-                          textTransform: "none",
-                          border: "2px solid #00C9A7",
-                          color: "#00C9A7",
-                          bgcolor: "#FFFFFF",
-                          "&:hover": {
-                            bgcolor: "#E6FFFB",
-                            borderColor: "#009f86",
-                          },
-                        }}
-                      >
-                        Baca Semua
-                      </Button>
-                    </Box>
-                  </Box>
+                  <NotificationPanel notifications={notifications} />
                 </Box>
               )}
             </Box>
