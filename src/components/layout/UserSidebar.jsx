@@ -3,15 +3,15 @@
 import { Box, List, ListItem, ListItemText, ListItemIcon } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 
-<<<<<<< HEAD
+
 // Sidebar reusable untuk semua role
-export default function UserSidebar({ menus = [] }) {
-=======
+
 import Home from "../../assets/image/Home.png";
 import Dashboard from "../../assets/image/Dashboard.png";
 import Profile from "../../assets/image/Profile.png";
 import Quiz from "../../assets/image/Quiz.png";
 
+export default function UserSidebar({ menus = [] }) {
 
 
 // Data Menu Sidebar
@@ -23,8 +23,7 @@ const menuItems = [
 
 ];
 
-export default function UserSidebar() {
->>>>>>> 73eacdb (commit)
+
   const location = useLocation();
   const navigate = useNavigate();
 
