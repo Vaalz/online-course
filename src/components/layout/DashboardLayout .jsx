@@ -17,6 +17,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import Logo from "../../assets/image/Logo.png"
 
 import { useNavigate } from "react-router-dom";
 
@@ -81,6 +82,7 @@ function NavbarDashboard() {
                 <MenuIcon />
               </IconButton>
 
+<<<<<<< HEAD
               {/* Logo */}
               <Typography
                 sx={{
@@ -96,6 +98,18 @@ function NavbarDashboard() {
               >
                 LOGO
               </Typography>
+=======
+            <Box
+            component="img"
+              src={Logo}
+              alt="logo"
+              sx={{
+                width: "80px",
+                height: "50px",
+                m: "10px"
+              }}
+            />
+>>>>>>> 73eacdb (commit)
 
               {/* Search Bar (Hanya muncul di md ke atas) */}
               <Box
@@ -109,11 +123,18 @@ function NavbarDashboard() {
                   backgroundColor: "#FFFFFF",
                 }}
               >
+<<<<<<< HEAD
                 <InputBase
                   placeholder="Cari kelas..."
                   sx={{ width: { md: 200, lg: 260 } }}
                 />
                 <SearchIcon sx={{ fontSize: 20, color: "gray" }} />
+=======
+                <InputBase placeholder="Cari kelas..." sx={{ width: 180 }} />
+                <IconButton onClick={() => alert('search di klik')}>
+                  <SearchIcon sx={{ fontSize: 20, color: "gray" }} />
+                </IconButton>
+>>>>>>> 73eacdb (commit)
               </Box>
 
               {/* Menu Link (desktop) */}
