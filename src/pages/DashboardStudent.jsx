@@ -12,6 +12,7 @@ import {
 import React, { useState, useEffect } from "react";
 
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import NotificationPanel from "../components/NotificationPanel";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
