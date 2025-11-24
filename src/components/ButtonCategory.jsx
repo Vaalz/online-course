@@ -1,19 +1,31 @@
-// src/components/CategoryButtons.jsx
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Box, useTheme } from "@mui/material";
-
-const categories = [
-  "Programing",
-  "UI/UX",
-  "Infrastruktur",
-  "Backend",
-  "Cyber Security",
-];
+import axios from "axios";
 
 export default function CategoryButtons() {
-  const [active, setActive] = useState("Programing");
-  const theme = useTheme();
+  const [categories, setCategories] = useState([]);
+  const [active, setActive] = useState(null);
+
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get(`${API_URL}course-types`);
+
+        const list = res.data.data || [];
+        setCategories(list);
+
+        // set default active category
+        if (list.length > 0) setActive(list[0].name);
+
+      } catch (err) {
+        console.error("Gagal mengambil kategori:", err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   return (
     <Box
@@ -27,22 +39,19 @@ export default function CategoryButtons() {
       }}
     >
       {categories.map((category) => {
-        const isActive = active === category;
+        const isActive = active === category.name;
 
         return (
           <Button
-            key={category}
-            onClick={() => setActive(category)}
+            key={category.id}
+            onClick={() => setActive(category.name)}
             variant="outlined"
             sx={{
               borderRadius: "20px",
               textTransform: "none",
               fontWeight: 500,
-
-              // 🔥 Perubahan utama agar muat 3 kotak
               minWidth: { xs: "120px", sm: "150px", md: "290px" },
               height: { xs: "60px", md: "80px" },
-
               whiteSpace: "nowrap",
               flexShrink: 0,
 
@@ -63,7 +72,7 @@ export default function CategoryButtons() {
               fontSize: { xs: "14px", md: "18px" },
             }}
           >
-            {category}
+            {category.name}
           </Button>
         );
       })}
