@@ -13,6 +13,7 @@ import React, { useState, useEffect } from "react";
 
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import NotificationPanel from "../components/NotificationPanel";
+import Loading from "../components/Loading";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
@@ -97,13 +98,7 @@ export default function DashboardStudent() {
     fetchData();
   }, []);
 
-  if (loading) {
-    return (
-      <Box sx={{ padding: 4 }}>
-        <Typography>Loading dashboard...</Typography>
-      </Box>
-    );
-  }
+  if (loading) return <Loading text="Memuat dashboard..." />;
 
   // STATS SETELAH DATA TERSEDIA
   const statsData = [
