@@ -8,15 +8,13 @@ import VerifyPage from "./pages/verify";
 import "./App.css";
 import DashboardStudent from "./pages/DashboardStudent";
 import DashboardSuperAdmin from "./pages/DashboardSuperAdmin";
-
+import Profile from "./pages/Profilestuudents";
 import DashboardInstructor from "./pages/DashboardInstructor";
-
 
 function App() {
   return (
     <>
       <CssBaseline />
-
       <Routes>
         <Route path="/" element={<Navigate to="/LandingPage" />} />
         <Route path="/login" element={<Login />} />
@@ -26,8 +24,7 @@ function App() {
         <Route path="/DashboardStudent" element={<DashboardStudent />} />
         <Route path="/DashboardInstructor" element={<DashboardInstructor />} />
         <Route path="/DashboardSuperAdmin" element={<DashboardSuperAdmin />} />
-
-
+        <Route path="/Pofilelestudents" element={<Profile/>} />
       </Routes>
     </>
   );

@@ -30,6 +30,8 @@ export default function DashboardStudent() {
 
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);
+  const [courses, setCourses] = useState([]);
+
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
   const notifications = [
@@ -43,7 +45,11 @@ export default function DashboardStudent() {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
+    console.log("TOKEN:", token);
+    console.log("ROLE:", role);
+
     if (!token) {
+      console.log("No token found, redirecting to home");
       window.location.href = "/";
       return;
     }
@@ -55,14 +61,10 @@ export default function DashboardStudent() {
 
     async function fetchData() {
       try {
-        const res = await fetch(
-          `${API_URL}dashboard/student`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        // FETCH DASHBOARD STUDENT
+        const res = await fetch(`${API_URL}dashboard/student`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         if (!res.ok) {
           console.log("STATUS:", res.status);
@@ -71,6 +73,20 @@ export default function DashboardStudent() {
 
         const json = await res.json();
         setStats(json.data);
+
+        // FETCH COURSE LIST
+        const resCourse = await fetch(`${API_URL}courses`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!resCourse.ok) {
+          console.log("STATUS COURSE:", resCourse.status);
+          throw new Error("Failed to fetch courses");
+        }
+
+        const jsonCourse = await resCourse.json();
+        console.log(jsonCourse.data.data);
+        setCourses(jsonCourse.data.data);
       } catch (err) {
         console.error("Fetch dashboard error:", err);
       } finally {
@@ -385,19 +401,22 @@ export default function DashboardStudent() {
               "&::-webkit-scrollbar": { height: 0 },
             }}
           >
-            {[1, 2, 3, 4, 5, 6].map((i) => (
+            {courses.map((c) => (
               <Box
-                key={i}
+                key={c.id}
                 sx={{
                   minWidth: { xs: 240, sm: 260, md: 300, lg: 320 },
                   flexShrink: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 3,
-                  pb: 3,
                 }}
               >
-                <CardKelas />
+                <CardKelas
+                  image={c.thumbnail}
+                  title={c.name}
+                  description={c.description}
+                  price={c.price}
+                  creator={c.creator?.full_name}
+                  lessons={c.lessons_count}
+                />
               </Box>
             ))}
           </Box>
