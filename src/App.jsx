@@ -10,12 +10,10 @@ import DashboardStudent from "./pages/DashboardStudent";
 import DashboardSuperAdmin from "./pages/DashboardSuperAdmin";
 import DashboardInstructor from "./pages/DashboardInstructor";
 
-
 function App() {
   return (
     <>
       <CssBaseline />
-
       <Routes>
         <Route path="/" element={<Navigate to="/landing-page" />} />
         <Route path="/login" element={<Login />} />
