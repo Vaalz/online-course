@@ -15,9 +15,12 @@ import {
   ListItemText,
   useMediaQuery,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from "@mui/material/styles";
+import logo from "../assets/image/Logo.png"
+import { Height } from "@mui/icons-material";
 
 const handleSearchClick = () => {
   alert("search");
@@ -30,7 +33,7 @@ function Navbar() {
 
   const toggleDrawer = (open) => () => setDrawerOpen(open);
 
-  const menuItems = ["Kursus", "Langganan", "Tentang Kami"];
+  const menuItems = ["Kelas", "Langganan", "Tentang Kami"];
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "transparent", boxShadow: "none" }}>
@@ -40,28 +43,16 @@ function Navbar() {
           {/* Bagian kiri: Logo + Search */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
             {/* LOGO */}
-            <Typography
+            <Box
+            component="img"
+              src={logo}
+              alt="logo"
               sx={{
-                fontWeight: "bold",
-                fontSize: 30,
-                pl: 8,
-                pr: 3,
-                py: 2,
-                background: "linear-gradient(90deg, #11DF9E, #466EF1, #11DF9E)",
-                backgroundSize: "200% auto",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                color: "transparent",
-                WebkitTextFillColor: "transparent",
-                animation: "gradientMove 3s linear infinite",
-                "@keyframes gradientMove": {
-                  "0%": { backgroundPosition: "0% center" },
-                  "100%": { backgroundPosition: "200% center" },
-                },
+                width: "80px",
+                height: "50px",
+                m: "10px"
               }}
-            >
-              LOGO
-            </Typography>
+            />
 
             {/* SEARCH */}
             <Box
@@ -108,10 +99,20 @@ function Navbar() {
           {/* Desktop Buttons */}
           {!isMobile && (
             <Box sx={{ display: "flex", gap: 2, pr: 8 }}>
-              <Button variant="text" sx={{ color: "#466EF1", fontWeight: 500, textTransform: "none" }}>
+              <Button 
+              variant="text" 
+              component={Link}
+              to= "/login"
+              sx={{ 
+                  color: "#466EF1", 
+                  fontWeight: 500, 
+                  textTransform: "none" 
+                }}>
                 Masuk
               </Button>
               <Button
+                component={Link}
+                to="/register"
                 variant="contained"
                 sx={{
                   textTransform: "none",
@@ -148,6 +149,8 @@ function Navbar() {
                 {/* Tombol Masuk */}
                 <ListItem disablePadding sx={{ mt: 2 }}>
                   <Button
+                    component={Link}
+                    to="/login"
                     fullWidth
                     variant="text"
                     sx={{ color: "#466EF1", fontWeight: 500, textTransform: "none" }}
@@ -160,6 +163,8 @@ function Navbar() {
                 <ListItem disablePadding sx={{ mt: 1 }}>
                   <Button
                     fullWidth
+                    component={Link}
+                    to="/register"
                     variant="contained"
                     sx={{
                       textTransform: "none",
