@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { verifyOtp, resendOtp } from "../services/otp";
+import useResendTimer from "../components/Authcompt/useResendTimer";
+import GambarLogin from "../assets/image/Gambar.png";
 
 // Import Komponen & Service
 import GradientButton from "../components/Authcompt/GradientButton";
@@ -50,13 +53,37 @@ export default function VerifyPage() {
   }, [navigate]);
 
   // Handlers
-  const handleVerify = () => {
+  const handleVerify = async () => {
     if (code.trim().length !== 6) {
       alert("Kode harus 6 digit");
       return;
     }
-    console.log(`Verifikasi kode ${code} untuk email ${email}`);
-    // TODO: panggil API verifikasi OTP
+
+    try {
+      const res = await verifyOtp(email, code);
+      console.log("OTP Verified:", res);
+
+      // ambil token + role dari response BE
+      const token = res.data?.token;
+      const role = res.data?.roles?.[0]?.name;
+
+      if (!token || !role) {
+        alert("Response login tidak valid!");
+        return;
+      }
+
+      // simpan ke localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+      localStorage.setItem("email", email);
+
+      // arahkan user sesuai role
+      if (role === "student") navigate("/dashboard/student");
+      else if (role === "teacher") navigate("/dashboard/teacher");
+      else navigate("/forbidden");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const handleResend = async () => {
@@ -64,10 +91,10 @@ export default function VerifyPage() {
 
     try {
       await resendOtp(email);
-      alert("Kode baru telah dikirim ke email Anda");
+      alert("Kode baru terkirim!");
       resetTimer();
-    } catch (error) {
-      alert(error.message || "Gagal terhubung ke server");
+    } catch (err) {
+      alert(err.message);
     }
   };
 
@@ -78,8 +105,27 @@ export default function VerifyPage() {
     <Box sx={{ width: "100%", height: "100vh" }}>
       <Grid container columnSpacing={3} sx={{ height: "100%" }}>
         {/* Kolom Kiri (Hanya Muncul di layar MD ke atas) */}
-        <Grid item xs={false} md={6}>
-          <Item sx={{ height: "100%" }}>{/* Konten Gambar/Branding */}</Item>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            display: { xs: "none", md: "flex" },
+            justifyContent: "center",
+            alignItems: "center",
+            p: 2,
+          }}
+        >
+          <img
+            src={GambarLogin}
+            alt="Gambar Login"
+            style={{
+              width: "100%",
+              maxWidth: "650px",
+              height: "auto",
+              objectFit: "contain",
+            }}
+          />
         </Grid>
 
         {/* Kolom Kanan (Form Verifikasi) */}
