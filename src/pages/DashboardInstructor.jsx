@@ -19,8 +19,7 @@ import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
 import NavbarDashboard from "../components/layout/DashboardLayout ";
 import Sidebar from "../components/layout/InstructorSidebar";
 
-import CardKelas from "../components/CardKelas";
-import ButtonCategory from "../components/ButtonCategory";
+
 
 function DashboardInstructor() {
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -51,7 +50,8 @@ function DashboardInstructor() {
   ];
 
   return (
-    <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
+    <>
+          <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
       {/* NAVBAR */}
       <Box
         sx={{
@@ -95,149 +95,89 @@ function DashboardInstructor() {
         )}
 
         {/* MAIN CONTENT */}
-        <Box sx={{ flexGrow: 1, overflowX: "hidden" }}>
-          <Grid container columnSpacing={3} sx={{ pr: 0, pl: 3, py: 3 }}>
-            {/* LEFT AREA */}
-            <Grid item xs={12} md={8}>
-              {/* STATS */}
+          <Box
+            sx={{
+              display: "flex",
+              gap: { xs: 2, sm: 2.5, md: 4 },
+              overflowX: "auto",
+              scrollbarWidth: "none",
+              "&::-webkit-scrollbar": { display: "none" },
+            }}
+          >
+            {statsData.map((stat, i) => (
               <Box
+                key={i}
                 sx={{
-                  display: "flex",
-                  gap: { xs: "16px", md: "39px" },
-                  overflowX: "auto",
-                  scrollbarWidth: "none",
-                  "&::-webkit-scrollbar": { height: 0 },
+                  minWidth: { xs: 140, sm: 180, md: 240, lg: 316 },
+                  width: { xs: 150, sm: 180, md: 240, lg: 316 },
+                  height: { xs: "80px", md: "103px" },
+                  flexShrink: 0,
                 }}
               >
-                {statsData.map((stat, i) => (
-                  <Box
-                    key={i}
-                    sx={{
-                      minWidth: { xs: "120px", sm: "150px", md: "316px" },
-                      width: { xs: "150px", sm: "150px", md: "316px" },
-                      height: { xs: "80px", md: "103px" },
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        px: { xs: 3, md: 4 },
-                        py: { xs: 2, md: 2 },
-                        border: "1px solid #B9C2C0",
-                        borderRadius: 3,
-                        height: "100%",
-                        backgroundColor: "#FFFFFF",
-                        boxShadow: "0px 3px 8px rgba(0,0,0,0.08)",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: { xs: 1, md: 2 },
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: { xs: 30, md: 40 },
-                          height: { xs: 30, md: 40 },
-                          alignItems: "center",
-                          display: "flex",
-                          justifyContent: "center",
-                          fontSize: { xs: 24, md: 32 },
-                          gap: { xs: 0.5, md: 1 },
-                        }}
-                      >
-                        {stat.icon}
-                        <Typography
-                          variant="h6"
-                          fontWeight={700}
-                          fontSize={{ xs: 16, md: 20 }}
-                        >
-                          {stat.value}
-                        </Typography>
-                      </Box>
-
-                      <Typography
-                        color="text.secondary"
-                        fontSize={{ xs: 10, sm: 12, md: 14 }}
-                        ml={{ xs: "-5px", md: "-10px" }}
-                      >
-                        {stat.label}
-                      </Typography>
-                    </Box>
-                  </Box>
-                ))}
-              </Box>
-            </Grid>
-
-            {/* RIGHT AREA */}
-            {!isMobile && (
-              <Grid item xs={12} md={4}>
                 <Box
                   sx={{
-                    p: 3,
-                    borderRadius: 4,
-                    width: "100%",
-                    height: "100%",
+                    px: { xs: 2, md: 4 },
+                    py: { xs: 1.5, md: 2 },
                     border: "1px solid #B9C2C0",
-                    bgcolor: "#FFFFFF",
+                    borderRadius: 3,
+                    height: "100%",
+                    backgroundColor: "#FFFFFF",
+                    boxShadow: "0px 3px 8px rgba(0,0,0,0.08)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    justifyContent: "center",
+                    gap: { xs: 1, md: 2 },
+                    mt: 3
                   }}
                 >
                   <Box
                     sx={{
                       display: "flex",
-                      justifyContent: "center",
                       alignItems: "center",
-                      gap: 1,
-                      mb: 2,
+                      gap: { xs: 0.5, md: 1.5 },
                     }}
                   >
-                    <NotificationsNoneIcon sx={{ fontSize: 20 }} />
-                    <Typography
-                      fontWeight={700}
-                      sx={{ textTransform: "uppercase", fontSize: 14 }}
-                    >
-                      Notifikasi
-                    </Typography>
-                  </Box>
-
-                  <Divider sx={{ mb: 2 }} />
-
-                  <Box
-                    textAlign="end"
-                    width="100%"
-                    sx={{
-                      mt: 3,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-end",
-                    }}
-                  >
-                    <Button
+                    <Box
                       sx={{
-                        px: 4,
-                        py: 1,
-                        borderRadius: 20,
-                        fontWeight: 600,
-                        textTransform: "none",
-                        border: "2px solid #00C9A7",
-                        color: "#00C9A7",
-                        bgcolor: "#FFFFFF",
-                        "&:hover": {
-                          bgcolor: "#E6FFFB",
-                          borderColor: "#009f86",
-                        },
+                        width: { xs: 30, md: 40 },
+                        height: { xs: 30, md: 40 },
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
                     >
-                      Baca Semua
-                    </Button>
+                      {stat.icon}
+                    </Box>
+                    <Typography
+                      variant="h6"
+                      fontWeight={700}
+                      fontSize={{ xs: 16, md: 20 }}
+                    >
+                      {stat.value}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography
+                      color="text.secondary"
+                      fontSize={{ xs: 10, sm: 12, md: 14 }}
+                      ml={{ xs: 0, md: 0 }}
+                      sx={{ mt: 0 }}
+                    >
+                      {stat.label}
+                    </Typography>
                   </Box>
                 </Box>
-              </Grid>
-            )}
-          </Grid>
-        </Box>
+              </Box>
+              
+            ))}
+          </Box>
+
+          
+        
       </Box>
     </Box>
+    </>
   );
 }
 

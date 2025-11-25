@@ -9,6 +9,7 @@ import GradientButton from "../components/Authcompt/GradientButton";
 import LoginAuth from "../services/auth";
 import GambarLogin from "../assets/image/Gambar.png";
 
+
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
   padding: "1rem",
@@ -22,13 +23,37 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const handleSendCode = () => {
+  const handleSendCode = async () => {
+    setError("");
+
     if (!email.trim()) return setError("Email tidak boleh kosong");
     if (!validateEmail(email)) return setError("Format email tidak valid");
 
-    sessionStorage.setItem("userEmail", email);
-    navigate("/verify");
+    try {
+      // KIRIM OTP KE BACKEND
+      const res = await fetch(`${API_URL}auth/otp/send`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!res.ok) {
+        return setError("Gagal mengirim kode OTP");
+      }
+
+      // SIMPAN EMAIL
+      sessionStorage.setItem("userEmail", email);
+
+      // PINDAH KE HALAMAN VERIFIKASI OTP
+      navigate("/verify");
+    } catch (err) {
+      console.error("OTP Error:", err);
+      setError("Terjadi kesalahan, coba lagi");
+    }
   };
 
   const handleGoogleLogin = async () => {
@@ -44,7 +69,7 @@ export default function LoginPage() {
       localStorage.setItem("role", role);
       localStorage.setItem("email", email);
 
-      if (role === "student") navigate("/DashboardStudent");
+      if (role === "student") navigate("/dashboard/student");
       else if (role === "teacher" || role === "instruktor")
         navigate("/DashboarTeacher");
       else navigate("/forbidden");
@@ -61,7 +86,6 @@ export default function LoginPage() {
         sx={{
           height: "100%",
           display: "flex",
-          
         }}
       >
         {/* ==== LEFT IMAGE ==== */}
@@ -179,8 +203,7 @@ export default function LoginPage() {
               fontSize={"20px"}
               sx={{
                 cursor: "pointer",
-                background:
-                  "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
+                background: "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 display: "inline-block",
