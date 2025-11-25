@@ -69,7 +69,7 @@ export default function LoginPage() {
       localStorage.setItem("role", role);
       localStorage.setItem("email", email);
 
-      if (role === "student") navigate("/DashboardStudent");
+      if (role === "student") navigate("/dashboard/student");
       else if (role === "teacher" || role === "instruktor")
         navigate("/DashboarTeacher");
       else navigate("/forbidden");

@@ -51,93 +51,91 @@ setOpenDrawer(false);
 };
 
 return (
-<>
-<AppBar
-position="sticky"
-sx={{ backgroundColor: "#F6FEFD", boxShadow: "none", borderBottom: "1px solid #E5E5E5", py: { xs: 0.5, md: 1 } }}
-> <Toolbar>
-<Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", px: { xs: 1, sm: 2 } }}>
+        <>
+          <AppBar
+          position="sticky"
+          sx={{ backgroundColor: "#F6FEFD", boxShadow: "none", borderBottom: "1px solid #E5E5E5", py: { xs: 0.5, md: 1 } }}
+          > <Toolbar>
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", px: { xs: 1, sm: 2 } }}>
+            {/* LEFT */}  
+            <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 1, md: 2 } }}>  
+              {/* Hamburger */}  
+              <IconButton sx={{ display: { xs: "flex", md: "none" } }} onClick={() => setOpenDrawer(true)}>  
+                <MenuIcon />  
+              </IconButton>  
 
-```
-        {/* LEFT */}  
-        <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 1, md: 2 } }}>  
-          {/* Hamburger */}  
-          <IconButton sx={{ display: { xs: "flex", md: "none" } }} onClick={() => setOpenDrawer(true)}>  
-            <MenuIcon />  
-          </IconButton>  
+              {/* Logo */}  
+              <Box component="img" src={Logo} alt="logo" sx={{ width: "80px", height: "50px", m: "10px", display: 'flex', justifyContent: 'flex-start' }} />  
 
-          {/* Logo */}  
-          <Box component="img" src={Logo} alt="logo" sx={{ width: "80px", height: "50px", m: "10px" }} />  
+              {/* Search Bar (md ke atas) */}  
+              <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", px: 2, py: 0.6, border: "1px solid #ccc", borderRadius: "40px", backgroundColor: "#FFFFFF" }}>  
+                <InputBase placeholder="Cari kelas..." sx={{ width: 180 }} />  
+                <IconButton onClick={() => alert("search di klik")}>  
+                  <SearchIcon sx={{ fontSize: 20, color: "gray" }} />  
+                </IconButton>  
+              </Box>  
 
-          {/* Search Bar (md ke atas) */}  
-          <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", px: 2, py: 0.6, border: "1px solid #ccc", borderRadius: "40px", backgroundColor: "#FFFFFF" }}>  
-            <InputBase placeholder="Cari kelas..." sx={{ width: 180 }} />  
-            <IconButton onClick={() => alert("search di klik")}>  
-              <SearchIcon sx={{ fontSize: 20, color: "gray" }} />  
-            </IconButton>  
+              {/* Menu Link (desktop) */}  
+              <Box sx={{ display: { xs: "none", md: "flex" }, gap: { md: 2, lg: 3 }, ml: 2 }}>  
+                {navbarMenu.map((menu) => (  
+                  <Typography  
+                    key={menu}  
+                    onClick={() => handleMenuClick(menu)}  
+                    sx={{ fontSize: { md: 14, lg: 16 }, color: "#6C757D", cursor: "pointer", "&:hover": { color: "#466EF1" }, whiteSpace: "nowrap" }}  
+                  >  
+                    {menu}  
+                  </Typography>  
+                ))}  
+              </Box>  
+            </Box>  
+
+            {/* RIGHT BUTTONS */}  
+            <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0, sm: 1 } }}>  
+              <IconButton size="small">  
+                <ShoppingCartOutlinedIcon sx={{ color: "#11DF9E" }} />  
+              </IconButton>  
+
+              <IconButton size="small">  
+                <FavoriteBorderOutlinedIcon sx={{ color: "#466EF1" }} />  
+              </IconButton>  
+
+              <Avatar src="https://i.pravatar.cc/40" sx={{ width: { xs: 30, sm: 34, md: 40 }, height: { xs: 30, sm: 34, md: 40 } }} />  
+            </Box>  
           </Box>  
+        </Toolbar>  
+      </AppBar>  
 
-          {/* Menu Link (desktop) */}  
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: { md: 2, lg: 3 }, ml: 2 }}>  
-            {navbarMenu.map((menu) => (  
-              <Typography  
-                key={menu}  
-                onClick={() => handleMenuClick(menu)}  
-                sx={{ fontSize: { md: 14, lg: 16 }, color: "#6C757D", cursor: "pointer", "&:hover": { color: "#466EF1" }, whiteSpace: "nowrap" }}  
-              >  
-                {menu}  
-              </Typography>  
-            ))}  
-          </Box>  
+      {/* DRAWER */}  
+      <Drawer anchor="left" open={openDrawer} onClose={() => setOpenDrawer(false)}>  
+        <Box sx={{ width: 270, p: 2, pt: 10 }}>  
+          {/* Navbar Menu */}  
+          <Typography fontWeight={700} sx={{ mb: 1 }}>Menu Utama</Typography>  
+          {navbarMenu.map((item) => (  
+            <Typography key={item} sx={{ py: 1, cursor: "pointer" }} onClick={() => handleMenuClick(item)}>{item}</Typography>  
+          ))}  
+
+          <Divider sx={{ my: 2 }} />  
+
+          {/* Sidebar Menu */}  
+          <Typography fontWeight={700} sx={{ mb: 1 }}>Navigasi</Typography>  
+          {sidebarMenu.map((item) => (  
+            <Typography key={item.label} sx={{ py: 1, cursor: "pointer" }} onClick={() => handleSidebarClick(item.path)}>{item.label}</Typography>  
+          ))}  
+
+          <Divider sx={{ my: 2 }} />  
+
+          {/* Notifications */}  
+          <Typography fontWeight={700} sx={{ mb: 1 }}>Notifikasi</Typography>  
+          {notificationsData.map((notif, i) => (  
+            <Typography key={i} sx={{ py: 1 }}>{notif}</Typography>  
+          ))}  
+
+          <Button fullWidth variant="outlined" sx={{ mt: 2, borderRadius: 3, textTransform: "none", borderColor: "#00C9A7", color: "#00C9A7" }}>  
+            Baca Semua  
+          </Button>  
         </Box>  
-
-        {/* RIGHT BUTTONS */}  
-        <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0, sm: 1 } }}>  
-          <IconButton size="small">  
-            <ShoppingCartOutlinedIcon sx={{ color: "#11DF9E" }} />  
-          </IconButton>  
-
-          <IconButton size="small">  
-            <FavoriteBorderOutlinedIcon sx={{ color: "#466EF1" }} />  
-          </IconButton>  
-
-          <Avatar src="https://i.pravatar.cc/40" sx={{ width: { xs: 30, sm: 34, md: 40 }, height: { xs: 30, sm: 34, md: 40 } }} />  
-        </Box>  
-      </Box>  
-    </Toolbar>  
-  </AppBar>  
-
-  {/* DRAWER */}  
-  <Drawer anchor="left" open={openDrawer} onClose={() => setOpenDrawer(false)}>  
-    <Box sx={{ width: 270, p: 2, pt: 10 }}>  
-      {/* Navbar Menu */}  
-      <Typography fontWeight={700} sx={{ mb: 1 }}>Menu Utama</Typography>  
-      {navbarMenu.map((item) => (  
-        <Typography key={item} sx={{ py: 1, cursor: "pointer" }} onClick={() => handleMenuClick(item)}>{item}</Typography>  
-      ))}  
-
-      <Divider sx={{ my: 2 }} />  
-
-      {/* Sidebar Menu */}  
-      <Typography fontWeight={700} sx={{ mb: 1 }}>Navigasi</Typography>  
-      {sidebarMenu.map((item) => (  
-        <Typography key={item.label} sx={{ py: 1, cursor: "pointer" }} onClick={() => handleSidebarClick(item.path)}>{item.label}</Typography>  
-      ))}  
-
-      <Divider sx={{ my: 2 }} />  
-
-      {/* Notifications */}  
-      <Typography fontWeight={700} sx={{ mb: 1 }}>Notifikasi</Typography>  
-      {notificationsData.map((notif, i) => (  
-        <Typography key={i} sx={{ py: 1 }}>{notif}</Typography>  
-      ))}  
-
-      <Button fullWidth variant="outlined" sx={{ mt: 2, borderRadius: 3, textTransform: "none", borderColor: "#00C9A7", color: "#00C9A7" }}>  
-        Baca Semua  
-      </Button>  
-    </Box>  
-  </Drawer>  
-</>  
+      </Drawer>  
+  </>  
 
 
 );
