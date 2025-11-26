@@ -67,7 +67,7 @@ export default function UserSidebar({ menus = [] }) {
     <Box
       sx={{
         width: { xs: "180px", sm: "220px", md: "319px" },
-        bgcolor: "#F1FCFA",
+        bgcolor: "#F6FEFD",
         borderRight: "1px solid #E0E0E0",
         py: 4,
         px: 2,

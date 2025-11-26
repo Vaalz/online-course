@@ -20,7 +20,7 @@ import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
 import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 
-import NavbarDashboard from "../components/layout/DashboardLayout ";
+import NavbarDashboard from "../components/layout/DashboardLayout";
 import UserSidebar from "../components/layout/UserSidebar";
 
 import CardKelas from "../components/CardKelas";
@@ -155,7 +155,7 @@ export default function DashboardStudent() {
               top: "80px",
               left: 0,
               height: "calc(100vh - 80px)",
-              overflowY: "auto",
+              overflowY: "hiden",
               bgcolor: "#F1FCFA",
               borderRight: "1px solid #E0E0E0",
             }}

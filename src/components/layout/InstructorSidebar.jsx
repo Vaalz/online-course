@@ -26,14 +26,14 @@ export default function InstructorSidebar() {
   return (
     <Box
       sx={{
-        width: { xs: "180px", sm: "220px", md: "319px" },
-        bgcolor: "#F1FCFA",
+        width: { xs: "180px", sm: "220px", md: "290px" },
+        bgcolor: "#F6FEFD",
         borderRight: "1px solid #E0E0E0",
         py: 4,
         px: 2,
         flexShrink: 0,
         top: 0,
-        height: "full",
+        height: "100%",
         
       }}
     >

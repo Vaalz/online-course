@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 
-import NavbarDashboard from "../components/layout/DashboardLayout ";
+import NavbarDashboard from "../components/layout/DashboardLayout";
 import UserSidebar from "../components/layout/UserSidebar";
 import NotificationPanel from "../components/NotificationPanel";
 import { superadminMenu } from "../components/Menu/SidebarMenu/superAdminMenu";
