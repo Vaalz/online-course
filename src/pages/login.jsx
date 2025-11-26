@@ -86,6 +86,8 @@ export default function LoginPage() {
         sx={{
           height: "100%",
           display: "flex",
+          alignItems: "space-between",
+          justifyContent: "center",
         }}
       >
         {/* ==== LEFT IMAGE ==== */}

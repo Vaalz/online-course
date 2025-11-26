@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import NavbarDashboard from "../components/layout/DashboardLayout ";
+import NavbarDashboard from "../components/layout/DashboardLayout";
 import UserSidebar from "../components/layout/UserSidebar";
 import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 
