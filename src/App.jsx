@@ -9,6 +9,7 @@ import "./App.css";
 import DashboardStudent from "./pages/DashboardStudent";
 import DashboardSuperAdmin from "./pages/DashboardSuperAdmin";
 import DashboardInstructor from "./pages/DashboardInstructor";
+import Profile from "./pages/Profilestuudents";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/dashboard/student" element={<DashboardStudent />} />
         <Route path="/dashboard/instructor" element={<DashboardInstructor />} />
         <Route path="/dashboard/super-admin" element={<DashboardSuperAdmin />} />
+        <Route path="/profile" element={<Profile />} />
 
 
       </Routes>

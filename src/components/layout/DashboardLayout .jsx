@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
+import SearchBar from "../Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import MobileDrawer from "./MobileDrawer";
@@ -23,13 +23,6 @@ import Logo from "../../assets/image/Logo.png";
 import { useNavigate } from "react-router-dom";
 
 const navbarMenu = ["Kelas", "Langganan", "Tentang Kami"];
-const sidebarMenu = [
-  { label: "Home", path: "/" },
-  { label: "Dashboard", path: "/DashboardStudent" },
-  { label: "Edit Profil", path: "/EditProfil" },
-  { label: "Quiz", path: "/Quiz" },
-];
-
 
 function NavbarDashboard() {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -39,11 +32,6 @@ function NavbarDashboard() {
     if (menu === "Kelas") navigate("/kelas");
     if (menu === "Langganan") navigate("/langganan");
     if (menu === "Tentang Kami") navigate("/tentang");
-    setOpenDrawer(false);
-  };
-
-  const handleSidebarClick = (path) => {
-    navigate(path);
     setOpenDrawer(false);
   };
 
@@ -100,22 +88,7 @@ function NavbarDashboard() {
               />
 
               {/* Search Bar (md ke atas) */}
-              <Box
-                sx={{
-                  display: { xs: "none", md: "flex" },
-                  alignItems: "center",
-                  px: 2,
-                  py: 0.6,
-                  border: "1px solid #ccc",
-                  borderRadius: "40px",
-                  backgroundColor: "#FFFFFF",
-                }}
-              >
-                <InputBase placeholder="Cari kelas..." sx={{ width: 180 }} />
-                <IconButton onClick={() => alert("search di klik")}>
-                  <SearchIcon sx={{ fontSize: 20, color: "gray" }} />
-                </IconButton>
-              </Box>
+              <SearchBar placeholder="Cari kelas..." />
 
               {/* Menu Link (desktop) */}
               <Box
