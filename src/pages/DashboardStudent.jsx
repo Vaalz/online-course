@@ -24,7 +24,7 @@ import NavbarDashboard from "../components/layout/DashboardLayout";
 import UserSidebar from "../components/layout/UserSidebar";
 
 import CardKelas from "../components/CardKelas";
-import ButtonCategory from "../components/ButtonCategory";
+import CategoryButtons from "../components/CategoryButtons";
 
 export default function DashboardStudent() {
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -32,6 +32,8 @@ export default function DashboardStudent() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);
   const [courses, setCourses] = useState([]);
+  const [allCourses, setAllCourses] = useState([]);
+  
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -375,12 +377,12 @@ export default function DashboardStudent() {
               px: { xs: 1.5, md: 3 },
               display: "flex",
               overflowX: "auto",
-              scrollbarWidth: "none",
+              scrollbarWidth: "auto",
               "&::-webkit-scrollbar": { display: "none" },
               whiteSpace: "nowrap",
             }}
           >
-            <ButtonCategory />
+            <CategoryButtons onSelectCategory={setCourses} />
           </Box>
 
           {/* CARD LIST */}
@@ -396,24 +398,23 @@ export default function DashboardStudent() {
               "&::-webkit-scrollbar": { height: 0 },
             }}
           >
-            {courses.map((c) => (
-              <Box
-                key={c.id}
-                sx={{
-                  minWidth: { xs: 240, sm: 260, md: 300, lg: 320 },
-                  flexShrink: 0,
-                }}
-              >
-                <CardKelas
-                  image={c.thumbnail}
-                  title={c.name}
-                  description={c.description}
-                  price={c.price}
-                  creator={c.creator?.full_name}
-                  lessons={c.lessons_count}
-                />
-              </Box>
-            ))}
+            {courses.length === 0 ? (
+              <Typography sx={{ fontSize: 18, color: "#999" }}>
+                Tidak ada kelas pada kategori ini
+              </Typography>
+            ) : (
+              courses.map((c) => (
+                <Box key={c.id} sx={{ minWidth: 280, flexShrink: 0 }}>
+                  <CardKelas
+                    image={c.thumbnail}
+                    title={c.name}
+                    description={c.description}
+                    lessons={c.lessons_count}
+                    creator={c.creator?.full_name}
+                  />
+                </Box>
+              ))
+            )}
           </Box>
         </Box>
       </Box>

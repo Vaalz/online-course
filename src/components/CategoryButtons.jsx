@@ -1,50 +1,63 @@
 import React, { useState, useEffect } from "react";
-import { Button, Box, useTheme } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import axios from "axios";
 
-export default function CategoryButtons() {
+export default function CategoryButtons({ onSelectCategory }) {
   const [categories, setCategories] = useState([]);
   const [active, setActive] = useState(null);
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchInitialData = async () => {
       try {
         const res = await axios.get(`${API_URL}course-types`);
+        setCategories(res.data.data || []);
 
-        const list = res.data.data || [];
-        setCategories(list);
-
-        // set default active category
-        if (list.length > 0) setActive(list[0].name);
-
+        const all = await axios.get(`${API_URL}courses`);
+        onSelectCategory(all.data.data.data || []); // <--- fix utama
       } catch (err) {
-        console.error("Gagal mengambil kategori:", err);
+        console.error("Gagal mengambil data:", err);
+        onSelectCategory([]);
       }
     };
 
-    fetchCategories();
+    fetchInitialData();
   }, []);
+
+  const fetchCourses = async (id) => {
+    try {
+      const res = await axios.get(`${API_URL}courses/category/${id}`);
+      const courses = res.data.data?.courses || [];
+      onSelectCategory(courses);
+    } catch (err) {
+      console.error("Gagal mengambil course:", err);
+      onSelectCategory([]);
+    }
+  };
+
+  const handleClick = (id) => {
+    setActive(id);
+    fetchCourses(id);
+  };
 
   return (
     <Box
       sx={{
         display: "flex",
-        width: "100%",
-        overflowX: { xs: "auto", md: "visible" },
         gap: 2,
+        overflowX: "auto",
         pb: 1,
         "&::-webkit-scrollbar": { display: "none" },
       }}
     >
-      {categories.map((category) => {
-        const isActive = active === category.name;
+      {categories.map((c) => {
+        const isActive = active === c.id;
 
         return (
           <Button
-            key={category.id}
-            onClick={() => setActive(category.name)}
+            key={c.id}
+            onClick={() => handleClick(c.id)}
             variant="outlined"
             sx={{
               borderRadius: "20px",
@@ -72,7 +85,7 @@ export default function CategoryButtons() {
               fontSize: { xs: "14px", md: "18px" },
             }}
           >
-            {category.name}
+            {c.name}
           </Button>
         );
       })}

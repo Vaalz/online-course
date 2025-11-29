@@ -1,7 +1,6 @@
-import React from "react";
-import { Card, CardMedia, CardContent, Typography, Grid } from "@mui/material";
+import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 
-function CardKelas({ image, title, description, price, lessons, creator }) {
+function CardKelas({ image, title, description, creator }) {
   return (
     <Card
       sx={{
@@ -38,9 +37,7 @@ function CardKelas({ image, title, description, price, lessons, creator }) {
           Oleh: {creator}
         </Typography>
 
-        {/* HARGA */}
         <Typography sx={{ fontWeight: 700, fontSize: 24, mt: 2 }}>
-          {/* Rp{price.toLocaleString("id-ID")} */}
         </Typography>
       </CardContent>
     </Card>

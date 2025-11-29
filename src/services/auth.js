@@ -1,4 +1,3 @@
-// src/services/auth.js
 import { auth, provider } from "../services/Firebase";
 import { signInWithPopup } from "firebase/auth";
 import axios from "axios";
