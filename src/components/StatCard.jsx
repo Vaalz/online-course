@@ -4,40 +4,47 @@ export default function StatCard({ icon, value, label }) {
   return (
     <Box
       sx={{
-        display: "flex",
-        gap: { xs: "16px", md: "39px" }, // gap mengecil di HP
-        overflowX: "auto",
-        scrollbarWidth: "none",
-        "&::-webkit-scrollbar": { height: 0 },
+        minWidth: { xs: 140, sm: 180, md: 240, lg: 316 },
+        width: { xs: 150, sm: 180, md: 240, lg: 316 },
+        height: { xs: "80px", md: "103px" },
+        flexShrink: 0,
       }}
     >
       <Box
         sx={{
-          px: { xs: 3, md: 4 },
-          py: { xs: 2, md: 2 },
+          px: { xs: 2, md: 4 },
+          py: { xs: 1.5, md: 2 },
           border: "1px solid #B9C2C0",
           borderRadius: 3,
           height: "100%",
           backgroundColor: "#FFFFFF",
           boxShadow: "0px 3px 8px rgba(0,0,0,0.08)",
-          display: "flex-column",
-          alignItems: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
           justifyContent: "center",
           gap: { xs: 1, md: 2 },
         }}
       >
         <Box
           sx={{
-            width: { xs: 30, md: 40 },
-            height: { xs: 30, md: 40 },
-            alignItems: "center",
             display: "flex",
-            justifyContent: "center",
-            fontSize: { xs: 24, md: 32 },
-            gap: { xs: 0.5, md: 1 },
+            alignItems: "center",
+            gap: { xs: 0.5, md: 1.5 },
           }}
         >
-          {icon}
+          <Box
+            sx={{
+              width: { xs: 30, md: 40 },
+              height: { xs: 30, md: 40 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {icon}
+          </Box>
+
           <Typography
             variant="h6"
             fontWeight={700}
@@ -47,17 +54,14 @@ export default function StatCard({ icon, value, label }) {
           </Typography>
         </Box>
 
-        <Box>
-          <Typography
-            color="text.secondary"
-            fontSize={{ xs: 10, sm: 12, md: 14 }}
-            ml={{ xs: "-5px", md: "-10px" }}
-            sx={{ mt: "0" }}
-          >
-            {label}
-          </Typography>
-        </Box>
+        <Typography
+          color="text.secondary"
+          fontSize={{ xs: 10, sm: 12, md: 14 }}
+        >
+          {label}
+        </Typography>
       </Box>
+      
     </Box>
   );
 }
