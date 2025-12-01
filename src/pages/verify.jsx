@@ -67,11 +67,9 @@ export default function VerifyPage() {
     try {
       const { token, role, userData } = await verifyOtp(email, code);
 
-      console.log("HASIL VERIFY:", { token, role, userData }); // <-- Tambahkan ini
-
-      if (!token || !role) {
-        throw new Error("Data login tidak valid");
-      }
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+      localStorage.setItem("user", JSON.stringify(userData));
 
       if (role === "student") navigate("/dashboard/student");
       else if (role === "teacher") navigate("/dashboard/teacher");

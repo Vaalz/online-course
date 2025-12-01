@@ -15,7 +15,7 @@ export default function CategoryButtons({ onSelectCategory }) {
         setCategories(res.data.data || []);
 
         const all = await axios.get(`${API_URL}courses`);
-        onSelectCategory(all.data.data.data || []); // <--- fix utama
+        onSelectCategory(all.data.data.data || []);
       } catch (err) {
         console.error("Gagal mengambil data:", err);
         onSelectCategory([]);
@@ -28,7 +28,7 @@ export default function CategoryButtons({ onSelectCategory }) {
   const fetchCourses = async (id) => {
     try {
       const res = await axios.get(`${API_URL}courses/category/${id}`);
-      const courses = res.data.data?.courses || [];
+      const courses = res.data?.data?.courses || [];
       onSelectCategory(courses);
     } catch (err) {
       console.error("Gagal mengambil course:", err);
@@ -36,11 +36,16 @@ export default function CategoryButtons({ onSelectCategory }) {
     }
   };
 
-  const handleClick = (id) => {
+  const handleClick = async (id) => {
     setActive(id);
-    fetchCourses(id);
-  };
 
+    if (id === "all") {
+      const res = await axios.get(`${API_URL}courses`);
+      onSelectCategory(res.data.data.data || []);
+    } else {
+      fetchCourses(id);
+    }
+  };
   return (
     <Box
       sx={{

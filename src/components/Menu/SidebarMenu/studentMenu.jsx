@@ -31,7 +31,7 @@ export const studentMenu = [
       />
     ),
     text: "DASHBOARD",
-    path: "/DashboardStudent",
+    path: "/dashboard/student",
   },
   {
     icon: (
