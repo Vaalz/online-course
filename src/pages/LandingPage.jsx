@@ -491,14 +491,12 @@ function LandingPage() {
         }}
       >
         {/* Logo */}
-        <Typography
-          sx={{
-            fontWeight: 600,
-            fontSize: { xs: '28px', md: '40px' },
-          }}
-        >
-          LOGO
-        </Typography>
+        <Box
+          component= "img"
+          src={logo}
+          sx={{width: '70px', height: '50px'}}
+        />
+        
 
         {/* Hak Cipta */}
         <Typography

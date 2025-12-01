@@ -155,7 +155,7 @@ export default function DashboardStudent() {
               top: "80px",
               left: 0,
               height: "calc(100vh - 80px)",
-              overflowY: "hiden",
+              overflowY: "hidden",
               bgcolor: "#F1FCFA",
               borderRight: "1px solid #E0E0E0",
             }}

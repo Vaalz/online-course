@@ -8,7 +8,8 @@ function CardKelas({ image, title, description, price, lessons, creator }) {
         boxShadow: 3,
         border: "1px solid #E5E7EB",
         borderRadius: 2,
-        width: "420px",
+        width: "100%",
+        maxWidth: "420px",
         "@media (max-width:600px)": {
           width: "100%",
         },
