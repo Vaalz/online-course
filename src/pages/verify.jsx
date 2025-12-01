@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { verifyOtp, resendOtp } from "../services/otp";
+import useResendTimer from "../components/Authcompt/useResendTimer";
+import GambarLogin from "../assets/image/Gambar.png";
 
 // Import Komponen & Service
 import GradientButton from "../components/Authcompt/GradientButton";
@@ -30,33 +33,51 @@ const GradientText = styled(Typography)(({ theme, clickable = false }) => ({
 // --- Komponen Utama ---
 
 export default function VerifyPage() {
-  // State
   const [code, setCode] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Custom Hook
-  const { seconds, canResend, resetTimer } = useResendTimer(30); // <--- Perubahan: Penggunaan custom hook
+  const { seconds, canResend, resetTimer } = useResendTimer(30);
 
-  // Effects
   useEffect(() => {
     const storedEmail = sessionStorage.getItem("userEmail");
     if (!storedEmail) {
-      // Lebih baik menggunakan `replace` untuk mencegah kembali ke halaman verifikasi
+      sessionStorage.removeItem("userEmail");
       navigate("/login", { replace: true });
       return;
     }
     setEmail(storedEmail);
   }, [navigate]);
 
-  // Handlers
-  const handleVerify = () => {
+  const handleVerify = async () => {
+    setLoading(true);
+
     if (code.trim().length !== 6) {
-      alert("Kode harus 6 digit");
+      setError("Kode harus 6 digit");
       return;
     }
-    console.log(`Verifikasi kode ${code} untuk email ${email}`);
-    // TODO: panggil API verifikasi OTP
+
+    console.log("Payload terkirim:", { email, otp: code });
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const { token, role, userData } = await verifyOtp(email, code);
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      if (role === "student") navigate("/dashboard/student");
+      else if (role === "teacher") navigate("/dashboard/teacher");
+      else navigate("/forbidden");
+    } catch (err) {
+      console.error("ERROR VERIFY:", err); // <--- tampilkan error asli
+      setError(err.message || "Verifikasi gagal");
+    }
   };
 
   const handleResend = async () => {
@@ -64,10 +85,10 @@ export default function VerifyPage() {
 
     try {
       await resendOtp(email);
-      alert("Kode baru telah dikirim ke email Anda");
+      alert("Kode baru terkirim!");
       resetTimer();
-    } catch (error) {
-      alert(error.message || "Gagal terhubung ke server");
+    } catch (err) {
+      alert(err.message);
     }
   };
 
@@ -76,10 +97,54 @@ export default function VerifyPage() {
 
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
-      <Grid container columnSpacing={3} sx={{ height: "100%" }}>
+      <Grid
+        container
+        sx={{
+          height: "100%",
+          display: "flex",
+          p: {
+            xs: "24px",
+            sm: "40px",
+            md: "80px",
+          },
+          justifyContent: "space-between",
+        }}
+      >
         {/* Kolom Kiri (Hanya Muncul di layar MD ke atas) */}
-        <Grid item xs={false} md={6}>
-          <Item sx={{ height: "100%" }}>{/* Konten Gambar/Branding */}</Item>
+        <Grid
+          item
+          xs={false}
+          md={6}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            p: 2,
+            // // Perbaikan: Gunakan display responsif jika xs={false} tidak berfungsi penuh
+            // display: { xs: "none", md: "flex" },
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              maxWidth: "650px",
+              height: "auto",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              src={GambarLogin}
+              alt="Gambar Login"
+              // Hapus style inline dan pindahkan ke sx
+              style={{
+                width: "100%",
+                maxWidth: "650px", // Ini sekarang redundan karena ada di Box
+                height: "auto",
+                objectFit: "contain",
+              }}
+            />
+          </Box>
         </Grid>
 
         {/* Kolom Kanan (Form Verifikasi) */}
@@ -97,26 +162,41 @@ export default function VerifyPage() {
             }}
           >
             {/* Header Text */}
-            <Box sx={{ gap: "20px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: { xs: "12px", md: "20px" },
+                textAlign: "center",
+              }}
+            >
+              {/* === JUDUL UTAMA: Cek email anda === */}
               <Typography
-                fontSize={36}
                 fontWeight={600}
                 textAlign="center"
-                sx={{ color: "#010E0A" }}
+                sx={{
+                  color: "#010E0A",
+                  fontSize: { xs: 24, sm: 32, md: 36 },
+                }}
               >
                 Cek email anda
               </Typography>
 
+              {/* === DESKRIPSI: Masukkan kode 6 digit === */}
               <Typography
-                fontSize={24}
                 textAlign="center"
-                sx={{ color: "#010E0A", maxWidth: 560 }}
+                sx={{
+                  color: "#010E0A",
+                  maxWidth: { xs: "90%", sm: 400, md: 560 },
+                  fontSize: { xs: 16, sm: 20, md: 24 },
+                  mx: "auto",
+                }}
               >
-                Masukkan kode 6 digit yang telah dikirim ke <b>{email}</b> untuk
+                Masukkan kode 6 digit yang telah dikirim ke **{email}** untuk
                 masuk
               </Typography>
             </Box>
-
             {/* Input Form */}
             <Box
               sx={{
@@ -148,11 +228,11 @@ export default function VerifyPage() {
             >
               Belum mendapat kode?{" "}
               {canResend ? (
-                <GradientText onClick={handleResend} clickable>
+                <GradientText onClick={handleResend} component="span">
                   Kirim ulang kode
                 </GradientText>
               ) : (
-                <GradientText>
+                <GradientText component="span">
                   Kirim ulang kode dalam <b>{seconds}s</b>
                 </GradientText>
               )}

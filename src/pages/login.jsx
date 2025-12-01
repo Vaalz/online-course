@@ -7,7 +7,9 @@ import AuthButton from "../components/Authcompt/ButtonAuth";
 import InputField from "../components/Authcompt/InputField";
 import GradientButton from "../components/Authcompt/GradientButton";
 import LoginAuth from "../services/auth";
+import { sendOtp } from "../services/otp";
 import GambarLogin from "../assets/image/Gambar.png";
+import Loading from "../components/Loading";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -19,19 +21,47 @@ const Item = styled(Paper)(() => ({
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleSendCode = () => {
-    if (!email.trim()) return setError("Email tidak boleh kosong");
-    if (!validateEmail(email)) return setError("Format email tidak valid");
+  // =============== SEND OTP ===============
+  const handleSendCode = async () => {
+    setError("");
+    setLoading(true); // ⏳ tampilkan
 
-    sessionStorage.setItem("userEmail", email);
-    navigate("/verify");
+    if (!email.trim()) {
+      setLoading(false);
+      return setError("Email tidak boleh kosong");
+    }
+    if (!validateEmail(email)) {
+      setLoading(false);
+      return setError("Format email tidak valid");
+    }
+
+    try {
+      const res = await sendOtp(email);
+      console.log("OTP Sent Response:", res);
+
+      sessionStorage.setItem("userEmail", email);
+      if (res?.data?.tempToken)
+        sessionStorage.setItem("tempToken", res.data.tempToken);
+
+      navigate("/verify");
+    } catch (err) {
+      console.error("OTP Error:", err);
+      setError(
+        err.response?.data?.message || err.message || "Gagal mengirim kode OTP"
+      );
+    } finally {
+      setLoading(false); // selesai
+    }
   };
 
+  // =============== GOOGLE LOGIN ===============
   const handleGoogleLogin = async () => {
+    setLoading(true);
     try {
       const res = await LoginAuth();
       const backendData = res.data;
@@ -44,50 +74,67 @@ export default function LoginPage() {
       localStorage.setItem("role", role);
       localStorage.setItem("email", email);
 
-      if (role === "student") navigate("/DashboardStudent");
+      if (role === "student") navigate("/dashboard/student");
       else if (role === "teacher" || role === "instruktor")
         navigate("/DashboarTeacher");
       else navigate("/forbidden");
     } catch (err) {
       console.error(err);
       alert("Login Google gagal");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Box sx={{ width: "100%", height: "100vh", overflow: "hidden" }}>
+    <Box sx={{ width: "100%", height: "100vh" }}>
       <Grid
         container
         sx={{
           height: "100%",
           display: "flex",
-          
+          p: {
+            xs: "24px",
+            sm: "40px",
+            md: "80px",
+          },
+          justifyContent: "space-between",
         }}
       >
+        {loading && <Loading text="Mohon tunggu..." fullscreen />}
         {/* ==== LEFT IMAGE ==== */}
         <Grid
           item
-          xs={12}
+          xs={false}
           md={6}
           sx={{
-            display: { xs: "none", md: "flex" },
+            display: "flex",
             justifyContent: "center",
             alignItems: "center",
             p: 2,
           }}
         >
-          <img
-            src={GambarLogin}
-            alt="Gambar Login"
-            style={{
+          <Box
+            sx={{
               width: "100%",
               maxWidth: "650px",
               height: "auto",
-              objectFit: "contain",
+              display: "flex",
+              justifyContent: "center",
             }}
-          />
+          >
+            <img
+              src={GambarLogin}
+              alt="Gambar Login"
+              style={{
+                width: "100%",
+                maxWidth: "650px", 
+                height: "auto",
+                objectFit: "contain",
+              }}
+            />
+          </Box>
         </Grid>
-
         {/* ==== RIGHT FORM ==== */}
         <Grid
           item
@@ -170,6 +217,7 @@ export default function LoginPage() {
             sx={{
               color: "#010E0A",
               fontSize: { xs: "16px", sm: "18px", md: "20px" },
+              textAlign: "center",
             }}
           >
             Belum punya akun?{" "}
@@ -179,8 +227,7 @@ export default function LoginPage() {
               fontSize={"20px"}
               sx={{
                 cursor: "pointer",
-                background:
-                  "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
+                background: "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 display: "inline-block",

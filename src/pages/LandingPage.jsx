@@ -280,7 +280,7 @@ function LandingPage() {
         {/* Card kelas */}
         <Grid
           container
-          spacing={2}
+          spacing={0.5}
           justifyContent="center"
           alignItems="center"
         >
@@ -291,7 +291,6 @@ function LandingPage() {
           ))}
         </Grid>
       </Box>
-
 
        {/* Testimoni */}
       <Box sx={{ pb: "96px" }}>
@@ -343,8 +342,6 @@ function LandingPage() {
           </Box>
         </Box>
       </Box>
-
-
 
        {/* pay as u grow */}
       <Box sx={{ pb: '96px' }}>
@@ -417,8 +414,6 @@ function LandingPage() {
         </Grid>
 
       </Box>
-
-
 
        {/* question */}
        <Box>
@@ -496,14 +491,12 @@ function LandingPage() {
         }}
       >
         {/* Logo */}
-        <Typography
-          sx={{
-            fontWeight: 600,
-            fontSize: { xs: '28px', md: '40px' },
-          }}
-        >
-          LOGO
-        </Typography>
+        <Box
+          component= "img"
+          src={logo}
+          sx={{width: '70px', height: '50px'}}
+        />
+        
 
         {/* Hak Cipta */}
         <Typography
