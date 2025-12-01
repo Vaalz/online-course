@@ -10,6 +10,7 @@ import DashboardStudent from "./pages/DashboardStudent";
 import DashboardSuperAdmin from "./pages/DashboardSuperAdmin";
 import DashboardInstructor from "./pages/DashboardInstructor";
 import Profile from "./pages/Profilestuudents";
+import ManageCourseStudent from "./pages/ManageCourseStudent";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/dashboard/instructor" element={<DashboardInstructor />} />
         <Route path="/dashboard/super-admin" element={<DashboardSuperAdmin />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/Manage/student" element={<ManageCourseStudent />} />
 
 
       </Routes>

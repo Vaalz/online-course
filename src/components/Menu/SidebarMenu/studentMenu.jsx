@@ -20,7 +20,7 @@ export const studentMenu = [
       />
     ),
     text: "HOME",
-    path: "/",
+    path: "/Manage/student",
   },
   {
     icon: (
@@ -31,7 +31,7 @@ export const studentMenu = [
       />
     ),
     text: "DASHBOARD",
-    path: "/DashboardStudent",
+    path: "/dashboard/student",
   },
   {
     icon: (
