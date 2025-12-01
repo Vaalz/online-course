@@ -35,13 +35,12 @@ const statsData = [
   },
 ];
 
-  const notifications = [
-    "Saatnya melakukan sesi zoom …",
-    "Anda telah menyelesaikan kuis yang diberikan",
-    "Selesaikan kuis yang tersedia",
-    "Saatnya melakukan sesi zoom …",
-  ];
-
+const notifications = [
+  "Saatnya melakukan sesi zoom …",
+  "Anda telah menyelesaikan kuis yang diberikan",
+  "Selesaikan kuis yang tersedia",
+  "Saatnya melakukan sesi zoom …",
+];
 
 const CardWrapper = styled(Paper)(({ theme }) => ({
   backgroundColor: "",
@@ -100,7 +99,7 @@ export default function DashboardSuperAdmin() {
           px: { xs: 2, md: 4 },
           py: 3,
           width: "100%",
-          height: "100vh"
+          height: "100vh",
         }}
       >
         {/* TITLE */}
@@ -109,22 +108,91 @@ export default function DashboardSuperAdmin() {
         </Typography>
 
         {/* GRID KONTEN */}
-        <Grid container spacing={2} sx={{ flexWrap: "wrap" }}>
+        <Grid container spacing={2} width={"100%"} >
           {/* STATS 4 CARD */}
-          {statsData.map((stat, i) => (
-            <Grid size={{ xs: 12, sm: 6, md: 3, key: { i } }}>
-              <StatCard
-                icon={stat.icon}
-                value={stat.value}
-                label={stat.label}
-              />
-            </Grid>
-          ))}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              gap: { xs: 2, sm: 2.5, md: 4 },
+              overflowX: "auto",
+              scrollbarWidth: "none",
+              "&::-webkit-scrollbar": { display: "none" },
+            }}
+          >
+            {statsData.map((stat, i) => (
+              <Box
+                key={i}
+                sx={{
+                  minWidth: { xs: 140, sm: 180, md: 240, lg: 316 },
+                  height: { xs: "80px", md: "103px" },
+                  flexShrink: 0,
+                }}
+              >
+                <Box
+                  sx={{
+                    px: { xs: 2, md: 4 },
+                    py: { xs: 1.5, md: 2 },
+                    border: "1px solid #B9C2C0",
+                    borderRadius: 3,
+                    height: "100%",
+                    backgroundColor: "#FFFFFF",
+                    boxShadow: "0px 3px 8px rgba(0,0,0,0.08)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    justifyContent: "center",
+                    gap: { xs: 1, md: 2 },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: { xs: 0.5, md: 1.5 },
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: { xs: 30, md: 40 },
+                        height: { xs: 30, md: 40 },
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {stat.icon}
+                    </Box>
+
+                    <Typography
+                      variant="h6"
+                      fontWeight={700}
+                      fontSize={{ xs: 16, md: 20 }}
+                    >
+                      {stat.value}
+                    </Typography>
+                  </Box>
+
+                  <Box>
+                    <Typography
+                      color="text.secondary"
+                      fontSize={{ xs: 10, sm: 12, md: 14 }}
+                      ml={{ xs: 0, md: 0 }}
+                      sx={{ mt: 0 }}
+                    >
+                      {stat.label}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+            ))}
+          </Box>
 
           {/* Card Konten Lebar */}
-          <Grid container spacing={2} width={"100%"} height={"100%"}>
+          <Grid container spacing={2} width={"100%"} height={"100vh"}>
             {/* LEFT CONTENT*/}
-            <Grid item sx={{ width: "1045px", height: "100%"}}>
+            <Grid item sx={{ width: "1045px", height: "100%" }}>
               <Grid container spacing={2}>
                 {/* Bagian atas */}
                 <Grid item xs={12} width={"100%"}>
@@ -200,11 +268,11 @@ export default function DashboardSuperAdmin() {
             </Grid>
 
             {/* RIGHT CONTENT: REMAINING SPACE */}
-            <Grid item sx={{ flexGrow: 1, minWidth: 0}}>
+            <Grid item height={"100%"} sx={{ flexGrow: 1, minWidth: 0 }}>
               <Box
                 sx={{
                   width: "100%",
-                  height: "255px",
+                  height: "100%",
                   borderRadius: 2,
                 }}
               >
