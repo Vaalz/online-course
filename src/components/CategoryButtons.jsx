@@ -27,7 +27,7 @@ export default function CategoryButtons({ onSelectCategory }) {
 
   const fetchCourses = async (id) => {
     try {
-      const res = await axios.get(`${API_URL}courses/category/${id}`);
+      const res = await axios.get(`${API_URL}courses/categories/${id}`);
       const courses = res.data?.data?.courses || [];
       onSelectCategory(courses);
     } catch (err) {

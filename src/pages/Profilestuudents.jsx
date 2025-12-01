@@ -193,10 +193,10 @@ export default function ProfileStudent() {
         )}
 
         {/* MAIN CONTENT */}
-        <Box sx={{ flexGrow: 1, p: { xs: 2, md: 3 } }}>
-          <Grid container spacing={3}>
+        <Box sx={{ flexGrow: 1, p: { xs: 3, md: 4 } }}>
+          <Grid container spacing={2}>
             {/* ==== LEFT SECTION ==== */}
-            <Grid item xs={12} lg={8}>
+            <Grid size={8}>
               {/* CARD PROFILE */}
               <Box
                 sx={{
@@ -326,7 +326,7 @@ export default function ProfileStudent() {
             </Grid>
 
             {/* ==== RIGHT SECTION ==== */}
-            <Grid item xs={12} lg={4}>
+            <Grid size={4}>
               {/* INFORMASI PRIBADI */}
               <Box
                 sx={{

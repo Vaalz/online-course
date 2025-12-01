@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 
 // API
 import BannerImage from "../assets/image/BennerManage.png";
+import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 
 export default function ManageCourseStudent() {
   const [courses, setCourses] = useState([]);
@@ -47,7 +48,7 @@ export default function ManageCourseStudent() {
           borderRight: "1px solid #e0e0e0",
         }}
       >
-        <Sidebar menus={superadminMenu} />
+        <Sidebar menus={studentMenu} />
       </Box>
 
       {/* MAIN CONTENT */}
@@ -72,7 +73,7 @@ export default function ManageCourseStudent() {
           <Grid container spacing={2} width={"100%"} height={"100%"}>
             {/* LEFT CONTENT*/}
             <Grid item sx={{ width: "100%", height: "100%" }}>
-              <Grid container spacing={2} width={"100%"} height={"100%"}>
+              <Grid container spacing={2} maxWidth={"100%"} height={"100%"}>
                 {/* Bagian atas */}
                 <Grid item xs={12} md={8} lg={8} width={"100%"}>
                   <Box
@@ -95,14 +96,10 @@ export default function ManageCourseStudent() {
                     />
                   </Box>
                 </Grid>
-
                 Bagian bawah
-                <Grid item xs={12} width={"100%"}>
+                <Grid item xs={12} sx={{ width: "100%", maxWidth: "100%" }}>
                   <Box
-                    sx={{
-                      width: "100%",
-                      height: "120px",
-                    }}
+                    sx={{ maxWidth: "100%", flexGrow: 1, overflowX: "hidden" }}
                   >
                     {/* CATEGORY BUTTON */}
                     <Box
@@ -115,38 +112,54 @@ export default function ManageCourseStudent() {
                     </Box>
 
                     {/* CARD LIST */}
-                    {/* <Box
+                    <Box
                       sx={{
                         mt: 4,
                         px: { xs: 1.5, md: 3 },
-                        display: "flex",
-                        gap: { xs: 2, md: 3 },
                         overflowX: "auto",
                         pb: 2,
+                        pr: 2,
                         width: "100%",
-                        maxWidth: "100vw",
+                        maxWidth: "100%",
+                        display: "flex",
+                        justifyContent: "flex-start",
+
                         scrollbarWidth: "none",
-                        "&::-webkit-scrollbar": { height: 0 },
+                        "&::-webkit-scrollbar": {
+                          height: 0,
+                        },
                       }}
                     >
-                      {courses.length === 0 ? (
-                        <Typography sx={{ fontSize: 18, color: "#999" }}>
-                          Tidak ada kelas pada kategori ini
-                        </Typography>
-                      ) : (
-                        courses.map((c) => (
-                          <Box key={c.id} sx={{ minWidth: 280, flexShrink: 0 }}>
-                            <CardKelas
-                              image={c.thumbnail}
-                              title={c.name}
-                              description={c.description}
-                              lessons={c.lessons_count}
-                              creator={c.creator?.full_name}
-                            />
-                          </Box>
-                        ))
-                      )}
-                    </Box> */}
+                      {/* WRAPPER YANG MEMBATASI WIDTH */}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          gap: { xs: 2, md: 3 },
+                          width: "1500px", // FIX WIDTH UNTUK AREA CARD
+                        }}
+                      >
+                        {courses.length === 0 ? (
+                          <Typography sx={{ fontSize: 18, color: "#999" }}>
+                            Tidak ada kelas pada kategori ini
+                          </Typography>
+                        ) : (
+                          courses.map((c) => (
+                            <Box
+                              key={c.id}
+                              sx={{ minWidth: 280, flexShrink: 0 }}
+                            >
+                              <CardKelas
+                                image={c.thumbnail}
+                                title={c.name}
+                                description={c.description}
+                                lessons={c.lessons_count}
+                                creator={c.creator?.full_name}
+                              />
+                            </Box>
+                          ))
+                        )}
+                      </Box>
+                    </Box>
                   </Box>
                 </Grid>
               </Grid>

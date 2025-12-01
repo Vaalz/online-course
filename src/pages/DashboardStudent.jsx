@@ -173,7 +173,6 @@ export default function DashboardStudent() {
             columnSpacing={3}
             alignItems="flex-start"
             sx={{
-              pr: { xs: 1.5, sm: 2, md: 3 },
               pl: { xs: 1.5, sm: 2, md: 3 },
               py: { xs: 2, md: 3 },
             }}
