@@ -69,7 +69,7 @@ export default function CategoryButtons({ onSelectCategory }) {
               textTransform: "none",
               fontWeight: 500,
               minWidth: { xs: "120px", sm: "150px", md: "290px" },
-              height: { xs: "60px", md: "80px" },
+              height: { xs: "24px", md: "48px" },
               whiteSpace: "nowrap",
               flexShrink: 0,
 

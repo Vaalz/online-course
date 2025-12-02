@@ -193,8 +193,8 @@ export default function ProfileStudent() {
         )}
 
         {/* MAIN CONTENT */}
-        <Box sx={{ flexGrow: 1, p: { xs: 3, md: 4 } }}>
-          <Grid container spacing={2}>
+        <Box sx={{ flexGrow: 1, p: { xs: 2, md: 3 } }}>
+          <Grid container spacing={3}>
             {/* ==== LEFT SECTION ==== */}
             <Grid size={8}>
               {/* CARD PROFILE */}
@@ -435,7 +435,13 @@ export default function ProfileStudent() {
 
       {/* ==== DIALOG EDIT PROFILE (statik save ke state) ==== */}
       <Dialog open={openEdit} onClose={handleCloseEdit} maxWidth="md" fullWidth>
-        <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           Edit Profil
           <IconButton onClick={handleCloseEdit} size="small">
             <CloseIcon />
@@ -485,7 +491,16 @@ export default function ProfileStudent() {
               />
             </Grid>
 
-            <Grid item xs={12} md={4} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               <Avatar
                 src={form.avatar}
                 sx={{ width: 140, height: 140, mb: 2, borderRadius: "50%" }}
@@ -503,7 +518,9 @@ export default function ProfileStudent() {
                 variant="contained"
                 onClick={() => {
                   // simple placeholder: you could open file input and upload then set URL
-                  alert("Upload image belum diimplementasikan. Masukkan URL avatar di field.");
+                  alert(
+                    "Upload image belum diimplementasikan. Masukkan URL avatar di field."
+                  );
                 }}
                 sx={{ textTransform: "none", borderRadius: 2 }}
               >
@@ -520,7 +537,11 @@ export default function ProfileStudent() {
           <Button
             onClick={handleSave}
             variant="contained"
-            sx={{ textTransform: "none", bgcolor: "#11DF9E", "&:hover": { bgcolor: "#0FCF8D" } }}
+            sx={{
+              textTransform: "none",
+              bgcolor: "#11DF9E",
+              "&:hover": { bgcolor: "#0FCF8D" },
+            }}
           >
             Simpan
           </Button>

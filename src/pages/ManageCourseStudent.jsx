@@ -4,7 +4,7 @@ import Sidebar from "../components/layout/UserSidebar";
 import { superadminMenu } from "../components/Menu/SidebarMenu/superAdminMenu";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import CardKelas from "../components/CardKelas";
-import CategoryButtons from "../components/CategoryButtons";
+import CategoryButtons from "../components/AllCategoryButtons";
 import { useState, useEffect } from "react";
 
 // API
@@ -38,10 +38,10 @@ export default function ManageCourseStudent() {
       <Box
         sx={{
           display: { xs: "none", md: "block" },
-          width: { xs: 0, md: "260px" },
           flexShrink: 0,
           position: "sticky",
           top: 0,
+          pt: "80px",
           height: "100vh",
           overflowY: "auto",
           bgcolor: "#fff",
@@ -62,13 +62,12 @@ export default function ManageCourseStudent() {
           height: "100vh",
         }}
       >
-        {/* TITLE */}
-        <Typography variant="h5" fontWeight="700" sx={{ mt: 2, mb: 3 }}>
-          kk
-        </Typography>
-
         {/* GRID KONTEN */}
-        <Grid container spacing={2} sx={{ flexWrap: "wrap", width: "100%" }}>
+        <Grid
+          container
+          spacing={2}
+          sx={{ flexWrap: "wrap", width: "100%", pt: "120px" }}
+        >
           {/* Card Konten Lebar */}
           <Grid container spacing={2} width={"100%"} height={"100%"}>
             {/* LEFT CONTENT*/}
@@ -96,7 +95,6 @@ export default function ManageCourseStudent() {
                     />
                   </Box>
                 </Grid>
-                Bagian bawah
                 <Grid item xs={12} sx={{ width: "100%", maxWidth: "100%" }}>
                   <Box
                     sx={{ maxWidth: "100%", flexGrow: 1, overflowX: "hidden" }}
@@ -115,7 +113,6 @@ export default function ManageCourseStudent() {
                     <Box
                       sx={{
                         mt: 4,
-                        px: { xs: 1.5, md: 3 },
                         overflowX: "auto",
                         pb: 2,
                         pr: 2,

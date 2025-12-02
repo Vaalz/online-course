@@ -11,6 +11,8 @@ import DashboardSuperAdmin from "./pages/DashboardSuperAdmin";
 import DashboardInstructor from "./pages/DashboardInstructor";
 import Profile from "./pages/Profilestuudents";
 import ManageCourseStudent from "./pages/ManageCourseStudent";
+import { Details } from "@mui/icons-material";
+import DetailCourses from "./pages/DetailCourses";
 
 function App() {
   return (
@@ -27,6 +29,7 @@ function App() {
         <Route path="/dashboard/super-admin" element={<DashboardSuperAdmin />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/Manage/student" element={<ManageCourseStudent />} />
+        <Route path="/detailcours" element={<DetailCourses />} />
 
 
       </Routes>
