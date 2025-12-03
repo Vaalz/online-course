@@ -48,7 +48,7 @@ function Navbar() {
               src={logo}
               alt="logo"
               sx={{
-                width: "80px",
+                width: "70px",
                 height: "50px",
                 m: "10px"
               }}

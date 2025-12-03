@@ -13,23 +13,28 @@ import React, { useState, useEffect } from "react";
 
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import NotificationPanel from "../components/NotificationPanel";
+import Loading from "../components/Loading";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
 import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 
-import NavbarDashboard from "../components/layout/DashboardLayout ";
+import NavbarDashboard from "../components/layout/DashboardLayout";
 import UserSidebar from "../components/layout/UserSidebar";
 
 import CardKelas from "../components/CardKelas";
-import ButtonCategory from "../components/ButtonCategory";
+import CategoryButtons from "../components/CategoryButtons";
 
 export default function DashboardStudent() {
   const isMobile = useMediaQuery("(max-width: 900px)");
 
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [allCourses, setAllCourses] = useState([]);
+  
+
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
   const notifications = [
@@ -43,7 +48,11 @@ export default function DashboardStudent() {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
+    console.log("TOKEN:", token);
+    console.log("ROLE:", role);
+
     if (!token) {
+      console.log("No token found, redirecting to home");
       window.location.href = "/";
       return;
     }
@@ -55,14 +64,10 @@ export default function DashboardStudent() {
 
     async function fetchData() {
       try {
-        const res = await fetch(
-          `${API_URL}dashboard/student`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        // FETCH DASHBOARD STUDENT
+        const res = await fetch(`${API_URL}dashboard/student`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         if (!res.ok) {
           console.log("STATUS:", res.status);
@@ -71,6 +76,20 @@ export default function DashboardStudent() {
 
         const json = await res.json();
         setStats(json.data);
+
+        // FETCH COURSE LIST
+        const resCourse = await fetch(`${API_URL}courses`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!resCourse.ok) {
+          console.log("STATUS COURSE:", resCourse.status);
+          throw new Error("Failed to fetch courses");
+        }
+
+        const jsonCourse = await resCourse.json();
+        console.log(jsonCourse.data.data);
+        setCourses(jsonCourse.data.data);
       } catch (err) {
         console.error("Fetch dashboard error:", err);
       } finally {
@@ -81,13 +100,7 @@ export default function DashboardStudent() {
     fetchData();
   }, []);
 
-  if (loading) {
-    return (
-      <Box sx={{ padding: 4 }}>
-        <Typography>Loading dashboard...</Typography>
-      </Box>
-    );
-  }
+  if (loading) return <Loading text="Memuat dashboard..." />;
 
   // STATS SETELAH DATA TERSEDIA
   const statsData = [
@@ -144,7 +157,7 @@ export default function DashboardStudent() {
               top: "80px",
               left: 0,
               height: "calc(100vh - 80px)",
-              overflowY: "auto",
+              overflowY: "hidden",
               bgcolor: "#F1FCFA",
               borderRight: "1px solid #E0E0E0",
             }}
@@ -364,12 +377,12 @@ export default function DashboardStudent() {
               px: { xs: 1.5, md: 3 },
               display: "flex",
               overflowX: "auto",
-              scrollbarWidth: "none",
+              scrollbarWidth: "auto",
               "&::-webkit-scrollbar": { display: "none" },
               whiteSpace: "nowrap",
             }}
           >
-            <ButtonCategory />
+            <CategoryButtons onSelectCategory={setCourses} />
           </Box>
 
           {/* CARD LIST */}
@@ -385,21 +398,23 @@ export default function DashboardStudent() {
               "&::-webkit-scrollbar": { height: 0 },
             }}
           >
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Box
-                key={i}
-                sx={{
-                  minWidth: { xs: 240, sm: 260, md: 300, lg: 320 },
-                  flexShrink: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 3,
-                  pb: 3,
-                }}
-              >
-                <CardKelas />
-              </Box>
-            ))}
+            {courses.length === 0 ? (
+              <Typography sx={{ fontSize: 18, color: "#999" }}>
+                Tidak ada kelas pada kategori ini
+              </Typography>
+            ) : (
+              courses.map((c) => (
+                <Box key={c.id} sx={{ minWidth: 280, flexShrink: 0 }}>
+                  <CardKelas
+                    image={c.thumbnail}
+                    title={c.name}
+                    description={c.description}
+                    lessons={c.lessons_count}
+                    creator={c.creator?.full_name}
+                  />
+                </Box>
+              ))
+            )}
           </Box>
         </Box>
       </Box>
