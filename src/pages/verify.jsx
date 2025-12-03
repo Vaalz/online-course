@@ -100,34 +100,43 @@ export default function VerifyPage() {
       <Grid
         container
         sx={{
-          height: "100%",
+          height: { xs: "auto", md: "100vh" },
+          width: "100%",
           display: "flex",
-          p: {
-            xs: "24px",
-            sm: "40px",
-            md: "80px",
-          },
-          justifyContent: "space-between",
+          flexDirection: { xs: "column", sm: "column", md: "row" },
+          justifyContent: { xs: "center", sm: "center", md: "center" },
+          p: { xs: 2, sm: 4, md: 8 },
         }}
       >
+        {loading && <Loading text="Mohon tunggu..." fullscreen />}
+
         {/* Kolom Kiri (Hanya Muncul di layar MD ke atas) */}
         <Grid
           item
           xs={false}
           md={6}
           sx={{
-            display: "flex",
+            display: {
+              xs: "none",
+              sm: "none",
+              md: "flex",
+              lg: "flex",
+              xl: "flex",
+            },
             justifyContent: "center",
             alignItems: "center",
             p: 2,
-            // // Perbaikan: Gunakan display responsif jika xs={false} tidak berfungsi penuh
-            // display: { xs: "none", md: "flex" },
           }}
         >
           <Box
             sx={{
               width: "100%",
-              maxWidth: "650px",
+              maxWidth: {
+                xs: "220px", // HP kecil
+                sm: "350px", // HP besar & tablet kecil
+                md: "500px", // Laptop kecil
+                lg: "650px", // Laptop besar
+              },
               height: "auto",
               display: "flex",
               justifyContent: "center",
@@ -136,10 +145,9 @@ export default function VerifyPage() {
             <img
               src={GambarLogin}
               alt="Gambar Login"
-              // Hapus style inline dan pindahkan ke sx
               style={{
                 width: "100%",
-                maxWidth: "650px", // Ini sekarang redundan karena ada di Box
+                maxWidth: "650px",
                 height: "auto",
                 objectFit: "contain",
               }}
@@ -148,7 +156,21 @@ export default function VerifyPage() {
         </Grid>
 
         {/* Kolom Kanan (Form Verifikasi) */}
-        <Grid item xs={12} md={6}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: { xs: "center", md: "center" },
+            alignItems: "center",
+            px: { xs: 4, sm: 6, md: 8 },
+            py: { xs: 4, md: 0 },
+            backgroundColor: "#fff",
+            gap: "30px",
+          }}
+        >
           <Item
             sx={{
               height: "100%",
@@ -158,6 +180,7 @@ export default function VerifyPage() {
               alignItems: "center",
               px: { xs: 4, md: 8 },
               gap: "30px",
+              backgroundColor: "#fff",
               padding: "50px",
             }}
           >

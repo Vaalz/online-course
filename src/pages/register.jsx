@@ -8,6 +8,10 @@ import AuthButton from "../components/Authcompt/ButtonAuth";
 import InputField from "../components/Authcompt/InputField";
 import GradientButton from "../components/Authcompt/GradientButton";
 import GambarLogin from "../assets/image/Gambar.png";
+import LoginAuth from "../services/auth";
+import Loading from "../components/Loading";
+
+
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -19,6 +23,8 @@ const Item = styled(Paper)(() => ({
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
@@ -27,39 +33,48 @@ export default function RegisterPage() {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleRegister = async () => {
-    const newErrors = {};
+  const newErrors = {};
 
-    if (!username.trim()) newErrors.username = "Username tidak boleh kosong";
-    if (!email.trim()) newErrors.email = "Email tidak boleh kosong";
-    else if (!validateEmail(email))
-      newErrors.email = "Format email tidak valid";
+  if (!username.trim()) newErrors.username = "Username tidak boleh kosong";
 
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
+  if (!email.trim()) {
+    newErrors.email = "Email tidak boleh kosong";
+  } else if (!validateEmail(email)) {
+    newErrors.email = "Format email tidak valid";
+  }
 
-    try {
-      const res = await fetch(`${API_URL}auth/otp/send`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+  setErrors(newErrors);
+  if (Object.keys(newErrors).length > 0) return;
 
-      const data = await res.json(); // <<< ini penting
+  setLoading(true);
 
-      if (!res.ok) {
-        setErrors({ email: data.message || "Gagal mengirim kode OTP" });
-        return;
-      }
+  try {
+    const res = await fetch(`${API_URL}auth/otp/send`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
 
-      sessionStorage.setItem("userEmail", email);
-      sessionStorage.setItem("username", username);
+    const data = await res.json();
 
-      navigate("/verify");
-    } catch (err) {
-      console.error("OTP Error:", err);
-      setErrors({ email: "Terjadi kesalahan, coba lagi" });
+    if (!res.ok) {
+      setLoading(false);
+      setErrors({ email: data.message || "Gagal mengirim kode OTP" });
+      return;
     }
-  };
+
+    sessionStorage.setItem("userEmail", email);
+    sessionStorage.setItem("username", username);
+
+    navigate("/verify");
+  } catch (err) {
+    console.error("OTP Error:", err);
+    setErrors({ email: "Terjadi kesalahan, coba lagi" });
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleGoogleLogin = async () => {
     try {
@@ -81,6 +96,8 @@ export default function RegisterPage() {
     } catch (err) {
       console.error(err);
       alert("Login Google gagal");
+    } finally {
+      setLoading(false); // selesai
     }
   };
 
@@ -89,14 +106,19 @@ export default function RegisterPage() {
       <Grid
         container
         sx={{
-          height: "100%",
+          height: { xs: "auto", md: "100vh" },
+          width: "100%",
           display: "flex",
+          flexDirection: { xs: "column",sm: "column" , md: "row" },
+          justifyContent: { xs: "center",sm: "center", md: "center"},
+          p: { xs: 2, sm: 4, md: 8 },
         }}
       >
+        {loading && <Loading text="Mohon tunggu..." fullscreen />}
         {/* ==== LEFT IMAGE ==== */}
         <Grid
           item
-          xs={12}
+          xs={false}
           md={6}
           sx={{
             display: {
@@ -111,10 +133,8 @@ export default function RegisterPage() {
             p: 2,
           }}
         >
-          <img
-            src={GambarLogin}
-            alt="Gambar Login"
-            style={{
+          <Box
+            sx={{
               width: "100%",
               maxWidth: {
                 xs: "220px", // HP kecil
@@ -123,12 +143,38 @@ export default function RegisterPage() {
                 lg: "650px", // Laptop besar
               },
               height: "auto",
-              objectFit: "contain",
+              display: "flex",
+              justifyContent: "center",
             }}
-          />
+          >
+            <img
+              src={GambarLogin}
+              alt="Gambar Login"
+              style={{
+                width: "100%",
+                maxWidth: "650px",
+                height: "auto",
+                objectFit: "contain",
+              }}
+            />
+          </Box>
         </Grid>
 
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: { xs: "center", md: "center" },
+            alignItems: "center",
+            px: { xs: 4, sm: 6, md: 8 },
+            py: { xs: 4, md: 0 },
+            backgroundColor: "#fff",
+            gap: "30px",
+          }}
+        >
           <Item
             sx={{
               height: "100%",

@@ -15,144 +15,38 @@ import {
   DialogActions,
   IconButton,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-
 import NavbarDashboard from "../components/layout/DashboardLayout";
 import UserSidebar from "../components/layout/UserSidebar";
 import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
+
+import ProfileInfo from "../components/profile/ProfileInfo";
+import ProfileEditDialog from "../components/profile/ProfileInfo";
+import { useProfile } from "../components/profile/useProfile";
 
 export default function ProfileStudent() {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const [profile, setProfile] = useState(null);
-  const [loadingProfile, setLoadingProfile] = useState(true);
+  const { profile, loading, updateProfile } = useProfile(API_URL);
 
-  // dialog state
   const [openEdit, setOpenEdit] = useState(false);
+  const [form, setForm] = useState({});
 
-  // form state (local editable copy)
-  const [form, setForm] = useState({
-    full_name: "",
-    last_name: "",
-    email: "",
-    phone: "",
-    about: "",
-    avatar: "",
-  });
-
-  // fallback static data (used if backend is down or returns nothing)
-  const FALLBACK = {
-    full_name: "Bayu Ramadhan",
-    last_name: "Putra",
-    email: "bayu@example.com",
-    phone: "+62 8123-4567-890",
-    about:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lectus lectus, dapibus ornare odio.",
-    avatar:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=80&auto=format&fit=crop",
-  };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    async function fetchProfile() {
-      try {
-        if (!API_URL) throw new Error("API_URL not set");
-
-        const res = await fetch(`${API_URL}profile/student`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!res.ok) {
-          // server returned non-2xx --> fallback to static
-          console.warn("Fetch profile failed, using fallback static profile");
-          setProfile(FALLBACK);
-        } else {
-          const json = await res.json();
-          // some backends nest data under .data
-          const data = json?.data ?? json;
-          // normalize fields (guard)
-          setProfile({
-            full_name: data.full_name ?? data.username ?? FALLBACK.full_name,
-            last_name: data.last_name ?? "",
-            email: data.email ?? FALLBACK.email,
-            phone: data.phone ?? data.contact ?? FALLBACK.phone,
-            about: data.about ?? data.bio ?? FALLBACK.about,
-            avatar: data.avatar ?? data.profile_picture ?? FALLBACK.avatar,
-          });
-        }
-      } catch (err) {
-        console.error("fetchProfile error:", err);
-        setProfile(FALLBACK);
-      } finally {
-        setLoadingProfile(false);
-      }
-    }
-
-    fetchProfile();
-  }, [API_URL]);
-
-  // when profile is loaded, copy to form state
-  useEffect(() => {
-    if (profile) {
-      setForm({
-        full_name: profile.full_name || "",
-        last_name: profile.last_name || "",
-        email: profile.email || "",
-        phone: profile.phone || "",
-        about: profile.about || "",
-        avatar: profile.avatar || "",
-      });
-    }
-  }, [profile]);
-
-  const handleOpenEdit = () => setOpenEdit(true);
-  const handleCloseEdit = () => {
-    // restore form from actual profile if user cancel
-    setForm({
-      full_name: profile.full_name || "",
-      last_name: profile.last_name || "",
-      email: profile.email || "",
-      phone: profile.phone || "",
-      about: profile.about || "",
-      avatar: profile.avatar || "",
-    });
-    setOpenEdit(false);
-  };
-
-  const handleChange = (field) => (e) =>
-    setForm((p) => ({ ...p, [field]: e.target.value }));
-
-  const handleSave = async () => {
-    // saat ini: statik -> update local state only
-    // nanti: panggil API untuk menyimpan perubahan
-    const updated = { ...profile, ...form };
-    setProfile(updated);
-    setOpenEdit(false);
-
-    // contoh komentar: jika mau panggil API untuk menyimpan, buat request PUT/PATCH di sini.
-    // try {
-    //   const token = localStorage.getItem("token");
-    //   await fetch(`${API_URL}profile/student`, {
-    //     method: "PUT",
-    //     headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-    //     body: JSON.stringify(form),
-    //   });
-    // } catch (err) { console.error(err); }
-  };
-
-  if (loadingProfile) {
-    return (
-      <Box sx={{ p: 4 }}>
-        <Typography>Loading profile...</Typography>
-      </Box>
-    );
+  if (loading) {
+    return <Typography>Loading...</Typography>;
   }
 
-  // safety: if still no profile (shouldn't happen due to fallback) -> render fallback
-  const safeProfile = profile ?? FALLBACK;
+  const handleEditOpen = () => {
+    setForm(profile);
+    setOpenEdit(true);
+  };
 
+  const handleSave = async () => {
+    await updateProfile(form);
+    setOpenEdit(false);
+  };
+
+  const safeProfile = profile ?? FALLBACK;
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
       {/* NAVBAR */}
@@ -197,65 +91,22 @@ export default function ProfileStudent() {
           <Grid container spacing={3}>
             {/* ==== LEFT SECTION ==== */}
             <Grid size={8}>
-              {/* CARD PROFILE */}
-              <Box
-                sx={{
-                  border: "1px solid #DCE4E3",
-                  bgcolor: "#fff",
-                  borderRadius: 3,
-                  p: 3,
-                }}
-              >
-                <Grid container spacing={3} alignItems="center">
+              {/* Profile Card */}
+              <Box sx={{ p: 3, bgcolor: "#fff", borderRadius: 3 }}>
+                <Grid container spacing={2}>
                   <Grid item>
                     <Avatar
-                      src={safeProfile.avatar}
-                      sx={{
-                        width: { xs: 100, md: 140 },
-                        height: { xs: 100, md: 140 },
-                        borderRadius: "50%",
-                      }}
+                      src={profile.avatar}
+                      sx={{ width: 120, height: 120 }}
                     />
                   </Grid>
-
                   <Grid item xs>
-                    <Typography fontSize={{ xs: 20, md: 26 }} fontWeight={800}>
-                      {safeProfile.full_name}
+                    <Typography fontSize={26} fontWeight={800}>
+                      {profile.full_name}
                     </Typography>
+                    <Typography>{profile.about}</Typography>
 
-                    <Typography sx={{ mt: 1, maxWidth: 550 }}>
-                      {safeProfile.about}
-                    </Typography>
-
-                    <Button
-                      size="small"
-                      sx={{
-                        mt: 2,
-                        textTransform: "none",
-                        px: 2.5,
-                        bgcolor: "#11DF9E",
-                        color: "#fff",
-                        borderRadius: "50px",
-                        fontWeight: 700,
-                        "&:hover": { bgcolor: "#0FCF8D" },
-                      }}
-                    >
-                      Student
-                    </Button>
-
-                    {/* tombol edit */}
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      sx={{
-                        mt: 2,
-                        ml: 2,
-                        textTransform: "none",
-                        px: 2.5,
-                        borderRadius: "50px",
-                      }}
-                      onClick={handleOpenEdit}
-                    >
+                    <Button sx={{ mt: 2 }} onClick={handleEditOpen}>
                       Edit Info
                     </Button>
                   </Grid>
@@ -328,68 +179,9 @@ export default function ProfileStudent() {
             {/* ==== RIGHT SECTION ==== */}
             <Grid size={4}>
               {/* INFORMASI PRIBADI */}
-              <Box
-                sx={{
-                  border: "1px solid #DCE4E3",
-                  bgcolor: "#fff",
-                  borderRadius: 3,
-                  p: 3,
-                }}
-              >
-                <Typography fontSize={20} fontWeight={800} sx={{ mb: 2 }}>
-                  Informasi Pribadi
-                </Typography>
-
-                <TextField
-                  fullWidth
-                  label="Nama Lengkap"
-                  value={safeProfile.full_name}
-                  sx={{ mb: 2 }}
-                  InputProps={{ readOnly: true }}
-                />
-                <TextField
-                  fullWidth
-                  label="Nama Belakang"
-                  value={safeProfile.last_name ?? ""}
-                  sx={{ mb: 2 }}
-                  InputProps={{ readOnly: true }}
-                />
-                <TextField
-                  fullWidth
-                  label="Email"
-                  value={safeProfile.email}
-                  sx={{ mb: 2 }}
-                  InputProps={{ readOnly: true }}
-                />
-                <TextField
-                  fullWidth
-                  label="Contact"
-                  value={safeProfile.phone ?? ""}
-                  sx={{ mb: 2 }}
-                  InputProps={{ readOnly: true }}
-                />
-                <TextField
-                  fullWidth
-                  label="Bergabung Pada"
-                  value="17 - 10 - 2025"
-                  sx={{ mb: 2 }}
-                  InputProps={{ readOnly: true }}
-                />
-
-                {/* tombol edit (duplikat agar mudah ditemukan) */}
-                <Button
-                  variant="outlined"
-                  sx={{
-                    mt: 1,
-                    float: "right",
-                    textTransform: "none",
-                    borderRadius: 2,
-                  }}
-                  onClick={handleOpenEdit}
-                >
-                  Edit Info
-                </Button>
-              </Box>
+              <Grid item xs={12} md={4}>
+                <ProfileInfo profile={profile} onEdit={handleEditOpen} />
+              </Grid>
 
               {/* SEDANG BERLANGSUNG */}
               <Box
