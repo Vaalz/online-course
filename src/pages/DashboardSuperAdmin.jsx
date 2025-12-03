@@ -56,15 +56,8 @@ const CardWrapper = styled(Paper)(({ theme }) => ({
 
 export default function DashboardSuperAdmin() {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        width: "100%",
-        minHeight: "100vh",
-        overflowX: "hidden",
-        backgroundColor: "#f5f6fa",
-      }}
-    >
+    <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
+      {/* NAVBAR FIXED */}
       <Box
         sx={{
           position: "fixed",
@@ -92,111 +85,52 @@ export default function DashboardSuperAdmin() {
         <Sidebar menus={superadminMenu} />
       </Box>
 
-      {/* MAIN CONTENT */}
+      {/* PAGE WRAPPER */}
       <Box
-        component="main"
         sx={{
-          flexGrow: 1,
-          px: { xs: 2, md: 4 },
-          py: 3,
+          display: "flex",
           width: "100%",
-          height: "100vh",
+          pt: "80px",
+          pl: { md: "330px", xs: 0 },
         }}
       >
-        {/* TITLE */}
-        <Typography variant="h5" fontWeight="700" sx={{ mt: 2, mb: 3 }}>
-          kk
-        </Typography>
+        {/* SIDEBAR LEFT */}
+        <Box
+          sx={{
+            width: 319,
+            flexShrink: 0,
+            position: "fixed",
+            top: "80px",
+            left: 0,
+            height: "calc(100vh - 80px)",
+            overflowY: "auto",
+            bgcolor: "#F1FCFA",
+            borderRight: "1px solid #E0E0E0",
+            display: { xs: "none", md: "block" },
+          }}
+        >
+          <UserSidebar menus={superadminMenu} />
+        </Box>
 
-        {/* GRID KONTEN */}
-        <Grid container spacing={2} width={"100%"} >
-          {/* STATS 4 CARD */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-              gap: { xs: 2, sm: 2.5, md: 4 },
-              overflowX: "auto",
-              scrollbarWidth: "none",
-              "&::-webkit-scrollbar": { display: "none" },
-            }}
-          >
-            {statsData.map((stat, i) => (
-              <Box
-                key={i}
-                sx={{
-                  minWidth: { xs: 140, sm: 180, md: 240, lg: 316 },
-                  height: { xs: "80px", md: "103px" },
-                  flexShrink: 0,
-                }}
-              >
-                <Box
-                  sx={{
-                    px: { xs: 2, md: 4 },
-                    py: { xs: 1.5, md: 2 },
-                    border: "1px solid #B9C2C0",
-                    borderRadius: 3,
-                    height: "100%",
-                    backgroundColor: "#FFFFFF",
-                    boxShadow: "0px 3px 8px rgba(0,0,0,0.08)",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    justifyContent: "center",
-                    gap: { xs: 1, md: 2 },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: { xs: 0.5, md: 1.5 },
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: { xs: 30, md: 40 },
-                        height: { xs: 30, md: 40 },
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {stat.icon}
-                    </Box>
-
-                    <Typography
-                      variant="h6"
-                      fontWeight={700}
-                      fontSize={{ xs: 16, md: 20 }}
-                    >
-                      {stat.value}
-                    </Typography>
-                  </Box>
-
-                  <Box>
-                    <Typography
-                      color="text.secondary"
-                      fontSize={{ xs: 10, sm: 12, md: 14 }}
-                      ml={{ xs: 0, md: 0 }}
-                      sx={{ mt: 0 }}
-                    >
-                      {stat.label}
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
-            ))}
-          </Box>
-
-          {/* Card Konten Lebar */}
-          <Grid container spacing={2} width={"100%"} height={"100vh"}>
-            {/* LEFT CONTENT*/}
-            <Grid item sx={{ width: "1045px", height: "100%" }}>
+        {/* CONTENT */}
+        <Box sx={{ flexGrow: 1, pr: 3, pl: 3, py: 3 }}>
+          <Grid container spacing={3}>
+            {/* LEFT AREA (stats, progress list, large box) */}
+            <Grid item xs={12} md={9}>
               <Grid container spacing={2}>
-                {/* Bagian atas */}
-                <Grid item xs={12} width={"100%"}>
+                {/* STATS 4 CARD */}
+                {statsData.map((stat, i) => (
+                  <Grid item xs={12} sm={6} md={3} key={i}>
+                    <StatCard
+                      icon={stat.icon}
+                      value={stat.value}
+                      label={stat.label}
+                    />
+                  </Grid>
+                ))}
+
+                {/* PROGRESS SEMUA ORANG */}
+                <Grid item xs={12}>
                   <Box
                     sx={{
                       p: 3,
@@ -268,17 +202,9 @@ export default function DashboardSuperAdmin() {
               </Grid>
             </Grid>
 
-            {/* RIGHT CONTENT: REMAINING SPACE */}
-            <Grid item height={"100%"} sx={{ flexGrow: 1, minWidth: 0 }}>
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: 2,
-                }}
-              >
-                <NotificationPanel notifications={notifications} />{" "}
-              </Box>
+            {/* RIGHT AREA — NOTIFIKASI */}
+            <Grid item xs={12} md={3}>
+              <NotificationPanel notifications={notifications} />
             </Grid>
           </Grid>
         </Grid>

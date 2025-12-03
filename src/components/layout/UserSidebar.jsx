@@ -13,52 +13,6 @@ import Quiz from "../../assets/image/Quiz.png";
 
 export default function UserSidebar({ menus = [] }) {
   // Data Menu Sidebar
-  const menuItems = [
-    {
-      icon: (
-        <img
-          src={Home}
-          alt="home"
-          style={{ width: 24, height: 24, marginRight: 20 }}
-        />
-      ),
-      text: "HOME",
-      path: "/",
-    },
-    {
-      icon: (
-        <img
-          src={Dashboard}
-          alt="dashboard"
-          style={{ width: 24, height: 24, marginRight: 20 }}
-        />
-      ),
-      text: "DASHBOARD",
-      path: "/DashboardStudent",
-    },
-    {
-      icon: (
-        <img
-          src={Profile}
-          alt="profile"
-          style={{ width: 28, height: 28, marginRight: 20 }}
-        />
-      ),
-      text: "EDIT PROFILE",
-      path: "/profile",
-    },
-    {
-      icon: (
-        <img
-          src={Quiz}
-          alt="quiz"
-          style={{ width: 26, height: 26, marginRight: 20 }}
-        />
-      ),
-      text: "QUIZ",
-      path: "/Quiz",
-    },
-  ];
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -66,7 +20,7 @@ export default function UserSidebar({ menus = [] }) {
   return (
     <Box
       sx={{
-        width: { xs: "180px", sm: "220px", md: "319px" },
+        width: { xs: "180px", sm: "220px", md: "270px" },
         bgcolor: "#F6FEFD",
         borderRight: "1px solid #E0E0E0",
         py: 4,
@@ -106,7 +60,7 @@ export default function UserSidebar({ menus = [] }) {
                 {item.icon}
               </ListItemIcon>
 
-              <ListItemText primary={item.text} />
+              <ListItemText primary={item.text} primaryTypographyProps={{ fontWeight: "bold", fontSize: '14px' }}/>
             </ListItem>
           );
         })}

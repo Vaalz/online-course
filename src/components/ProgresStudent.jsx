@@ -20,6 +20,7 @@ export default function ProgresStudent() {
         p: 2,
         mt: 2,
         width: '100%',
+        height: 160,
         backgroundColor: "#F8FEFF",
       }}
     >
@@ -29,17 +30,17 @@ export default function ProgresStudent() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          mb: 2,
+          mb: 0.2,
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <PeopleAltIcon sx={{ color: "#466EF1" }} />
-          <Typography fontWeight={700} sx={{fontSize: '20px'}}>PROGRES SISWA</Typography>
+          <Typography fontWeight={700} sx={{fontSize: '15px'}}>PROGRES SISWA</Typography>
         </Box>
 
         <Typography
           sx={{
-            fontSize: 14,
+            fontSize: 12,
             color: "#466EF1",
             cursor: "pointer",
             fontWeight: 600,
