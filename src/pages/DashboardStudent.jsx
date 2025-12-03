@@ -24,7 +24,8 @@ import NavbarDashboard from "../components/layout/DashboardLayout";
 import UserSidebar from "../components/layout/UserSidebar";
 
 import CardKelas from "../components/CardKelas";
-import CategoryButtons from "../components/CategoryButtons";
+import StatCard from "../components/StatCard";
+import CategoryButtons from "../components/MyCategoryButtons";
 
 export default function DashboardStudent() {
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -33,7 +34,6 @@ export default function DashboardStudent() {
   const [stats, setStats] = useState(null);
   const [courses, setCourses] = useState([]);
   const [allCourses, setAllCourses] = useState([]);
-  
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -47,9 +47,6 @@ export default function DashboardStudent() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
-
-    console.log("TOKEN:", token);
-    console.log("ROLE:", role);
 
     if (!token) {
       console.log("No token found, redirecting to home");
@@ -78,7 +75,7 @@ export default function DashboardStudent() {
         setStats(json.data);
 
         // FETCH COURSE LIST
-        const resCourse = await fetch(`${API_URL}courses`, {
+        const resCourse = await fetch(`${API_URL}mycourses/categories/${id}/courses`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -88,8 +85,8 @@ export default function DashboardStudent() {
         }
 
         const jsonCourse = await resCourse.json();
-        console.log(jsonCourse.data.data);
-        setCourses(jsonCourse.data.data);
+        console.log(jsonCourse.data);
+        setCourses(jsonCourse.data);
       } catch (err) {
         console.error("Fetch dashboard error:", err);
       } finally {
@@ -142,19 +139,15 @@ export default function DashboardStudent() {
           width: "100%",
           height: "100%",
           pt: "80px",
-          /* pl disesuaikan dengan lebar sidebar pada md/lg; tidak memaksa padding besar di layar kecil */
           pl: { xs: 0, sm: 0, md: "260px", lg: "300px" },
-          pr: "0",
         }}
       >
         {/* SIDEBAR DESKTOP */}
         {!isMobile && (
           <Box
             sx={{
-              /* Lebar sidebar disesuaikan di md/lg agar wrapper pl konsisten */
               flexShrink: 0,
               position: "fixed",
-              top: "80px",
               left: 0,
               height: "calc(100vh - 80px)",
               overflowY: "hidden",
@@ -173,9 +166,7 @@ export default function DashboardStudent() {
             columnSpacing={3}
             alignItems="flex-start"
             sx={{
-              pr: { xs: 1.5, sm: 2, md: 3 },
               pl: { xs: 1.5, sm: 2, md: 3 },
-              py: { xs: 2, md: 3 },
             }}
           >
             <Box
@@ -183,6 +174,8 @@ export default function DashboardStudent() {
                 display: "flex",
                 width: "100%",
                 alignItems: "flex-end",
+                px: { xs: 2, md: 4 },
+                pt: "50px",
               }}
             >
               {/* === LEFT AREA === */}
@@ -191,6 +184,8 @@ export default function DashboardStudent() {
                 <Box
                   sx={{
                     display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%",
                     gap: { xs: 2, sm: 2.5, md: 4 },
                     overflowX: "auto",
                     scrollbarWidth: "none",
@@ -198,71 +193,12 @@ export default function DashboardStudent() {
                   }}
                 >
                   {statsData.map((stat, i) => (
-                    <Box
+                    <StatCard
                       key={i}
-                      sx={{
-                        minWidth: { xs: 140, sm: 180, md: 240, lg: 316 },
-                        width: { xs: 150, sm: 180, md: 240, lg: 316 },
-                        height: { xs: "80px", md: "103px" },
-                        flexShrink: 0,
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          px: { xs: 2, md: 4 },
-                          py: { xs: 1.5, md: 2 },
-                          border: "1px solid #B9C2C0",
-                          borderRadius: 3,
-                          height: "100%",
-                          backgroundColor: "#FFFFFF",
-                          boxShadow: "0px 3px 8px rgba(0,0,0,0.08)",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "flex-start",
-                          justifyContent: "center",
-                          gap: { xs: 1, md: 2 },
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: { xs: 0.5, md: 1.5 },
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              width: { xs: 30, md: 40 },
-                              height: { xs: 30, md: 40 },
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            {stat.icon}
-                          </Box>
-
-                          <Typography
-                            variant="h6"
-                            fontWeight={700}
-                            fontSize={{ xs: 16, md: 20 }}
-                          >
-                            {stat.value}
-                          </Typography>
-                        </Box>
-
-                        <Box>
-                          <Typography
-                            color="text.secondary"
-                            fontSize={{ xs: 10, sm: 12, md: 14 }}
-                            ml={{ xs: 0, md: 0 }}
-                            sx={{ mt: 0 }}
-                          >
-                            {stat.label}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
+                      icon={stat.icon}
+                      value={stat.value}
+                      label={stat.label}
+                    />
                   ))}
                 </Box>
 
@@ -368,54 +304,55 @@ export default function DashboardStudent() {
                 </Box>
               )}
             </Box>
+            <Box
+              sx={{
+                mt: "20px",
+                px: { xs: 2, md: 4 },
+                display: "flex",
+                overflowX: "auto",
+                scrollbarWidth: "auto",
+                "&::-webkit-scrollbar": { display: "none" },
+                whiteSpace: "nowrap",
+              }}
+            >
+              <CategoryButtons onSelectCategory={setCourses} />
+            </Box>
+
+            {/* CARD LIST */}
+            <Box
+              sx={{
+                mt: 4,
+                px: { xs: 2, md: 4 },
+                display: "flex",
+                gap: { xs: 2, md: 3 },
+                overflowX: "auto",
+                scrollbarWidth: "none",
+                width: "1500px", // FIX WIDTH UNTUK AREA CARD
+
+                "&::-webkit-scrollbar": { height: 0 },
+              }}
+            >
+              {courses.length === 0 ? (
+                <Typography sx={{ fontSize: 18, color: "#999" }}>
+                  Tidak ada kelas pada kategori ini
+                </Typography>
+              ) : (
+                courses.map((c) => (
+                  <Box key={c.id} sx={{ minWidth: 280, flexShrink: 0 }}>
+                    <CardKelas
+                      image={c.thumbnail}
+                      title={c.name}
+                      description={c.description}
+                      lessons={c.lessons_count}
+                      creator={c.creator?.full_name}
+                    />
+                  </Box>
+                ))
+              )}
+            </Box>
           </Grid>
 
           {/* CATEGORY BUTTON */}
-          <Box
-            sx={{
-              mt: "20px",
-              px: { xs: 1.5, md: 3 },
-              display: "flex",
-              overflowX: "auto",
-              scrollbarWidth: "auto",
-              "&::-webkit-scrollbar": { display: "none" },
-              whiteSpace: "nowrap",
-            }}
-          >
-            <CategoryButtons onSelectCategory={setCourses} />
-          </Box>
-
-          {/* CARD LIST */}
-          <Box
-            sx={{
-              mt: 4,
-              px: { xs: 1.5, md: 3 },
-              display: "flex",
-              gap: { xs: 2, md: 3 },
-              overflowX: "auto",
-              pb: 2,
-              scrollbarWidth: "none",
-              "&::-webkit-scrollbar": { height: 0 },
-            }}
-          >
-            {courses.length === 0 ? (
-              <Typography sx={{ fontSize: 18, color: "#999" }}>
-                Tidak ada kelas pada kategori ini
-              </Typography>
-            ) : (
-              courses.map((c) => (
-                <Box key={c.id} sx={{ minWidth: 280, flexShrink: 0 }}>
-                  <CardKelas
-                    image={c.thumbnail}
-                    title={c.name}
-                    description={c.description}
-                    lessons={c.lessons_count}
-                    creator={c.creator?.full_name}
-                  />
-                </Box>
-              ))
-            )}
-          </Box>
         </Box>
       </Box>
     </Box>

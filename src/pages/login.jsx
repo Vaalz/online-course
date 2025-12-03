@@ -87,18 +87,16 @@ export default function LoginPage() {
   };
 
   return (
-    <Box sx={{ width: "100%", height: "100vh" }}>
+    <Box sx={{ width: "100%", height: { xs: "auto", md: "100vh" } }}>
       <Grid
         container
         sx={{
-          height: "100%",
+          height: { xs: "auto", md: "100vh" },
+          width: "100%",
           display: "flex",
-          p: {
-            xs: "24px",
-            sm: "40px",
-            md: "80px",
-          },
-          justifyContent: "space-between",
+          p: { xs: 2, sm: 4, md: 8 },
+          flexDirection: { xs: "column", sm: "column", md: "row" },
+          justifyContent: { xs: "center", sm: "center", md: "center" },
         }}
       >
         {loading && <Loading text="Mohon tunggu..." fullscreen />}
@@ -117,7 +115,7 @@ export default function LoginPage() {
             },
             justifyContent: "center",
             alignItems: "center",
-            p: 2,
+            p: { xs: 0, sm: 0, md: "80px" },
           }}
         >
           <Box
@@ -139,7 +137,7 @@ export default function LoginPage() {
               alt="Gambar Login"
               style={{
                 width: "100%",
-                maxWidth: "650px", 
+                maxWidth: "650px",
                 height: "auto",
                 objectFit: "contain",
               }}
@@ -152,7 +150,6 @@ export default function LoginPage() {
           xs={12}
           md={6}
           sx={{
-            height: "100%",
             display: "flex",
             flexDirection: "column",
             justifyContent: { xs: "center", md: "center" },

@@ -5,7 +5,6 @@ export default function StatCard({ icon, value, label }) {
     <Box
       sx={{
         minWidth: { xs: 140, sm: 180, md: 240, lg: 316 },
-        width: { xs: 150, sm: 180, md: 240, lg: 316 },
         height: { xs: "80px", md: "103px" },
         flexShrink: 0,
       }}
@@ -61,7 +60,6 @@ export default function StatCard({ icon, value, label }) {
           {label}
         </Typography>
       </Box>
-      
     </Box>
   );
 }
