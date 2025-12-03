@@ -9,7 +9,6 @@ import GradientButton from "../components/Authcompt/GradientButton";
 import LoginAuth from "../services/auth";
 import GambarLogin from "../assets/image/Gambar.png";
 
-
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
   padding: "1rem",
@@ -94,7 +93,13 @@ export default function LoginPage() {
           xs={12}
           md={6}
           sx={{
-            display: { xs: "none", md: "flex" },
+            display: {
+              xs: "none",
+              sm: "none",
+              md: "flex",
+              lg: "flex",
+              xl: "flex",
+            },
             justifyContent: "center",
             alignItems: "center",
             p: 2,
@@ -105,7 +110,12 @@ export default function LoginPage() {
             alt="Gambar Login"
             style={{
               width: "100%",
-              maxWidth: "650px",
+              maxWidth: {
+                xs: "220px", // HP kecil
+                sm: "350px", // HP besar & tablet kecil
+                md: "500px", // Laptop kecil
+                lg: "650px", // Laptop besar
+              },
               height: "auto",
               objectFit: "contain",
             }}
