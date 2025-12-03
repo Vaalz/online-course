@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import AuthButton from "../components/Authcompt/ButtonAuth";
 import InputField from "../components/Authcompt/InputField";
 import GradientButton from "../components/Authcompt/GradientButton";
+import GambarLogin from "../assets/image/Gambar.png";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -19,57 +20,112 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [errors, setErrors] = useState({});
+
   const navigate = useNavigate();
 
-  // Hapus data session ketika masuk ke halaman register
-  useEffect(() => {
-    sessionStorage.removeItem("userEmail");
-    sessionStorage.removeItem("verifySource");
-  }, []);
-
-  // Validasi email sederhana
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     const newErrors = {};
 
-    // Validasi input
-    if (!email) newErrors.email = "Email tidak boleh kosong";
+    if (!username.trim()) newErrors.username = "Username tidak boleh kosong";
+    if (!email.trim()) newErrors.email = "Email tidak boleh kosong";
     else if (!validateEmail(email))
       newErrors.email = "Format email tidak valid";
 
-    if (!username) newErrors.username = "Username tidak boleh kosong";
-    if (!password) newErrors.password = "Password tidak boleh kosong";
-    if (!confirmPassword)
-      newErrors.confirmPassword = "Konfirmasi password tidak boleh kosong";
-    else if (password !== confirmPassword)
-      newErrors.confirmPassword = "Password tidak sama";
-
     setErrors(newErrors);
-
-    // Jika masih ada error, hentikan
     if (Object.keys(newErrors).length > 0) return;
 
-    // ✅ Simpan data email ke sessionStorage agar VerifyPage tahu siapa user-nya
-    sessionStorage.setItem("userEmail", email);
-    sessionStorage.setItem("verifySource", "register"); // Tandai sumber halaman
+    try {
+      const res = await fetch(`${API_URL}auth/otp/send`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
 
-    console.log("📨 Mengirim kode verifikasi ke:", email);
+      const data = await res.json(); // <<< ini penting
 
-    // ⏩ Arahkan ke halaman verify
-    navigate("/verify");
+      if (!res.ok) {
+        setErrors({ email: data.message || "Gagal mengirim kode OTP" });
+        return;
+      }
+
+      sessionStorage.setItem("userEmail", email);
+      sessionStorage.setItem("username", username);
+
+      navigate("/verify");
+    } catch (err) {
+      console.error("OTP Error:", err);
+      setErrors({ email: "Terjadi kesalahan, coba lagi" });
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const res = await LoginAuth();
+      const backendData = res.data;
+
+      const token = res.idToken;
+      const role = backendData.roles?.[0]?.name;
+      const email = backendData.email;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+      localStorage.setItem("email", email);
+
+      if (role === "student") navigate("/dashboard/student");
+      else if (role === "teacher" || role === "instruktor")
+        navigate("/dashboard/instructor");
+      else navigate("/forbidden");
+    } catch (err) {
+      console.error(err);
+      alert("Login Google gagal");
+    }
   };
 
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
       <Grid
         container
-        rowSpacing={1}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-        sx={{ height: "100%" }}
+        sx={{
+          height: "100%",
+          display: "flex",
+        }}
       >
-        <Grid size={6}>
-          <Item sx={{ height: "100%" }}>1</Item>
+        {/* ==== LEFT IMAGE ==== */}
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            display: {
+              xs: "none",
+              sm: "none",
+              md: "flex",
+              lg: "flex",
+              xl: "flex",
+            },
+            justifyContent: "center",
+            alignItems: "center",
+            p: 2,
+          }}
+        >
+          <img
+            src={GambarLogin}
+            alt="Gambar Login"
+            style={{
+              width: "100%",
+              maxWidth: {
+                xs: "220px", // HP kecil
+                sm: "350px", // HP besar & tablet kecil
+                md: "500px", // Laptop kecil
+                lg: "650px", // Laptop besar
+              },
+              height: "auto",
+              objectFit: "contain",
+            }}
+          />
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
@@ -108,44 +164,22 @@ export default function RegisterPage() {
               }}
             >
               <Box>
-                <Typography
-                  sx={{
-                    color: "black",
-                    fontSize: "16px",
-                    textAlign: "left",
-                    fontStyle: "regular",
-                    mb: "10px",
-                  }}
-                >
-                  Username
-                </Typography>
                 <InputField
-                  label={"Username"}
+                  label="Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  error={!!errors.username}
-                  helperText={errors.username}
+                  error={Boolean(errors.username)}
+                  helperText={errors.username || ""}
                 />
               </Box>
               <Box>
-                <Typography
-                  sx={{
-                    color: "black",
-                    fontSize: "16px",
-                    textAlign: "left",
-                    fontStyle: "regular",
-                    mb: "10px",
-                  }}
-                >
-                  Email
-                </Typography>
                 <InputField
-                  label={"Email"}
+                  label="Email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  error={!!errors.email}
-                  helperText={errors.email}
+                  error={Boolean(errors.email)}
+                  helperText={errors.email || ""}
                 />
               </Box>
             </Box>
@@ -187,14 +221,10 @@ export default function RegisterPage() {
             </Box>
 
             {/* Login dengan Google */}
-            <Box
-              sx={{
-                width: "100%",
-                maxWidth: 560,
-              }}
-            >
+            <Box sx={{ width: "100%", maxWidth: "480px" }}>
               <AuthButton
                 text="Login dengan Google"
+                onClick={handleGoogleLogin}
                 icon={<GoogleIcon fontSize="25px" />}
               />
             </Box>

@@ -108,7 +108,13 @@ export default function LoginPage() {
           xs={false}
           md={6}
           sx={{
-            display: "flex",
+            display: {
+              xs: "none",
+              sm: "none",
+              md: "flex",
+              lg: "flex",
+              xl: "flex",
+            },
             justifyContent: "center",
             alignItems: "center",
             p: 2,
@@ -117,7 +123,12 @@ export default function LoginPage() {
           <Box
             sx={{
               width: "100%",
-              maxWidth: "650px",
+              maxWidth: {
+                xs: "220px", // HP kecil
+                sm: "350px", // HP besar & tablet kecil
+                md: "500px", // Laptop kecil
+                lg: "650px", // Laptop besar
+              },
               height: "auto",
               display: "flex",
               justifyContent: "center",
