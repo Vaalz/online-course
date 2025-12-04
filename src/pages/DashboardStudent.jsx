@@ -1,20 +1,22 @@
 // src/pages/DashboardStudent.jsx
+import axios from "axios";
 import {
   Box,
   Grid,
   Typography,
   LinearProgress,
-  Divider,
-  Button,
   IconButton,
   useMediaQuery,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import CreateProfileDialog from "../components/profile/CreateProfileDialog";
+
 import NotificationPanel from "../components/NotificationPanel";
-import Loading from "../components/Loading";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import CategoryButtons from "../components/MyCategoryButtons";
+
+import Loading from "../components/Loading";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
@@ -23,17 +25,14 @@ import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 import NavbarDashboard from "../components/layout/DashboardLayout";
 import UserSidebar from "../components/layout/UserSidebar";
 
-import CardKelas from "../components/CardKelas";
 import StatCard from "../components/StatCard";
-import CategoryButtons from "../components/MyCategoryButtons";
 
 export default function DashboardStudent() {
   const isMobile = useMediaQuery("(max-width: 900px)");
-
+  const [isProfileRequired, setIsProfileRequired] = useState(false);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);
   const [courses, setCourses] = useState([]);
-  const [allCourses, setAllCourses] = useState([]);
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -48,58 +47,31 @@ export default function DashboardStudent() {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
-    if (!token) {
-      console.log("No token found, redirecting to home");
-      window.location.href = "/";
-      return;
-    }
+    if (!token) return (window.location.href = "/");
+    if (role !== "student") return (window.location.href = "/forbidden");
 
-    if (role !== "student") {
-      window.location.href = "/forbidden";
-      return;
-    }
-
-    async function fetchData() {
+    async function checkProfile() {
       try {
-        // FETCH DASHBOARD STUDENT
-        const res = await fetch(`${API_URL}dashboard/student`, {
+        const res = await fetch(`${API_URL}profile/mybiodata`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        if (!res.ok) {
-          console.log("STATUS:", res.status);
-          throw new Error("Unauthorized or invalid token");
+        if (res.status === 500) {
+          console.log("PROFILE BELUM ADA");
+          setIsProfileRequired(true);
         }
-
-        const json = await res.json();
-        setStats(json.data);
-
-        // FETCH COURSE LIST
-        const resCourse = await fetch(`${API_URL}mycourses/categories/${id}/courses`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!resCourse.ok) {
-          console.log("STATUS COURSE:", resCourse.status);
-          throw new Error("Failed to fetch courses");
-        }
-
-        const jsonCourse = await resCourse.json();
-        console.log(jsonCourse.data);
-        setCourses(jsonCourse.data);
       } catch (err) {
-        console.error("Fetch dashboard error:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchData();
+    checkProfile();
   }, []);
 
   if (loading) return <Loading text="Memuat dashboard..." />;
 
-  // STATS SETELAH DATA TERSEDIA
   const statsData = [
     {
       label: "KURSUS DI IKUTI",
@@ -118,8 +90,20 @@ export default function DashboardStudent() {
     },
   ];
 
+  const handleCreateProfile = async (payload) => {
+    const token = localStorage.getItem("token");
+
+    await axios.post(`${API_URL}profile/biodata`, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    setIsProfileRequired(false);
+    window.location.reload(); // Refresh untuk ambil profil terbaru
+  };
+
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
+      {/* NAVBAR */}
       {/* NAVBAR */}
       <Box
         sx={{
@@ -351,8 +335,11 @@ export default function DashboardStudent() {
               )}
             </Box>
           </Grid>
-
-          {/* CATEGORY BUTTON */}
+          {/* MODAL CREATE PROFILE */}
+          <CreateProfileDialog
+            open={isProfileRequired}
+            onSubmit={handleCreateProfile}
+          />
         </Box>
       </Box>
     </Box>

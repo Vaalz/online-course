@@ -15,36 +15,47 @@ import {
   DialogActions,
   IconButton,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+
 import NavbarDashboard from "../components/layout/DashboardLayout";
 import UserSidebar from "../components/layout/UserSidebar";
 import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 
 import ProfileInfo from "../components/profile/ProfileInfo";
-import ProfileEditDialog from "../components/profile/ProfileInfo";
 import { useProfile } from "../components/profile/useProfile";
 
 export default function ProfileStudent() {
+  const { profile, loading, updateProfile } = useProfile();
   const isMobile = useMediaQuery("(max-width: 900px)");
-  const API_URL = import.meta.env.VITE_API_BASE_URL;
-
-  const { profile, loading, updateProfile } = useProfile(API_URL);
 
   const [openEdit, setOpenEdit] = useState(false);
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({
+    name: "",
+    lastName: "",
+    contact: "",
+    description: "",
+    profile_picture: "",
+  });
 
-  if (loading) {
-    return <Typography>Loading...</Typography>;
-  }
+  const handleChange = (field) => (e) => {
+    setForm({ ...form, [field]: e.target.value });
+  };
 
   const handleEditOpen = () => {
-    setForm(profile);
+    if (profile) setForm(profile);
     setOpenEdit(true);
   };
 
+  const handleCloseEdit = () => setOpenEdit(false);
+
   const handleSave = async () => {
-    await updateProfile(form);
+    await updateProfile(form); // PUT request
     setOpenEdit(false);
   };
+
+  if (loading) return <Typography sx={{ p: 4 }}>Loading...</Typography>;
+  if (!profile)
+    return <Typography sx={{ p: 4 }}>Data profil tidak tersedia.</Typography>;
 
   const safeProfile = profile ?? FALLBACK;
   return (
@@ -93,23 +104,33 @@ export default function ProfileStudent() {
             <Grid size={8}>
               {/* Profile Card */}
               <Box sx={{ p: 3, bgcolor: "#fff", borderRadius: 3 }}>
-                <Grid container spacing={2}>
-                  <Grid item>
+                <Grid
+                  item
+                  xs={12}
+                  md={4}
+                  display="flex"
+                  justifyContent="center"
+                >
+                  <Box textAlign="center">
                     <Avatar
-                      src={profile.avatar}
-                      sx={{ width: 120, height: 120 }}
+                      src={profile.profile_picture}
+                      sx={{ width: 140, height: 140, mb: 2 }}
                     />
-                  </Grid>
-                  <Grid item xs>
                     <Typography fontSize={26} fontWeight={800}>
-                      {profile.full_name}
+                      {profile.name}
                     </Typography>
-                    <Typography>{profile.about}</Typography>
+                    <Typography fontSize={18} sx={{ color: "gray" }}>
+                      {profile.description}
+                    </Typography>
 
-                    <Button sx={{ mt: 2 }} onClick={handleEditOpen}>
-                      Edit Info
+                    <Button
+                      variant="contained"
+                      sx={{ mt: 2, borderRadius: 2 }}
+                      onClick={handleEditOpen}
+                    >
+                      Edit Profile
                     </Button>
-                  </Grid>
+                  </Box>
                 </Grid>
               </Box>
 
@@ -327,12 +348,10 @@ export default function ProfileStudent() {
             Batal
           </Button>
           <Button
-            onClick={handleSave}
             variant="contained"
-            sx={{
-              textTransform: "none",
-              bgcolor: "#11DF9E",
-              "&:hover": { bgcolor: "#0FCF8D" },
+            onClick={async () => {
+              await handleSave();
+              document.activeElement.blur();
             }}
           >
             Simpan

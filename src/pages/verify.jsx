@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { verifyOtp, resendOtp } from "../services/otp";
 import useResendTimer from "../components/Authcompt/useResendTimer";
 import GambarLogin from "../assets/image/Gambar.png";
+import Loading from "../components/Loading";
 
 // Import Komponen & Service
 import GradientButton from "../components/Authcompt/GradientButton";
