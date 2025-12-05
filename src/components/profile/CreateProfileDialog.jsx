@@ -11,17 +11,19 @@ import {
 import { useState } from "react";
 
 export default function CreateProfileDialog({ open, onSubmit }) {
+  const localUser = JSON.parse(localStorage.getItem("user"));
+
   const [form, setForm] = useState({
     name: "",
     firstName: "",
     lastName: "",
     contact: "",
-    email: "",
     description: "",
     age: "",
     school: "",
     profile_picture: "",
-    joinDate: new Date().toLocaleDateString("id-ID"), // static auto Today
+    created_at: localUser?.createdAt || new Date().toISOString(),
+    email: localUser?.email || "",
   });
 
   const [preview, setPreview] = useState(null);
@@ -111,11 +113,11 @@ export default function CreateProfileDialog({ open, onSubmit }) {
               <Grid item xs={6}>
                 <Typography fontWeight={600}>Email</Typography>
                 <TextField
-                  placeholder="Masukan email anda"
+                  placeholder="Email anda"
                   name="email"
                   value={form.email}
-                  onChange={handleChange}
                   fullWidth
+                  disabled
                 />
               </Grid>
 
@@ -132,8 +134,14 @@ export default function CreateProfileDialog({ open, onSubmit }) {
 
               <Grid item xs={6}>
                 <Typography fontWeight={600}>Bergabung Pada</Typography>
-                <TextField value={form.joinDate} fullWidth disabled />
+                <TextField
+                  fullWidth
+                  name="created_at"
+                  value={new Date(form.created_at).toLocaleDateString("id-ID")}
+                  disabled
+                />
               </Grid>
+
               <Grid item xs={6}>
                 <Typography fontWeight={600}>usi</Typography>
                 <TextField
@@ -223,16 +231,6 @@ export default function CreateProfileDialog({ open, onSubmit }) {
             mt: 4,
           }}
         >
-          <Button
-            variant="contained"
-            sx={{
-              background: "#00C89E",
-              width: 200,
-            }}
-          >
-            BATAL
-          </Button>
-
           <Button
             variant="contained"
             sx={{

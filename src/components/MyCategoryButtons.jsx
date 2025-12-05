@@ -52,7 +52,7 @@ export default function CategoryButtons({ onSelectCategory }) {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const courses = res.data?.data || [];
+      const courses = res.data?.data?.data || [];
       onSelectCategory(courses);
     } catch (err) {
       console.error("❌ ERROR ALL COURSES:", err);

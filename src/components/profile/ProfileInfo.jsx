@@ -35,6 +35,7 @@ export default function ProfileInfo({ profile, onEdit }) {
         value={profile.email}
         sx={{ mb: 2 }}
         InputProps={{ readOnly: true }}
+        disabled
       />
       <TextField
         fullWidth

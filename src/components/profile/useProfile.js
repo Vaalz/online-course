@@ -21,12 +21,6 @@ export const useProfile = () => {
     setError(null);
     setIsNewProfile(false);
 
-    if (!token) {
-      setError(new Error("TOKEN_NOT_AVAILABLE"));
-      setLoading(false);
-      return;
-    }
-
     try {
       const res = await axios.get(`${API_URL}profile/mybiodata`, {
         headers: getAuthHeaders(),

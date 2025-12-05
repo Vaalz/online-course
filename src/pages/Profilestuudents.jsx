@@ -20,6 +20,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import NavbarDashboard from "../components/layout/DashboardLayout";
 import UserSidebar from "../components/layout/UserSidebar";
 import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
+import EditProfileDialog from "../components/profile/EditProfileDialog";
 
 import ProfileInfo from "../components/profile/ProfileInfo";
 import { useProfile } from "../components/profile/useProfile";
@@ -29,12 +30,15 @@ export default function ProfileStudent() {
   const isMobile = useMediaQuery("(max-width: 900px)");
 
   const [openEdit, setOpenEdit] = useState(false);
+
   const [form, setForm] = useState({
     name: "",
     lastName: "",
     contact: "",
     description: "",
     profile_picture: "",
+    age: 0,
+    school: "",
   });
 
   const handleChange = (field) => (e) => {
@@ -49,7 +53,7 @@ export default function ProfileStudent() {
   const handleCloseEdit = () => setOpenEdit(false);
 
   const handleSave = async () => {
-    await updateProfile(form); // PUT request
+    await updateProfile(form);
     setOpenEdit(false);
   };
 
@@ -247,117 +251,13 @@ export default function ProfileStudent() {
       </Box>
 
       {/* ==== DIALOG EDIT PROFILE (statik save ke state) ==== */}
-      <Dialog open={openEdit} onClose={handleCloseEdit} maxWidth="md" fullWidth>
-        <DialogTitle
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          Edit Profil
-          <IconButton onClick={handleCloseEdit} size="small">
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-
-        <DialogContent dividers>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={8}>
-              <TextField
-                fullWidth
-                label="Nama Lengkap"
-                value={form.full_name}
-                onChange={handleChange("full_name")}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Nama Belakang"
-                value={form.last_name}
-                onChange={handleChange("last_name")}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Email"
-                value={form.email}
-                onChange={handleChange("email")}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Contact"
-                value={form.phone}
-                onChange={handleChange("phone")}
-                sx={{ mb: 2 }}
-              />
-
-              <TextField
-                fullWidth
-                multiline
-                minRows={4}
-                label="Deskripsi / About"
-                value={form.about}
-                onChange={handleChange("about")}
-                sx={{ mb: 2 }}
-              />
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              md={4}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Avatar
-                src={form.avatar}
-                sx={{ width: 140, height: 140, mb: 2, borderRadius: "50%" }}
-              />
-              <TextField
-                fullWidth
-                label="URL Avatar"
-                value={form.avatar}
-                onChange={handleChange("avatar")}
-                sx={{ mb: 2 }}
-              />
-
-              <Button
-                fullWidth
-                variant="contained"
-                onClick={() => {
-                  // simple placeholder: you could open file input and upload then set URL
-                  alert(
-                    "Upload image belum diimplementasikan. Masukkan URL avatar di field."
-                  );
-                }}
-                sx={{ textTransform: "none", borderRadius: 2 }}
-              >
-                Pilih File (tidak aktif)
-              </Button>
-            </Grid>
-          </Grid>
-        </DialogContent>
-
-        <DialogActions sx={{ px: 3, py: 2 }}>
-          <Button onClick={handleCloseEdit} sx={{ textTransform: "none" }}>
-            Batal
-          </Button>
-          <Button
-            variant="contained"
-            onClick={async () => {
-              await handleSave();
-              document.activeElement.blur();
-            }}
-          >
-            Simpan
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <EditProfileDialog
+        open={openEdit}
+        form={form}
+        onChange={handleChange}
+        onClose={handleCloseEdit}
+        onSave={handleSave}
+      />
     </Box>
   );
 }

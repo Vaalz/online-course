@@ -24,6 +24,7 @@ import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 
 import NavbarDashboard from "../components/layout/DashboardLayout";
 import UserSidebar from "../components/layout/UserSidebar";
+import CardKelas from "../components/CardKelas";
 
 import StatCard from "../components/StatCard";
 
