@@ -1,6 +1,8 @@
 import React from "react";
 import Navbar from "../components/layout/DashboardLayout";
 import Sidebar from "../components/layout/UserSidebar";
+import { useParams } from "react-router-dom";
+
 
 import { superadminMenu } from "../components/Menu/SidebarMenu/superAdminMenu";
 import { Box, Grid, Paper, Typography } from "@mui/material";
@@ -8,7 +10,6 @@ import { styled } from "@mui/material/styles";
 import MeetingItem from "../components/MeetingItem";
 import axios from "axios";
 import { useState, useEffect } from "react";
-
 
 const ImagePlaceholder = styled(Box)(({ theme }) => ({
   backgroundColor: "#f0f0f0",
@@ -22,43 +23,49 @@ const ImagePlaceholder = styled(Box)(({ theme }) => ({
   border: "1px solid #e0e0e0",
 }));
 
+const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-export default function DashboardSuperAdmin() {
+export default function DetailCourses() {
+  const { id } = useParams();
   const courseTitle = "JUDUL KURSUS CONTOH MATERI PROGRAMING PERTEMUAN 1";
   const instructorName = "USERNAME INSTRUKTUR";
   const dummyDescription =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales maximus leo, id euismod urna pellentesque ut. Maecenas non pulvinar ex. Sed finibus, magna mattis tempor suscipit, massa metus placerat nisi, eget pretium libero lectus in urna. Duis luctus dignissim ligula a ultricies. Suspendisse commodo, libero et tincidunt cursus, lorem felis mattis quam, nec consectetur leo nunc ac erat. Integer venenatis, eros et eleifend maximus, tortor lectus efficitur neque, vitae posuere nunc ligula nec ipsum. Proin rhoncus urna felis, eget sollicitudin purus laoreet eget.";
 
-  const [ setMeetings] = useState([]);
+  const [setMeetings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // Endpoint API (Ganti dengan endpoint BE Anda yang sebenarnya)
   const COURSE_ID = "123"; // Ambil ID kursus dari URL params
-  const API_ENDPOINT = `/api/courses/${COURSE_ID}/meetings`;
 
   const meetings = [
-        { title: "PERTEMUAN 1", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit..." },
-        { title: "PERTEMUAN 2", content: "Sed finibus, magna mattis tempor suscipit, massa metus placerat nisi..." },
-        // ... pertemuan lainnya
-    ];
+    {
+      title: "PERTEMUAN 1",
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+    },
+    {
+      title: "PERTEMUAN 2",
+      content:
+        "Sed finibus, magna mattis tempor suscipit, massa metus placerat nisi...",
+    },
+    // ... pertemuan lainnya
+  ];
+
+  const fetchCourse = async () => {
+    try {
+      const res = await axios.get(`${API_URL}courses`);
+      setCourse(res.data.data.data);
+    } catch (error) {
+      console.error("FETCH COURSE ERROR:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchMeetings = async () => {
-      try {
-        const response = await axios.get(API_ENDPOINT);
-        setMeetings(response.data.meetings || response.data); // Asumsi BE mengembalikan array pertemuan
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching meetings:", err);
-        setError("Gagal memuat daftar pertemuan.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchMeetings();
-  }, [API_ENDPOINT]);
+    fetchCourse();
+  }, [id]);
 
   return (
     <Box
@@ -126,7 +133,11 @@ export default function DashboardSuperAdmin() {
               }}
             >
               {/* 1. IMAGE PLACEHOLDER ATAS */}
-              <ImagePlaceholder>{/*  */}</ImagePlaceholder>
+              <img
+                src={thumbnail}
+                alt={title}
+                style={{ width: "100%", borderRadius: 8 }}
+              />
 
               {/* 2. JUDUL KURSUS */}
               <Typography
@@ -134,7 +145,7 @@ export default function DashboardSuperAdmin() {
                 fontWeight="700"
                 sx={{ mt: 2, mb: 1, color: "#010E0A" }}
               >
-                {courseTitle}
+                {name}
               </Typography>
 
               {/* 3. DESKRIPSI UTAMA */}
@@ -142,9 +153,13 @@ export default function DashboardSuperAdmin() {
                 variant="body1"
                 sx={{ mb: 2, color: "#657575", lineHeight: 1.6 }}
               >
-                {dummyDescription}
+                {description}
               </Typography>
 
+              {/* 4. NAMA INSTRUCTOR */}
+              <Typography variant="subtitle1" fontWeight={600}>
+                Instructor: {instructor.full_name}
+              </Typography>
 
               {/* Tampilkan Loading/Error State */}
               {isLoading && <Typography>Memuat daftar pertemuan...</Typography>}

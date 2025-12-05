@@ -15,10 +15,35 @@ export default function ProfileInfo({ profile, onEdit }) {
         Informasi Pribadi
       </Typography>
 
-      <TextField fullWidth label="Nama Lengkap" value={profile.full_name} sx={{ mb: 2 }} InputProps={{ readOnly: true }} />
-      <TextField fullWidth label="Nama Belakang" value={profile.last_name} sx={{ mb: 2 }} InputProps={{ readOnly: true }} />
-      <TextField fullWidth label="Email" value={profile.email} sx={{ mb: 2 }} InputProps={{ readOnly: true }} />
-      <TextField fullWidth label="Contact" value={profile.phone} sx={{ mb: 2 }} InputProps={{ readOnly: true }} />
+      <TextField
+        fullWidth
+        label="Nama Lengkap"
+        value={profile.name}
+        sx={{ mb: 2 }}
+        InputProps={{ readOnly: true }}
+      />
+      <TextField
+        fullWidth
+        label="Nama Belakang"
+        value={profile.lastName}
+        sx={{ mb: 2 }}
+        InputProps={{ readOnly: true }}
+      />
+      <TextField
+        fullWidth
+        label="Email"
+        value={profile.email}
+        sx={{ mb: 2 }}
+        InputProps={{ readOnly: true }}
+        disabled
+      />
+      <TextField
+        fullWidth
+        label="Contact"
+        value={profile.contact}
+        sx={{ mb: 2 }}
+        InputProps={{ readOnly: true }}
+      />
 
       <Button
         variant="outlined"

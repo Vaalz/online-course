@@ -95,7 +95,7 @@ export default function LoginPage() {
           width: "100%",
           display: "flex",
           p: { xs: 2, sm: 4, md: 8 },
-          flexDirection: { xs: "column", sm: "column", md: "row" },
+          flexDirection: { xs: "column", sm: "row", md: "row" },
           justifyContent: { xs: "center", sm: "center", md: "center" },
         }}
       >
