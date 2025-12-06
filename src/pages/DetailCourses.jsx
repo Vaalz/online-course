@@ -1,92 +1,68 @@
 import React from "react";
-import Navbar from "../components/layout/DashboardLayout";
+import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/UserSidebar";
 import { useParams } from "react-router-dom";
-
-
 import { superadminMenu } from "../components/Menu/SidebarMenu/superAdminMenu";
-import { Box, Grid, Paper, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, Grid, Typography } from "@mui/material";
 import MeetingItem from "../components/MeetingItem";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const ImagePlaceholder = styled(Box)(({ theme }) => ({
-  backgroundColor: "#f0f0f0",
-  borderRadius: "8px",
-  height: "350px", // Tinggi placeholder gambar utama
-  width: "100%",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  marginBottom: theme.spacing(3),
-  border: "1px solid #e0e0e0",
-}));
-
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function DetailCourses() {
-  const { id } = useParams();
-  const courseTitle = "JUDUL KURSUS CONTOH MATERI PROGRAMING PERTEMUAN 1";
-  const instructorName = "USERNAME INSTRUKTUR";
-  const dummyDescription =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales maximus leo, id euismod urna pellentesque ut. Maecenas non pulvinar ex. Sed finibus, magna mattis tempor suscipit, massa metus placerat nisi, eget pretium libero lectus in urna. Duis luctus dignissim ligula a ultricies. Suspendisse commodo, libero et tincidunt cursus, lorem felis mattis quam, nec consectetur leo nunc ac erat. Integer venenatis, eros et eleifend maximus, tortor lectus efficitur neque, vitae posuere nunc ligula nec ipsum. Proin rhoncus urna felis, eget sollicitudin purus laoreet eget.";
-
-  const [setMeetings] = useState([]);
+  const { id } = useParams(); // DARI URL
+  const [course, setCourse] = useState(null);
+  const [meetings, setMeetings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Endpoint API (Ganti dengan endpoint BE Anda yang sebenarnya)
-  const COURSE_ID = "123"; // Ambil ID kursus dari URL params
+  // Ambil token dari localStorage
+  const token = localStorage.getItem("token");
 
-  const meetings = [
-    {
-      title: "PERTEMUAN 1",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-    },
-    {
-      title: "PERTEMUAN 2",
-      content:
-        "Sed finibus, magna mattis tempor suscipit, massa metus placerat nisi...",
-    },
-    // ... pertemuan lainnya
-  ];
-
-  const fetchCourse = async () => {
+  const fetchCourseDetail = async () => {
     try {
-      const res = await axios.get(`${API_URL}courses`);
-      setCourse(res.data.data.data);
-    } catch (error) {
-      console.error("FETCH COURSE ERROR:", error);
+      const res = await axios.get(`${API_URL}courses/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCourse(res.data.data);
+    } catch (err) {
+      setError("Gagal memuat detail course");
+      console.error(err);
+    }
+  };
+
+  const fetchMeetings = async () => {
+    try {
+      const res = await axios.get(`${API_URL}courses/${id}/meetings`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setMeetings(res.data.data || []);
+    } catch (err) {
+      setError("Gagal memuat daftar pertemuan");
+      console.error(err);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCourse();
+    if (!token) return setError("Token tidak ditemukan, silakan login ulang");
+    fetchCourseDetail();
+    fetchMeetings();
   }, [id]);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        width: "100%",
-        minHeight: "100vh",
-        overflowX: "hidden",
-        backgroundColor: "#f5f6fa",
-      }}
-    >
-      <Box
-        sx={{
-          position: "fixed",
-          top: 0,
-          width: "100%",
-          zIndex: 1300,
-        }}
-      >
+    <Box sx={{ display: "flex", width: "100%", minHeight: "100vh", backgroundColor: "#f5f6fa" }}>
+      {/* NAVBAR */}
+      <Box sx={{ position: "fixed", top: 0, width: "100%", zIndex: 1300 }}>
         <Navbar />
       </Box>
+
       {/* SIDEBAR */}
       <Box
         sx={{
@@ -96,7 +72,6 @@ export default function DetailCourses() {
           position: "sticky",
           top: 0,
           height: "100vh",
-          overflowY: "auto",
           bgcolor: "#fff",
           borderRight: "1px solid #e0e0e0",
         }}
@@ -105,88 +80,47 @@ export default function DetailCourses() {
       </Box>
 
       {/* MAIN CONTENT */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          px: { xs: 2, md: 4 },
-          py: 3,
-          width: "100%",
-          height: "100vh",
-        }}
-      >
-        {/* TITLE */}
-        <Typography variant="h5" fontWeight="700" sx={{ mt: 2, mb: 3 }}>
-          kk
-        </Typography>
+      <Box component="main" sx={{ flexGrow: 1, px: { xs: 2, md: 4 }, py: 3 }}>
+        {isLoading && <Typography>Memuat data...</Typography>}
+        {error && <Typography color="error">{error}</Typography>}
 
-        {/* GRID KONTEN */}
-        <Grid container spacing={2} width={"100%"}>
-          <Grid item xs={12} width={"100%"}>
-            <Box
-              sx={{
-                pt: "80px",
-                pb: 3,
-                width: "100%",
-                minHeight: "100vh",
-                // maxWidth: { md: "calc(100% - 260px)" }, // Batasan lebar
-              }}
-            >
-              {/* 1. IMAGE PLACEHOLDER ATAS */}
-              <img
-                src={thumbnail}
-                alt={title}
-                style={{ width: "100%", borderRadius: 8 }}
-              />
+        {/* Jika course berhasil didapat */}
+        {course && (
+          <>
+            <img
+              src={course.thumbnail}
+              alt={course.name}
+              style={{ width: "100%", borderRadius: 8 }}
+            />
 
-              {/* 2. JUDUL KURSUS */}
-              <Typography
-                variant="h5"
-                fontWeight="700"
-                sx={{ mt: 2, mb: 1, color: "#010E0A" }}
-              >
-                {name}
-              </Typography>
+            <Typography variant="h5" fontWeight="700" sx={{ mt: 2, mb: 1 }}>
+              {course.name}
+            </Typography>
 
-              {/* 3. DESKRIPSI UTAMA */}
-              <Typography
-                variant="body1"
-                sx={{ mb: 2, color: "#657575", lineHeight: 1.6 }}
-              >
-                {description}
-              </Typography>
+            <Typography sx={{ mb: 2, color: "#657575", lineHeight: 1.6 }}>
+              {course.description}
+            </Typography>
 
-              {/* 4. NAMA INSTRUCTOR */}
-              <Typography variant="subtitle1" fontWeight={600}>
-                Instructor: {instructor.full_name}
-              </Typography>
+            <Typography fontWeight={600}>
+              Instructor: {course.instructor?.full_name}
+            </Typography>
 
-              {/* Tampilkan Loading/Error State */}
-              {isLoading && <Typography>Memuat daftar pertemuan...</Typography>}
-              {error && <Typography color="error">{error}</Typography>}
-
-              {/* Render komponen jika data sudah ada */}
-              {!isLoading &&
-                !error &&
-                meetings.length > 0 &&
-                meetings.map((meeting) => (
+            <Box sx={{ mt: 3 }}>
+              {meetings.length > 0 ? (
+                meetings.map((m) => (
                   <MeetingItem
-                    key={meeting.id} // Gunakan ID unik dari BE sebagai key
-                    title={meeting.title}
-                    content={meeting.description}
-                    // Asumsi BE memberikan URL gambar (meeting.image_url)
-                    imageSrc={meeting.image_url}
+                    key={m.id}
+                    title={m.title}
+                    content={m.description}
+                    imageSrc={m.image_url}
                   />
-                ))}
-
-              {!isLoading && !error && meetings.length === 0 && (
-                <Typography color="#657575">
-                  Kursus ini belum memiliki pertemuan.
-                </Typography>
+                ))
+              ) : (
+                <Typography>Kursus ini belum memiliki pertemuan.</Typography>
               )}
             </Box>
-          </Grid>
-        </Grid>
+          </>
+        )}
       </Box>
     </Box>
   );

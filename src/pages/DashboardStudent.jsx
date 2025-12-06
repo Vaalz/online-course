@@ -22,7 +22,7 @@ import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
 import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 
-import NavbarDashboard from "../components/layout/DashboardLayout";
+import NavbarDashboard from "../components/layout/Navbar";
 import UserSidebar from "../components/layout/UserSidebar";
 import CardKelas from "../components/CardKelas";
 
@@ -99,13 +99,10 @@ export default function DashboardStudent() {
     });
 
     setIsProfileRequired(false);
-    window.location.reload(); // Refresh untuk ambil profil terbaru
   };
 
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
-      {/* NAVBAR */}
-      {/* NAVBAR */}
       <Box
         sx={{
           position: "fixed",
@@ -117,7 +114,6 @@ export default function DashboardStudent() {
         <NavbarDashboard />
       </Box>
 
-      {/* MAIN WRAPPER */}
       <Box
         sx={{
           display: "flex",
@@ -127,7 +123,6 @@ export default function DashboardStudent() {
           pl: { xs: 0, sm: 0, md: "260px", lg: "300px" },
         }}
       >
-        {/* SIDEBAR DESKTOP */}
         {!isMobile && (
           <Box
             sx={{
@@ -144,7 +139,6 @@ export default function DashboardStudent() {
           </Box>
         )}
 
-        {/* MAIN CONTENT */}
         <Box sx={{ flexGrow: 1, overflowX: "hidden" }}>
           <Grid
             container
@@ -163,9 +157,7 @@ export default function DashboardStudent() {
                 pt: "50px",
               }}
             >
-              {/* === LEFT AREA === */}
               <Grid item xs={12} md={8} lg={8}>
-                {/* STATS CARDS — scrollable */}
                 <Box
                   sx={{
                     display: "flex",
@@ -187,7 +179,6 @@ export default function DashboardStudent() {
                   ))}
                 </Box>
 
-                {/* PROGRES BELAJAR */}
                 <Box sx={{ mt: { xs: 3, md: 4 }, width: "100%" }}>
                   <Typography
                     fontSize={{ xs: 17, md: 20 }}
@@ -242,7 +233,6 @@ export default function DashboardStudent() {
                   </Box>
                 </Box>
 
-                {/* START LEARNING */}
                 <Box
                   sx={{
                     mt: { xs: 3, sm: 3, md: 4 },
@@ -261,8 +251,6 @@ export default function DashboardStudent() {
                   MULAI BELAJAR KURSUS YANG ANDA IKUTI
                 </Box>
               </Grid>
-
-              {/* === RIGHT AREA — DESKTOP NOTIFICATION === */}
 
               {!isMobile && (
                 <Box
@@ -312,7 +300,7 @@ export default function DashboardStudent() {
                 gap: { xs: 2, md: 3 },
                 overflowX: "auto",
                 scrollbarWidth: "none",
-                width: "1500px", // FIX WIDTH UNTUK AREA CARD
+                width: "1500px",
 
                 "&::-webkit-scrollbar": { height: 0 },
               }}
@@ -336,8 +324,8 @@ export default function DashboardStudent() {
               )}
             </Box>
           </Grid>
-          {/* MODAL CREATE PROFILE */}
           <CreateProfileDialog
+            keepMounted
             open={isProfileRequired}
             onSubmit={handleCreateProfile}
           />

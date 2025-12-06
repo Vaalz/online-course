@@ -18,6 +18,8 @@ export default function CategoryButtons({ onSelectCategory }) {
         });
 
         setCategories(res.data.data || []);
+        fetchAllCourses();
+        setActive("all");
       } catch (err) {
         console.error("Gagal mengambil data:", err);
         onSelectCategory([]);

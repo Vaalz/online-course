@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/layout/DashboardLayout";
+import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/UserSidebar";
 import { superadminMenu } from "../components/Menu/SidebarMenu/superAdminMenu";
 import { Box, Grid, Paper, Typography } from "@mui/material";

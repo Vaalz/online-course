@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 import MobileDrawer from "./MobileDrawer";
 import { studentMenu } from "../Menu/SidebarMenu/studentMenu";
+import { useProfile } from "../profile/useProfile";
 
 import Sampah from "../../assets/image/Sampah.png";
 import Love from "../../assets/image/Favorite.png";
@@ -28,6 +29,7 @@ const navbarMenu = ["Kelas", "Langganan", "Tentang Kami"];
 function NavbarDashboard() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
+  const { profile } = useProfile();
 
   const handleMenuClick = (menu) => {
     if (menu === "Kelas") navigate("/kelas");
@@ -56,10 +58,14 @@ function NavbarDashboard() {
               px: { xs: 1, sm: 2 },
             }}
           >
-
             {/* LEFT AREA */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 1, md: 2 } }}>
-              
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: { xs: 1, md: 2 },
+              }}
+            >
               {/* Mobile Menu */}
               <IconButton
                 sx={{ display: { xs: "flex", md: "none" } }}
@@ -147,7 +153,7 @@ function NavbarDashboard() {
               </IconButton>
 
               <Avatar
-                src="https://i.pravatar.cc/40"
+                src={profile?.profile_picture ?? "https://i.pravatar.cc/40"}
                 sx={{
                   width: { xs: 30, sm: 34, md: 40 },
                   height: { xs: 30, sm: 34, md: 40 },

@@ -15,9 +15,8 @@ import {
   DialogActions,
   IconButton,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 
-import NavbarDashboard from "../components/layout/DashboardLayout";
+import NavbarDashboard from "../components/layout/Navbar";
 import UserSidebar from "../components/layout/UserSidebar";
 import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 import EditProfileDialog from "../components/profile/EditProfileDialog";
@@ -26,7 +25,7 @@ import ProfileInfo from "../components/profile/ProfileInfo";
 import { useProfile } from "../components/profile/useProfile";
 
 export default function ProfileStudent() {
-  const { profile, loading, updateProfile } = useProfile();
+  const { profile, loading, updateProfile, fetchProfile } = useProfile();
   const isMobile = useMediaQuery("(max-width: 900px)");
 
   const [openEdit, setOpenEdit] = useState(false);
@@ -42,19 +41,51 @@ export default function ProfileStudent() {
   });
 
   const handleChange = (field) => (e) => {
-    setForm({ ...form, [field]: e.target.value });
+    const value = e.target ? e.target.value : e;
+
+    setForm({
+      ...form,
+      [field]: value,
+    });
+  };
+
+  const handleFileChange = (e) => {
+    setForm({
+      ...form,
+      profile_picture_file: e.target.files[0],
+    });
   };
 
   const handleEditOpen = () => {
-    if (profile) setForm(profile);
+    if (profile)
+      setForm({
+        name: profile.name ?? "",
+        lastName: profile.lastName ?? "",
+        contact: profile.contact ?? "",
+        description: profile.description ?? "",
+        school: profile.school ?? "",
+        age: profile.age ?? 0,
+        profile_picture: profile.profile_picture ?? "",
+      });
     setOpenEdit(true);
   };
 
   const handleCloseEdit = () => setOpenEdit(false);
 
   const handleSave = async () => {
-    await updateProfile(form);
-    setOpenEdit(false);
+    const payload = {
+      name: form.name,
+      lastName: form.lastName,
+      contact: form.contact,
+      description: form.description,
+      age: form.age,
+      school: form.school,
+      profile_picture: form.profile_picture_file, 
+    };
+
+    await updateProfile(payload); 
+    await fetchProfile(); 
+    setOpenEdit(false); 
   };
 
   if (loading) return <Typography sx={{ p: 4 }}>Loading...</Typography>;
@@ -257,6 +288,7 @@ export default function ProfileStudent() {
         onChange={handleChange}
         onClose={handleCloseEdit}
         onSave={handleSave}
+        onFileChange={handleFileChange} // <-- tambahkan ini
       />
     </Box>
   );

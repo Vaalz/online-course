@@ -44,14 +44,19 @@ export default function ProfileInfo({ profile, onEdit }) {
         sx={{ mb: 2 }}
         InputProps={{ readOnly: true }}
       />
-
-      <Button
-        variant="outlined"
-        sx={{ mt: 1, float: "right", textTransform: "none", borderRadius: 2 }}
-        onClick={onEdit}
-      >
-        Edit Info
-      </Button>
+      <TextField
+        fullWidth
+        label="create_at"
+        value={profile.created_at}
+        sx={{ mb: 2 }}
+        InputProps={{ readOnly: true }}
+        disabled
+      />
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+        <Button variant="outlined" sx={{ borderRadius: 2 }} onClick={onEdit}>
+          Edit Info
+        </Button>
+      </Box>
     </Box>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/layout/DashboardLayout";
+import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/UserSidebar";
 import StatCard from "../components/StatCard";
 import NotificationPanel from "../components/NotificationPanel";
@@ -81,7 +81,7 @@ export default function DashboardSuperAdmin() {
       <Box
         sx={{
           ml: { md: "319px", xs: 0 }, // geser konten agar tidak menempel sidebar
-          pt: "110px",                // jarak dari navbar
+          pt: "110px", // jarak dari navbar
           px: 3,
           pb: 5,
         }}

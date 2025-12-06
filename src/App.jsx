@@ -13,6 +13,7 @@ import Profile from "./pages/Profilestuudents";
 import ManageCourseStudent from "./pages/ManageCourseStudent";
 import { Details } from "@mui/icons-material";
 import DetailCourses from "./pages/DetailCourses";
+import Testi2 from "./pages/ManageQuizStudent";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/Manage/student" element={<ManageCourseStudent />} />
         <Route path="/detailcours" element={<DetailCourses />} />
-
+        <Route path="/testi2" element={<Testi2 />} />
 
       </Routes>
     </>
