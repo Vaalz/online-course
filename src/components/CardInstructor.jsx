@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import Gambar from "../assets/image/Gambar1.png";
 
-function Kelas() {
+function Kelas({ id, image, title, description, creator }) {
   return (
     <Card
       sx={{
@@ -20,21 +20,22 @@ function Kelas() {
       <CardMedia
         component="img"
         height="150"           // Thumbnail tinggi
-        src={Gambar}
+        image={image}
+        alt={title}
         sx={{ borderRadius: 2, objectFit: "cover", mb: 1 }}
       />
 
       <CardContent sx={{ flex: 1, p: 0 }}>
         <Typography variant="h6" sx={{ fontWeight: 700, fontSize: 18, mb: 0.5 }}>
-          Judul Kelas
+          {title}
         </Typography>
 
         <Typography sx={{ fontSize: 14, color: "#657575", mb: 0.5 }}>
-          Deskripsi singkat kelas
+          {description?.substring(0, 100)}...
         </Typography>
 
         <Typography sx={{ fontSize: 12, color: "#999", mb: 1 }}>
-          Oleh: Creator
+          Oleh: {creator}
         </Typography>
 
         <Typography sx={{ fontWeight: 700, fontSize: 20 }}>

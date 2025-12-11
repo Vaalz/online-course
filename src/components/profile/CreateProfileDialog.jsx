@@ -34,7 +34,7 @@ export default function CreateProfileDialog({ open, onSubmit }) {
     border: "none",
   });
 
-  const localUser = JSON.parse(localStorage.getItem("user"));
+  const localUser = localStorage.getItem("user");
 
   const [form, setForm] = useState({
     name: "",

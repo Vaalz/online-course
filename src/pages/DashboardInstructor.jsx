@@ -8,6 +8,7 @@ import {
   CardMedia,
   CardContent,
 } from "@mui/material";
+import { useRef } from "react";
 
 // Import komponen & aset Anda
 import NavbarDashboard from "../components/layout/Navbar";
@@ -15,6 +16,7 @@ import Sidebar from "../components/layout/InstructorSidebar";
 import ProgresStudent from "../components/ProgresStudent";
 import NotificationPanel from "../components/NotificationPanel";
 import Kelas from "../components/CardInstructor";
+
 import UserSidebar from "../components/layout/UserSidebar";
 import { instructorMenu } from "../components/Menu/SidebarMenu/adminMenu";
 // import RiwayatAktifitas from "../components/RiwayatAktifitas"; // (Buat komponen ini nanti)
@@ -27,6 +29,8 @@ function DashboardInstructor() {
   const [courses, setCourses] = useState([]);
   const isMobile = useMediaQuery("(max-width: 900px)");
   const sidebarWidth = 270;
+  const sliderRef = useRef(null);
+
 
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh", p: "3px" }}>
@@ -88,12 +92,110 @@ function DashboardInstructor() {
                     pb: 1, // padding bawah agar tidak terpotong scrollbar
                   }}
                 >
-                  <Kelas />
-                  <Kelas />
-                  <Kelas />
-                  <Kelas />
-                  <Kelas />
-                  <Kelas />
+                  <Box
+                    sx={{
+                      position: "relative",
+                      width: "100%",
+                      mt: 4,
+                      px: { xs: 2, md: 6 },
+                    }}
+                  >
+                    {/* BUTTON PREV */}
+                    <Box
+                      onClick={() =>
+                        sliderRef.current.scrollBy({
+                          left: -300,
+                          behavior: "smooth",
+                        })
+                      }
+                      sx={{
+                        position: "absolute",
+                        left: 0,
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        zIndex: 10,
+                        width: 40,
+                        height: 40,
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        bgcolor: "white",
+                        boxShadow: "0px 2px 10px rgba(0,0,0,0.2)",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {"<"}
+                    </Box>
+
+                    {/* WRAPPER HORIZONTAL */}
+                    <Box
+                      ref={sliderRef}
+                      sx={{
+                        display: "flex",
+                        gap: { xs: 2, md: 3 },
+                        overflowX: "auto",
+                        scrollBehavior: "smooth",
+                        scrollbarWidth: "none",
+                        "&::-webkit-scrollbar": { display: "none" },
+                        py: 2,
+                      }}
+                    >
+                      {courses.length === 0 ? (
+                        <Typography sx={{ fontSize: 18, color: "#999" }}>
+                          Tidak ada kelas pada kategori ini
+                        </Typography>
+                      ) : (
+                        courses.map((c) => (
+                          <Box
+                            key={c.id}
+                            sx={{
+                              minWidth: { xs: 260, md: 320 },
+                              flexShrink: 0,
+                              scrollSnapAlign: "start",
+                            }}
+                          >
+                            <Kelas
+                              id={c.id}
+                              image={c.thumbnail}
+                              title={c.name}
+                              description={c.description}
+                              lessons={c.lessons_count}
+                              creator={c.creator?.full_name}
+                            />
+                          </Box>
+                        ))
+                      )}
+                    </Box>
+
+                    {/* BUTTON NEXT */}
+                    <Box
+                      onClick={() =>
+                        sliderRef.current.scrollBy({
+                          left: 300,
+                          behavior: "smooth",
+                        })
+                      }
+                      sx={{
+                        position: "absolute",
+                        right: 0,
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        zIndex: 10,
+                        width: 40,
+                        height: 40,
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        bgcolor: "white",
+                        boxShadow: "0px 2px 10px rgba(0,0,0,0.2)",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {">"}
+                    </Box>
+                  </Box>
                 </Box>
               </SectionContainer>
             </Box>

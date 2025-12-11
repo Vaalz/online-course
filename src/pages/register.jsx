@@ -76,15 +76,15 @@ export default function RegisterPage() {
   const handleGoogleLogin = async () => {
     try {
       const res = await LoginAuth();
-      const backendData = res.data;
 
+      const backendData = res?.data;
       const token = res.idToken;
       const role = backendData.roles?.[0]?.name;
-      const email = backendData.email;
 
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
-      localStorage.setItem("email", email);
+      localStorage.setItem("email", backendData.email);
+      localStorage.setItem("user", JSON.stringify(backendData));
 
       if (role === "student") navigate("/dashboard/student");
       else if (role === "teacher" || role === "instruktor")

@@ -26,10 +26,9 @@ export default function LoginPage() {
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  // =============== SEND OTP ===============
   const handleSendCode = async () => {
     setError("");
-    setLoading(true); // ⏳ tampilkan
+    setLoading(true);
 
     if (!email.trim()) {
       setLoading(false);
@@ -55,28 +54,29 @@ export default function LoginPage() {
         err.response?.data?.message || err.message || "Gagal mengirim kode OTP"
       );
     } finally {
-      setLoading(false); // selesai
+      setLoading(false);
     }
   };
 
-  // =============== GOOGLE LOGIN ===============
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
       const res = await LoginAuth();
-      const backendData = res.data;
+      console.log("LOGIN AUTH RESPONSE:", res);
 
+      const backendData = res?.data;
       const token = res.idToken;
       const role = backendData.roles?.[0]?.name;
-      const email = backendData.email;
 
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
-      localStorage.setItem("email", email);
+      localStorage.setItem("email", backendData.email);
+      localStorage.setItem("user", JSON.stringify(backendData));
 
       if (role === "student") navigate("/dashboard/student");
-      else if (role === "teacher" || role === "instruktor")
-        navigate("/DashboarTeacher");
+      else if (role === "instructor") navigate("/dashboard/instructor");
+      else if (role === "admin") navigate("/dashboard/admin");
+      else if (role === "super_admin") navigate("/dashboard/superadmin");
       else navigate("/forbidden");
     } catch (err) {
       console.error(err);

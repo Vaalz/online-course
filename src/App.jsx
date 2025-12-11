@@ -30,8 +30,8 @@ function App() {
         <Route path="/dashboard/super-admin" element={<DashboardSuperAdmin />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/Manage/student" element={<ManageCourseStudent />} />
-        <Route path="/detailcours" element={<DetailCourses />} />
-        <Route path="/testi2" element={<Testi2 />} />
+        <Route path="/course/:id" element={<DetailCourses />} />
+        <Route path="/quiz" element={<Testi2 />} />
 
       </Routes>
     </>

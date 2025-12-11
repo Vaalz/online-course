@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Button, Box } from "@mui/material";
 import axios from "axios";
 
-export default function CategoryButtons({ onSelectCategory }) {
+export default function CategoryButtons({ onSelectCategory, onResetPage }) {
   const [categories, setCategories] = useState([]);
   const [active, setActive] = useState("all");
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
+
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -39,6 +40,7 @@ export default function CategoryButtons({ onSelectCategory }) {
 
   const handleClick = async (id) => {
     setActive(id);
+    onResetPage();
 
     if (id === "all") {
       const res = await axios.get(`${API_URL}courses`);
