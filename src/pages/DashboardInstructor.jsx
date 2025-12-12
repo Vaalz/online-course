@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { useRef } from "react";
 
-// Import komponen & aset Anda
 import NavbarDashboard from "../components/layout/Navbar";
 import Sidebar from "../components/layout/InstructorSidebar";
 import ProgresStudent from "../components/ProgresStudent";
@@ -21,7 +20,6 @@ import Kelas from "../components/CardInstructor";
 
 import UserSidebar from "../components/layout/UserSidebar";
 import { instructorMenu } from "../components/Menu/SidebarMenu/adminMenu";
-// import RiwayatAktifitas from "../components/RiwayatAktifitas"; // (Buat komponen ini nanti)
 
 import Kursus from "../../src/assets/image/Kursus.png";
 import Zoom from "../../src/assets/image/Zoom2.png";
@@ -42,14 +40,14 @@ function DashboardInstructor() {
       const token = localStorage.getItem("token");
 
       const res = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/instructor/my-courses`,
+        `${import.meta.env.VITE_API_BASE_URL}instructor/my-courses`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-
+      console.log(res.data.data.courses);
       setCourses(res.data.data.courses);
     } catch (error) {
       console.error("Gagal mengambil data course:", error);
@@ -80,8 +78,8 @@ function DashboardInstructor() {
 
       <Box
         sx={{
-          ml: { md: "319px", xs: 0 }, 
-          pt: "110px", 
+          ml: { md: "319px", xs: 0 },
+          pt: "110px",
           px: 2,
           pb: 5,
         }}
@@ -101,9 +99,9 @@ function DashboardInstructor() {
                 <Box
                   sx={{
                     display: "flex",
-                    gap: 2, // jarak antar card
-                    overflowX: "auto", // enable scroll horizontal
-                    pb: 1, // padding bawah agar tidak terpotong scrollbar
+                    gap: 2,
+                    overflowX: "auto",
+                    pb: 1,
                   }}
                 >
                   <Box
@@ -253,9 +251,6 @@ function DashboardInstructor() {
   );
 }
 
-// --- Komponen Kecil untuk Styling ---
-
-// 1. Kartu Statistik Atas
 function StatCard({ icon, number, title }) {
   return (
     <Box
@@ -289,7 +284,6 @@ function StatCard({ icon, number, title }) {
   );
 }
 
-// 2. Container Putih untuk Section (Progres/Kelas)
 function SectionContainer({ title, children }) {
   return (
     <Box
