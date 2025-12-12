@@ -100,7 +100,6 @@ export default function LoginPage() {
         }}
       >
         {loading && <Loading text="Mohon tunggu..." fullscreen />}
-        {/* ==== LEFT IMAGE ==== */}
         <Grid
           item
           xs={false}
