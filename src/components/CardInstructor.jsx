@@ -1,43 +1,87 @@
 import React from 'react';
-import { Card, CardMedia, CardContent, Typography } from "@mui/material";
+import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
 import Gambar from "../assets/image/Gambar1.png";
 
 function Kelas() {
   return (
     <Card
       sx={{
-        width: 285,           // Fixed width
-        height: 350,          // Hug content height sekitar 350px
+        width: 285,
+        height: 350,
         border: "1px solid #E5E7EB",
-        borderRadius: 2,      // 8px
-        flexShrink: 0,        // agar tidak mengecil saat scroll
-        boxShadow: 1,
-        p: "10px 0",          // padding top & bottom 10px
+        borderRadius: 2,     // 8px
+        flexShrink: 0,
+        boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
+        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
       }}
     >
+      {/* Thumbnail */}
       <CardMedia
         component="img"
-        height="150"           // Thumbnail tinggi
         src={Gambar}
-        sx={{ borderRadius: 2, objectFit: "cover", mb: 1 }}
+        sx={{
+          height: 190,
+          width: "100%",
+          objectFit: "fit",
+          backgroundColor: "#fff", 
+          p: 1
+        }}
       />
 
-      <CardContent sx={{ flex: 1, p: 0 }}>
-        <Typography variant="h6" sx={{ fontWeight: 700, fontSize: 18, mb: 0.5 }}>
-          Judul Kelas
-        </Typography>
+      {/* Content */}
+      <CardContent
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          flexGrow: 1,
+          p: 2,
+        }}
+      >
+        <Box>
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 700,
+              fontSize: 18,
+              lineHeight: "22px",
+              mb: 0.8,
+            }}
+          >
+            Judul Kelas
+          </Typography>
 
-        <Typography sx={{ fontSize: 14, color: "#657575", mb: 0.5 }}>
-          Deskripsi singkat kelas
-        </Typography>
+          <Typography
+            sx={{
+              fontSize: 14,
+              color: "#657575",
+              lineHeight: "20px",
+              mb: 0.8,
+            }}
+          >
+            Deskripsi singkat kelas
+          </Typography>
 
-        <Typography sx={{ fontSize: 12, color: "#999", mb: 1 }}>
-          Oleh: Creator
-        </Typography>
+          <Typography
+            sx={{
+              fontSize: 12,
+              color: "#999",
+            }}
+          >
+            Oleh: Creator
+          </Typography>
+        </Box>
 
-        <Typography sx={{ fontWeight: 700, fontSize: 20 }}>
+        {/* Harga */}
+        <Typography
+          sx={{
+            fontWeight: 700,
+            fontSize: 20,
+            mt: 1.5,
+          }}
+        >
           Rp0
         </Typography>
       </CardContent>

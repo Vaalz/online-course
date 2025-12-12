@@ -1,10 +1,8 @@
 // src/components/layout/UserSidebar.jsx
 
-import { Box, List, ListItem, ListItemText, ListItemIcon } from "@mui/material";
+import { Box, List, ListItem, ListItemText, ListItemIcon, ListItemButton } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import LogoutButton from "../Authcompt/LogoutButton";
-
-// Sidebar reusable untuk semua role
 
 import Home from "../../assets/image/Home.png";
 import Dashboard from "../../assets/image/Dashboard.png";
@@ -12,8 +10,6 @@ import Profile from "../../assets/image/Profile.png";
 import Quiz from "../../assets/image/Quiz.png";
 
 export default function UserSidebar({ menus = [] }) {
-  // Data Menu Sidebar
-
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -37,30 +33,31 @@ export default function UserSidebar({ menus = [] }) {
           const isActive = location.pathname === item.path;
 
           return (
-            <ListItem
-              key={i}
-              button
-              onClick={() => navigate(item.path)}
-              sx={{
-                borderRadius: "10px",
-                mb: 1.5,
-                border: isActive
-                  ? "1px solid #00E0A8"
-                  : "1px solid transparent",
-                color: isActive ? "#00E0A8" : "#466EF1",
-                "&:hover": { bgcolor: "#E6FBF6" },
-              }}
-            >
-              <ListItemIcon
+            <ListItem key={i} disablePadding>
+              <ListItemButton
+                onClick={() => navigate(item.path)}
                 sx={{
+                  borderRadius: "10px",
+                  mb: 1.5,
+                  border: isActive ? "1px solid #00E0A8" : "1px solid transparent",
                   color: isActive ? "#00E0A8" : "#466EF1",
-                  minWidth: 40,
+                  "&:hover": { bgcolor: "#E6FBF6" },
                 }}
               >
-                {item.icon}
-              </ListItemIcon>
+                <ListItemIcon
+                  sx={{
+                    color: isActive ? "#00E0A8" : "#466EF1",
+                    minWidth: 40,
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
 
-              <ListItemText primary={item.text} primaryTypographyProps={{ fontWeight: "bold", fontSize: '14px' }}/>
+                <ListItemText
+                  primary={item.text}
+                  primaryTypographyProps={{ fontWeight: "bold", fontSize: "14px" }}
+                />
+              </ListItemButton>
             </ListItem>
           );
         })}

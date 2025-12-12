@@ -4,7 +4,7 @@ export default function StatCard({ icon, value, label }) {
   return (
     <Box
       sx={{
-        minWidth: { xs: 140, sm: 180, md: 240, lg: 316 },
+        width: '220px',
         height: { xs: "80px", md: "103px" },
         flexShrink: 0,
       }}
@@ -46,7 +46,7 @@ export default function StatCard({ icon, value, label }) {
 
           <Typography
             variant="h6"
-            fontWeight={700}
+            fontWeight={800}
             fontSize={{ xs: 16, md: 20 }}
           >
             {value}
@@ -56,6 +56,7 @@ export default function StatCard({ icon, value, label }) {
         <Typography
           color="text.secondary"
           fontSize={{ xs: 10, sm: 12, md: 14 }}
+          fontWeight={800}
         >
           {label}
         </Typography>

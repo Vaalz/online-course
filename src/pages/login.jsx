@@ -90,21 +90,22 @@ export default function LoginPage() {
     <Box sx={{ width: "100%", height: { xs: "auto", md: "100vh" } }}>
       <Grid
         container
+        direction={{ xs: "row", sm: "colum", md: "row", lg: "row" }}
         sx={{
           height: { xs: "auto", md: "100vh" },
           width: "100%",
           display: "flex",
           p: { xs: 2, sm: 4, md: 8 },
-          flexDirection: { xs: "column", sm: "row", md: "row" },
+          flexDirection: { xs: "column", sm: "column", md: "row" },
           justifyContent: { xs: "center", sm: "center", md: "center" },
         }}
       >
         {loading && <Loading text="Mohon tunggu..." fullscreen />}
-        {/* ==== LEFT IMAGE ==== */}
+        <Box sx={{display: 'flex'}}>
+                  {/* ==== LEFT IMAGE ==== */}
         <Grid
           item
           xs={false}
-          md={6}
           sx={{
             display: {
               xs: "none",
@@ -147,8 +148,6 @@ export default function LoginPage() {
         {/* ==== RIGHT FORM ==== */}
         <Grid
           item
-          xs={12}
-          md={6}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -246,6 +245,7 @@ export default function LoginPage() {
             </Typography>
           </Typography>
         </Grid>
+        </Box>
       </Grid>
     </Box>
   );

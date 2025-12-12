@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "../components/layout/DashboardLayout ";
+import { Box, Grid, Typography, Card, CardContent } from "@mui/material"; // Tambahkan Card & CardContent untuk antisipasi konten bawah
+
+import Navbar from "../components/layout/DashboardLayout";
 import Sidebar from "../components/layout/UserSidebar";
 import StatCard from "../components/StatCard";
 import NotificationPanel from "../components/NotificationPanel";
 import ProgresStudent from "../components/Progres";
-import { superadminMenu } from "../components/Menu/SidebarMenu/superAdminMenu";
-import styled from "@emotion/styled";
-import { Paper } from "@mui/material";
+import { AdminMenu } from "../components/Menu/SidebarMenu/AdminMenu";
 
 // Icons
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
@@ -50,7 +50,7 @@ const notifications = [
 ];
 
 // --- FUNGSI UTAMA KOMPONEN ---
-export default function DashboardSuperAdmin() {
+export default function DashboardAdmin() {
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
       
@@ -73,7 +73,7 @@ export default function DashboardSuperAdmin() {
           display: { xs: "none", md: "block" },
         }}
       >
-        <Sidebar menus={superadminMenu} />
+        <Sidebar menus={AdminMenu} />
       </Box>
 
       {/* 3. MAIN CONTENT WRAPPER */}

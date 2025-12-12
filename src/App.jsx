@@ -10,9 +10,11 @@ import DashboardStudent from "./pages/DashboardStudent";
 import DashboardSuperAdmin from "./pages/DashboardSuperAdmin";
 import DashboardInstructor from "./pages/DashboardInstructor";
 import Profile from "./pages/Profilestuudents";
-import ManageCourseStudent from "./pages/ManageCourseStudent";
+import ManageCourse from "./pages/ManageCourse";
 import { Details } from "@mui/icons-material";
 import DetailCourses from "./pages/DetailCourses";
+import DashboardAdmin from "./pages/DashboardAdmin";
+import EditProfileInstructor from "./pages/EditProfileInstructor";
 
 function App() {
   return (
@@ -26,12 +28,12 @@ function App() {
         <Route path="/landing-page" element={<LandingPage />} />
         <Route path="/dashboard/student" element={<DashboardStudent />} />
         <Route path="/dashboard/instructor" element={<DashboardInstructor />} />
+        <Route path="/dashboard/admin" element={<DashboardAdmin />} />
         <Route path="/dashboard/super-admin" element={<DashboardSuperAdmin />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/Manage/student" element={<ManageCourseStudent />} />
+        <Route path="/manage/course" element={<ManageCourse />} />
         <Route path="/detailcours" element={<DetailCourses />} />
-
-
+        <Route path="/dashboard/instructor/edit-profile" element={<EditProfileInstructor />} />
       </Routes>
     </>
   );
