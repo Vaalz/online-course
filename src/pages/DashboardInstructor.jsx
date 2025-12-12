@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import {
   Box,
   Grid,
@@ -31,15 +33,35 @@ function DashboardInstructor() {
   const sidebarWidth = 270;
   const sliderRef = useRef(null);
 
+  useEffect(() => {
+    fetchMyCourses();
+  }, []);
+
+  const fetchMyCourses = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/instructor/my-courses`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setCourses(res.data.data.courses);
+    } catch (error) {
+      console.error("Gagal mengambil data course:", error);
+    }
+  };
 
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh", p: "3px" }}>
-      {/* 1. NAVBAR */}
       <Box sx={{ position: "fixed", top: 0, width: "100%", zIndex: 1300 }}>
         <NavbarDashboard />
       </Box>
 
-      {/* 2. SIDEBAR */}
       {!isMobile && (
         <Box
           sx={{
@@ -56,34 +78,26 @@ function DashboardInstructor() {
         </Box>
       )}
 
-      {/* 3. MAIN CONTENT WRAPPER */}
       <Box
         sx={{
-          ml: { md: "319px", xs: 0 }, // offset dari sidebar
-          pt: "110px", // offset dari navbar
+          ml: { md: "319px", xs: 0 }, 
+          pt: "110px", 
           px: 2,
           pb: 5,
         }}
       >
-        {/* GRID SYSTEM UTAMA */}
         <Grid container spacing={2}>
-          {/* === KOLOM KIRI (KONTEN UTAMA) === */}
           <Grid size={8}>
-            {/* A. Baris Kartu Statistik */}
             <Box sx={{ display: "flex", gap: 1, mb: 3, height: 80 }}>
-              {/* Note: Agar responsif, kartu bisa dibungkus Grid kecil atau flex-grow */}
               <StatCard icon={Kursus} number="23" title="Kursus Anda" />
               <StatCard icon={Zoom} number="23" title="Sesi Zoom" />
               <StatCard icon={Siswa} number="23" title="Siswa Anda" />
             </Box>
 
-            {/* B. Progres Siswa */}
             <ProgresStudent />
 
-            {/* C. Kelas Kursus */}
             <Box sx={{ mt: 1.5 }}>
               <SectionContainer title="KELAS KURSUS YANG ANDA MILIKI">
-                {/* Masukkan Grid Card Kursus di sini */}
                 <Box
                   sx={{
                     display: "flex",
@@ -157,11 +171,11 @@ function DashboardInstructor() {
                           >
                             <Kelas
                               id={c.id}
-                              image={c.thumbnail}
+                              image={c.thumbnail || Kursus}
                               title={c.name}
                               description={c.description}
                               lessons={c.lessons_count}
-                              creator={c.creator?.full_name}
+                              creator={c.instructor?.full_name}
                             />
                           </Box>
                         ))

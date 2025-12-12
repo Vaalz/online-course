@@ -12,6 +12,10 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import FormControl, { useFormControl } from "@mui/material/FormControl";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import React from "react";
+import { useState, useEffect } from "react";
 
 export default function EditProfileDialog({
   open,
@@ -26,9 +30,32 @@ export default function EditProfileDialog({
       backgroundColor: "#F8FCFB",
       borderRadius: 8,
       "& fieldset": { borderColor: "#E0E0E0" },
-      "&.Mui-focused fieldset": { borderColor: "#00C19D" },
     },
   });
+
+  const [localEmail, setLocalEmail] = useState("");
+  const [joinDate, setJoinDate] = useState("");
+
+  useEffect(() => {
+    if (open) {
+      const email = localStorage.getItem("email");
+
+      const userRaw = localStorage.getItem("user");
+      let createdAtValue = "";
+
+      if (userRaw) {
+        try {
+          const userObj = JSON.parse(userRaw);
+          createdAtValue = userObj.createdAt || "";
+        } catch {
+          createdAtValue = "";
+        }
+      }
+
+      setLocalEmail(email || "");
+      setJoinDate(createdAtValue);
+    }
+  }, [open]);
 
   const handleNumberOnly = (e, field) => {
     const value = e.target.value.replace(/[^0-9]/g, "");
@@ -39,6 +66,15 @@ export default function EditProfileDialog({
     const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
     onChange(field)({ target: { value } });
   };
+
+  function MyFormHelperText() {
+    const { focused } = useFormControl() || {};
+
+    const helperText = React.useMemo(() => {
+      if (focused) return "This field is being focused";
+      return "Helper text";
+    }, [focused]);
+  }
 
   return (
     <Dialog
@@ -54,7 +90,6 @@ export default function EditProfileDialog({
         },
       }}
     >
-      {/* TITLE */}
       <DialogTitle
         sx={{
           textAlign: "center",
@@ -76,37 +111,39 @@ export default function EditProfileDialog({
 
       <DialogContent>
         <Grid container spacing={4} justifyContent="space-between">
-          {/* LEFT FORM */}
           <Grid item xs={12} md={7}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <Typography fontWeight={600}>Username</Typography>
-                <StyledTextField
-                  fullWidth
-                  size="small"
-                  value={form.name}
-                  onChange={(e) => handleLettersOnly(e, "name")}
-                />
+                <FormControl fullWidth size="small">
+                  <OutlinedInput
+                    value={form.name}
+                    onChange={(e) => handleLettersOnly(e, "name")}
+                  />
+                  <MyFormHelperText />
+                </FormControl>
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <Typography fontWeight={600}>Nama Belakang</Typography>
-                <StyledTextField
-                  fullWidth
-                  size="small"
-                  value={form.lastName}
-                  onChange={(e) => handleLettersOnly(e, "lastName")}
-                />
+                <FormControl fullWidth size="small">
+                  <OutlinedInput
+                    value={form.lastName}
+                    onChange={(e) => handleLettersOnly(e, "lastName")}
+                  />
+                  <MyFormHelperText />
+                </FormControl>
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <Typography fontWeight={600}>Nama Depan</Typography>
-                <StyledTextField
-                  fullWidth
-                  size="small"
-                  value={form.firstName}
-                  onChange={(e) => handleLettersOnly(e, "firstName")}
-                />
+                <FormControl fullWidth size="small">
+                  <OutlinedInput
+                    value={form.firstName}
+                    onChange={(e) => handleLettersOnly(e, "firstName")}
+                  />
+                  <MyFormHelperText />
+                </FormControl>
               </Grid>
 
               <Grid item xs={12} sm={6}>
@@ -114,19 +151,20 @@ export default function EditProfileDialog({
                 <StyledTextField
                   fullWidth
                   size="small"
-                  value={form.email}
+                  value={localEmail}
                   disabled
                 />
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <Typography fontWeight={600}>Contact</Typography>
-                <StyledTextField
-                  fullWidth
-                  size="small"
-                  value={form.contact}
-                  onChange={(e) => handleNumberOnly(e, "contact")}
-                />
+                <FormControl fullWidth size="small">
+                  <OutlinedInput
+                    value={form.contact}
+                    onChange={(e) => handleNumberOnly(e, "contact")}
+                  />
+                  <MyFormHelperText />
+                </FormControl>
               </Grid>
 
               <Grid item xs={12} sm={6}>
@@ -135,24 +173,30 @@ export default function EditProfileDialog({
                   fullWidth
                   size="small"
                   disabled
-                  value={form.joinDate}
+                  value={joinDate}
                 />
               </Grid>
 
               <Grid item xs={12}>
                 <Typography fontWeight={600}>Deskripsi</Typography>
-                <StyledTextField
+                <TextField
+                  id="outlined-multiline-static"
                   fullWidth
                   multiline
-                  minRows={5}
+                  rows={5}
                   value={form.description}
                   onChange={onChange("description")}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      backgroundColor: "#F8FCFB",
+                      borderRadius: 2,
+                    },
+                  }}
                 />
               </Grid>
             </Grid>
           </Grid>
 
-          {/* RIGHT PROFILE PHOTO */}
           <Grid
             item
             xs={12}
@@ -208,7 +252,6 @@ export default function EditProfileDialog({
         </Grid>
       </DialogContent>
 
-      {/* ACTION BUTTONS */}
       <DialogActions sx={{ justifyContent: "center", mt: 4 }}>
         <Button
           onClick={onClose}

@@ -5,14 +5,14 @@ import StatCard from "../components/StatCard";
 import NotificationPanel from "../components/NotificationPanel";
 import { superadminMenu } from "../components/Menu/SidebarMenu/superAdminMenu";
 import styled from "@emotion/styled";
-import { Paper } from "@mui/material";
+import { Paper, Box, Grid } from "@mui/material";
+
 
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
 import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
 
-// DATA STATISTIK
 const statsData = [
   {
     label: "TOTAL KURSUS",
@@ -36,7 +36,6 @@ const statsData = [
   },
 ];
 
-// DATA NOTIFIKASI
 const notifications = [
   "Saatnya melakukan sesi zoom …",
   "Anda telah menyelesaikan kuis yang diberikan",
@@ -44,7 +43,6 @@ const notifications = [
   "Saatnya melakukan sesi zoom …",
 ];
 
-// Contoh styled component (optional)
 const CardWrapper = styled(Paper)(({ theme }) => ({
   textAlign: "center",
   padding: theme.spacing(1),
@@ -54,12 +52,10 @@ const CardWrapper = styled(Paper)(({ theme }) => ({
 export default function DashboardSuperAdmin() {
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
-      {/* NAVBAR FIXED */}
       <Box sx={{ position: "fixed", top: 0, width: "100%", zIndex: 1300 }}>
         <Navbar />
       </Box>
 
-      {/* SIDEBAR FIXED */}
       <Box
         sx={{
           width: 319,
@@ -77,20 +73,17 @@ export default function DashboardSuperAdmin() {
         <Sidebar menus={superadminMenu} />
       </Box>
 
-      {/* MAIN CONTENT WRAPPER */}
       <Box
         sx={{
-          ml: { md: "319px", xs: 0 }, // geser konten agar tidak menempel sidebar
-          pt: "110px", // jarak dari navbar
+          ml: { md: "319px", xs: 0 }, 
+          pt: "110px", 
           px: 3,
           pb: 5,
         }}
       >
         <Grid container spacing={3}>
-          {/* LEFT AREA (Konten Utama) */}
           <Grid item xs={12} md={9}>
             <Grid container spacing={2}>
-              {/* STATS 4 CARD */}
               {statsData.map((stat, i) => (
                 <Grid item xs={12} sm={6} md={3} key={i}>
                   <StatCard
@@ -101,19 +94,14 @@ export default function DashboardSuperAdmin() {
                 </Grid>
               ))}
 
-              {/* PROGRESS SEMUA ORANG */}
               <Grid item xs={12}>
-                {/* TODO: Masukkan konten progress */}
               </Grid>
 
-              {/* BAGIAN BAWAH */}
               <Grid item xs={12}>
-                {/* TODO: Masukkan konten bagian bawah */}
               </Grid>
             </Grid>
           </Grid>
 
-          {/* RIGHT AREA (Notifikasi) */}
           <Grid item xs={12} md={3}>
             <NotificationPanel notifications={notifications} />
           </Grid>

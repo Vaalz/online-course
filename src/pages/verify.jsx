@@ -75,7 +75,7 @@ export default function VerifyPage() {
       if (role === "student") navigate("/dashboard/student");
       else if (role === "instruktor") navigate("/dashboard/instructor");
       else if (role === "admin") navigate("/dashboard/admin");
-      else if (role === "super_admin") navigate("/dashboard/superadmin");
+      else if (role === "super_admin") navigate("/dashboard/super-admin");
       else navigate("/forbidden");
     } catch (err) {
       console.error("ERROR VERIFY:", err);

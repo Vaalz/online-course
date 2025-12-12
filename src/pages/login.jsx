@@ -76,7 +76,7 @@ export default function LoginPage() {
       if (role === "student") navigate("/dashboard/student");
       else if (role === "instructor") navigate("/dashboard/instructor");
       else if (role === "admin") navigate("/dashboard/admin");
-      else if (role === "super_admin") navigate("/dashboard/superadmin");
+      else if (role === "super_admin") navigate("/dashboard/super-admin");
       else navigate("/forbidden");
     } catch (err) {
       console.error(err);
@@ -122,10 +122,10 @@ export default function LoginPage() {
             sx={{
               width: "100%",
               maxWidth: {
-                xs: "220px", // HP kecil
-                sm: "350px", // HP besar & tablet kecil
-                md: "500px", // Laptop kecil
-                lg: "650px", // Laptop besar
+                xs: "220px", 
+                sm: "350px", 
+                md: "500px", 
+                lg: "650px",
               },
               height: "auto",
               display: "flex",
@@ -144,7 +144,6 @@ export default function LoginPage() {
             />
           </Box>
         </Grid>
-        {/* ==== RIGHT FORM ==== */}
         <Grid
           item
           xs={12}
@@ -160,7 +159,6 @@ export default function LoginPage() {
             gap: "30px",
           }}
         >
-          {/* Title */}
           <Typography
             fontSize={{ xs: 26, sm: 32, md: 36 }}
             fontWeight={600}
@@ -170,7 +168,6 @@ export default function LoginPage() {
             Masuk untuk mulai belajar
           </Typography>
 
-          {/* Input */}
           <Box
             sx={{
               width: "100%",
@@ -190,12 +187,10 @@ export default function LoginPage() {
             />
           </Box>
 
-          {/* Button Login */}
           <Box sx={{ width: "100%", maxWidth: "480px" }}>
             <GradientButton text="Dapatkan Kode" onClick={handleSendCode} />
           </Box>
 
-          {/* OR Line */}
           <Box
             sx={{
               width: "100%",
@@ -211,7 +206,6 @@ export default function LoginPage() {
             <Divider sx={{ flex: 1 }} />
           </Box>
 
-          {/* Google Login */}
           <Box sx={{ width: "100%", maxWidth: "480px" }}>
             <AuthButton
               text="Login dengan Google"
@@ -220,7 +214,6 @@ export default function LoginPage() {
             />
           </Box>
 
-          {/* Register */}
           <Typography
             sx={{
               color: "#010E0A",

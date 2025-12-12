@@ -5,15 +5,9 @@ import {
   Typography,
   Grid,
   Avatar,
-  TextField,
   Button,
   useMediaQuery,
   Divider,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  IconButton,
 } from "@mui/material";
 
 import NavbarDashboard from "../components/layout/Navbar";
@@ -95,7 +89,6 @@ export default function ProfileStudent() {
   const safeProfile = profile ?? FALLBACK;
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
-      {/* NAVBAR */}
       <Box
         sx={{
           position: "fixed",
@@ -107,7 +100,6 @@ export default function ProfileStudent() {
         <NavbarDashboard />
       </Box>
 
-      {/* WRAPPER */}
       <Box
         sx={{
           display: "flex",
@@ -115,7 +107,6 @@ export default function ProfileStudent() {
           pl: { xs: 0, md: "260px", lg: "300px" },
         }}
       >
-        {/* SIDEBAR */}
         {!isMobile && (
           <Box
             sx={{
@@ -132,12 +123,9 @@ export default function ProfileStudent() {
           </Box>
         )}
 
-        {/* MAIN CONTENT */}
         <Box sx={{ flexGrow: 1, p: { xs: 2, md: 3 } }}>
           <Grid container spacing={3}>
-            {/* ==== LEFT SECTION ==== */}
             <Grid size={8}>
-              {/* Profile Card */}
               <Box sx={{ p: 3, bgcolor: "#fff", borderRadius: 3 }}>
                 <Grid
                   item
@@ -169,7 +157,6 @@ export default function ProfileStudent() {
                 </Grid>
               </Box>
 
-              {/* TABLE RIWAYAT BELAJAR */}
               <Box
                 sx={{
                   mt: 3,
@@ -188,7 +175,6 @@ export default function ProfileStudent() {
                   Riwayat Belajar Kamu
                 </Typography>
 
-                {/* HEADER TABLE */}
                 <Grid container sx={{ fontWeight: 700, mb: 1 }}>
                   <Grid item xs={2}>
                     No
@@ -232,14 +218,11 @@ export default function ProfileStudent() {
               </Box>
             </Grid>
 
-            {/* ==== RIGHT SECTION ==== */}
             <Grid size={4}>
-              {/* INFORMASI PRIBADI */}
               <Grid item xs={12} md={4}>
                 <ProfileInfo profile={profile} onEdit={handleEditOpen} />
               </Grid>
 
-              {/* SEDANG BERLANGSUNG */}
               <Box
                 sx={{
                   mt: 3,
@@ -257,7 +240,6 @@ export default function ProfileStudent() {
                   Saat ini kamu sedang belajar "Judul Kelas"
                 </Typography>
 
-                {/* PROGRESS CIRCLE */}
                 <Box
                   sx={{
                     width: 160,
@@ -281,14 +263,13 @@ export default function ProfileStudent() {
         </Box>
       </Box>
 
-      {/* ==== DIALOG EDIT PROFILE (statik save ke state) ==== */}
       <EditProfileDialog
         open={openEdit}
         form={form}
         onChange={handleChange}
         onClose={handleCloseEdit}
         onSave={handleSave}
-        onFileChange={handleFileChange} // <-- tambahkan ini
+        onFileChange={handleFileChange} 
       />
     </Box>
   );
