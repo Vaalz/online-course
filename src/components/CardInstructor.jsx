@@ -1,15 +1,14 @@
 import React from 'react';
 import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
-import Gambar from "../assets/image/Gambar1.png";
 
-function Kelas() {
+function Kelas({ id, image, title, description, creator, price }) {
   return (
     <Card
       sx={{
         width: 285,
         height: 350,
         border: "1px solid #E5E7EB",
-        borderRadius: 2,     // 8px
+        borderRadius: 2,
         flexShrink: 0,
         boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
         overflow: "hidden",
@@ -17,20 +16,19 @@ function Kelas() {
         flexDirection: "column",
       }}
     >
-      {/* Thumbnail */}
       <CardMedia
         component="img"
-        src={Gambar}
+        height="150"
+        image={image}
+        alt={title}
         sx={{
-          height: 190,
           width: "100%",
-          objectFit: "fit",
-          backgroundColor: "#fff", 
-          p: 1
+          objectFit: "cover",
+          borderRadius: 2,
+          mb: 1,
         }}
       />
 
-      {/* Content */}
       <CardContent
         sx={{
           display: "flex",
@@ -50,7 +48,7 @@ function Kelas() {
               mb: 0.8,
             }}
           >
-            Judul Kelas
+            {title}
           </Typography>
 
           <Typography
@@ -61,7 +59,7 @@ function Kelas() {
               mb: 0.8,
             }}
           >
-            Deskripsi singkat kelas
+            {description?.substring(0, 100)}...
           </Typography>
 
           <Typography
@@ -70,7 +68,7 @@ function Kelas() {
               color: "#999",
             }}
           >
-            Oleh: Creator
+            Oleh: {creator}
           </Typography>
         </Box>
 
@@ -82,7 +80,7 @@ function Kelas() {
             mt: 1.5,
           }}
         >
-          Rp0
+          Rp {price}
         </Typography>
       </CardContent>
     </Card>

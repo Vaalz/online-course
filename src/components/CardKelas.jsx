@@ -1,8 +1,12 @@
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-function CardKelas({ image, title, description, creator }) {
+function CardKelas({ id, image, title, price,description, creator }) {
+  const navigate = useNavigate();
+
   return (
     <Card
+      onClick={() => navigate(`/course/${id}`)}
       sx={{
         boxShadow: 3,
         border: "1px solid #E5E7EB",
@@ -28,19 +32,15 @@ function CardKelas({ image, title, description, creator }) {
         <Typography variant="h6" sx={{ fontWeight: 700, fontSize: 20 }}>
           {title}
         </Typography>
-
         {/* DESKRIPSI */}
         <Typography sx={{ fontSize: 14, color: "#657575", mt: 1 }}>
           {description?.substring(0, 100)}...
         </Typography>
-
         {/* CREATOR */}
         <Typography sx={{ fontSize: 12, mt: 1, color: "#999" }}>
           Oleh: {creator}
         </Typography>
-
-        <Typography sx={{ fontWeight: 700, fontSize: 24, mt: 2 }}>
-        </Typography>
+        <Typography sx={{ fontWeight: 700, fontSize: 20 }}>Rp{price}</Typography>{" "}
       </CardContent>
     </Card>
   );

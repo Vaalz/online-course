@@ -13,6 +13,7 @@ import Profile from "./pages/Profilestuudents";
 import ManageCourse from "./pages/ManageCourse";
 import { Details } from "@mui/icons-material";
 import DetailCourses from "./pages/DetailCourses";
+import Testi2 from "./pages/ManageQuizStudent";
 import DashboardAdmin from "./pages/DashboardAdmin";
 import EditProfileInstructor from "./pages/EditProfileInstructor";
 
@@ -31,8 +32,10 @@ function App() {
         <Route path="/dashboard/admin" element={<DashboardAdmin />} />
         <Route path="/dashboard/super-admin" element={<DashboardSuperAdmin />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/Manage/student" element={<ManageCourseStudent />} />
+        <Route path="/course/:id" element={<DetailCourses />} />
+        <Route path="/quiz" element={<Testi2 />} />
         <Route path="/manage/course" element={<ManageCourse />} />
-        <Route path="/detailcours" element={<DetailCourses />} />
         <Route path="/dashboard/instructor/edit-profile" element={<EditProfileInstructor />} />
       </Routes>
     </>

@@ -9,7 +9,6 @@ export default function CategoryButtons({ onSelectCategory }) {
   const token = localStorage.getItem("token");
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-  // 🚀 --- FETCH CATEGORY LIST FROM BE ---
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
@@ -18,6 +17,8 @@ export default function CategoryButtons({ onSelectCategory }) {
         });
 
         setCategories(res.data.data || []);
+        fetchAllCourses();
+        setActive("all");
       } catch (err) {
         console.error("Gagal mengambil data:", err);
         onSelectCategory([]);
@@ -27,7 +28,6 @@ export default function CategoryButtons({ onSelectCategory }) {
     fetchInitialData();
   }, []);
 
-  // 🚀 --- FETCH COURSES BY CATEGORY ---
   const fetchCourses = async (id) => {
     try {
       const res = await axios.get(
@@ -45,7 +45,6 @@ export default function CategoryButtons({ onSelectCategory }) {
     }
   };
 
-  // 🚀 --- HANDLE CLICK STATIC ALL BUTTON ---
   const fetchAllCourses = async () => {
     try {
       const res = await axios.get(`${API_URL}my/courses`, {

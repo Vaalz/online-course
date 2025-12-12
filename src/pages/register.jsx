@@ -76,23 +76,24 @@ export default function RegisterPage() {
   const handleGoogleLogin = async () => {
     try {
       const res = await LoginAuth();
-      const backendData = res.data;
 
+      const backendData = res?.data;
       const token = res.idToken;
       const role = backendData.roles?.[0]?.name;
-      const email = backendData.email;
 
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
-      localStorage.setItem("email", email);
+      localStorage.setItem("email", backendData.email);
+      localStorage.setItem("user", JSON.stringify(backendData));
 
       if (role === "student") navigate("/dashboard/student");
-      else if (role === "teacher" || role === "instruktor")
-        navigate("/dashboard/instructor");
+      else if (role === "instructor") navigate("/dashboard/instructor");
+      else if (role === "admin") navigate("/dashboard/admin");
+      else if (role === "super_admin") navigate("/dashboard/super-admin");
       else navigate("/forbidden");
     } catch (err) {
       console.error(err);
-      alert("Login Google gagal");
+      alert("Register Gagal");
     } finally {
       setLoading(false);
     }
@@ -123,7 +124,6 @@ export default function RegisterPage() {
         }}
       >
         {loading && <Loading text="Mohon tunggu..." fullscreen />}
-        {/* ==== LEFT IMAGE ==== */}
         <Box display={"flex"}>
           <Grid
             item
@@ -144,10 +144,10 @@ export default function RegisterPage() {
               sx={{
                 width: "100%",
                 maxWidth: {
-                  xs: "220px", // HP kecil
-                  sm: "350px", // HP besar & tablet kecil
-                  md: "500px", // Laptop kecil
-                  lg: "650px", // Laptop besar
+                  xs: "220px",
+                  sm: "350px", 
+                  md: "500px", 
+                  lg: "650px", 
                 },
                 height: "auto",
                 display: "flex",
@@ -193,7 +193,6 @@ export default function RegisterPage() {
                 padding: "50px",
               }}
             >
-              {/* Judul */}
               <Typography
                 fontSize={36}
                 fontWeight={600}
@@ -204,7 +203,6 @@ export default function RegisterPage() {
                 Masuk Untuk Mulai Belajar
               </Typography>
 
-              {/* Input Fields */}
               <Box
                 sx={{
                   width: "100%",
@@ -235,7 +233,6 @@ export default function RegisterPage() {
                 </Box>
               </Box>
 
-              {/* Tombol daftar */}
               <Box
                 sx={{
                   width: "100%",
@@ -245,7 +242,6 @@ export default function RegisterPage() {
                 <GradientButton text="Dapatkan kode" onClick={handleRegister} />
               </Box>
 
-              {/* Pembatas */}
               <Box
                 sx={{
                   width: "100%",
@@ -271,7 +267,6 @@ export default function RegisterPage() {
                 />
               </Box>
 
-              {/* Login dengan Google */}
               <Box sx={{ width: "100%", maxWidth: "480px" }}>
                 <AuthButton
                   text="Login dengan Google"
@@ -280,7 +275,6 @@ export default function RegisterPage() {
                 />
               </Box>
 
-              {/* Sudah punya akun */}
               <Typography
                 sx={{
                   color: "#010E0A",

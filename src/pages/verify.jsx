@@ -31,7 +31,6 @@ const GradientText = styled(Typography)(({ theme, clickable = false }) => ({
   cursor: clickable ? "pointer" : "default",
 }));
 
-// --- Komponen Utama ---
 
 export default function VerifyPage() {
   const [code, setCode] = useState("");
@@ -70,13 +69,16 @@ export default function VerifyPage() {
 
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
+      localStorage.setItem("email", email);
       localStorage.setItem("user", JSON.stringify(userData));
 
       if (role === "student") navigate("/dashboard/student");
-      else if (role === "teacher") navigate("/dashboard/teacher");
+      else if (role === "instruktor") navigate("/dashboard/instructor");
+      else if (role === "admin") navigate("/dashboard/admin");
+      else if (role === "super_admin") navigate("/dashboard/super-admin");
       else navigate("/forbidden");
     } catch (err) {
-      console.error("ERROR VERIFY:", err); // <--- tampilkan error asli
+      console.error("ERROR VERIFY:", err);
       setError(err.message || "Verifikasi gagal");
     }
   };
@@ -93,8 +95,7 @@ export default function VerifyPage() {
     }
   };
 
-  // Rendering
-  if (!email) return null; // Pre-render check
+  if (!email) return null; 
 
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
@@ -111,7 +112,6 @@ export default function VerifyPage() {
       >
         {loading && <Loading text="Mohon tunggu..." fullscreen />}
 
-        {/* Kolom Kiri (Hanya Muncul di layar MD ke atas) */}
         <Grid
           item
           xs={false}
@@ -132,12 +132,7 @@ export default function VerifyPage() {
           <Box
             sx={{
               width: "100%",
-              maxWidth: {
-                xs: "220px", // HP kecil
-                sm: "350px", // HP besar & tablet kecil
-                md: "500px", // Laptop kecil
-                lg: "650px", // Laptop besar
-              },
+              maxWidth: {xs: "220px", sm: "350px", md: "500px", lg: "650px",},
               height: "auto",
               display: "flex",
               justifyContent: "center",
@@ -156,7 +151,6 @@ export default function VerifyPage() {
           </Box>
         </Grid>
 
-        {/* Kolom Kanan (Form Verifikasi) */}
         <Grid
           item
           xs={12}
@@ -185,7 +179,6 @@ export default function VerifyPage() {
               padding: "50px",
             }}
           >
-            {/* Header Text */}
             <Box
               sx={{
                 display: "flex",
@@ -195,7 +188,6 @@ export default function VerifyPage() {
                 textAlign: "center",
               }}
             >
-              {/* === JUDUL UTAMA: Cek email anda === */}
               <Typography
                 fontWeight={600}
                 textAlign="center"
@@ -207,7 +199,6 @@ export default function VerifyPage() {
                 Cek email anda
               </Typography>
 
-              {/* === DESKRIPSI: Masukkan kode 6 digit === */}
               <Typography
                 textAlign="center"
                 sx={{
@@ -221,7 +212,6 @@ export default function VerifyPage() {
                 masuk
               </Typography>
             </Box>
-            {/* Input Form */}
             <Box
               sx={{
                 width: "100%",
@@ -240,12 +230,10 @@ export default function VerifyPage() {
               />
             </Box>
 
-            {/* Tombol */}
             <Box sx={{ width: "100%", maxWidth: 560 }}>
               <GradientButton text="Masuk" onClick={handleVerify} />
             </Box>
 
-            {/* Resend Timer/Button */}
             <Typography
               variant="body2"
               sx={{ fontSize: "20px", color: "gray" }}

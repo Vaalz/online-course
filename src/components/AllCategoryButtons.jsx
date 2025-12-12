@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Button, Box } from "@mui/material";
 import axios from "axios";
 
-export default function CategoryButtons({ onSelectCategory }) {
+export default function CategoryButtons({ onSelectCategory, onResetPage }) {
   const [categories, setCategories] = useState([]);
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState("all");
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
+
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -14,6 +15,7 @@ export default function CategoryButtons({ onSelectCategory }) {
         const res = await axios.get(`${API_URL}course-types`);
         setCategories(res.data.data || []);
 
+        // default load semua course
         const all = await axios.get(`${API_URL}courses`);
         onSelectCategory(all.data.data.data || []);
       } catch (err) {
@@ -38,6 +40,7 @@ export default function CategoryButtons({ onSelectCategory }) {
 
   const handleClick = async (id) => {
     setActive(id);
+    onResetPage();
 
     if (id === "all") {
       const res = await axios.get(`${API_URL}courses`);
@@ -46,6 +49,7 @@ export default function CategoryButtons({ onSelectCategory }) {
       fetchCourses(id);
     }
   };
+
   return (
     <Box
       sx={{
@@ -56,6 +60,32 @@ export default function CategoryButtons({ onSelectCategory }) {
         "&::-webkit-scrollbar": { display: "none" },
       }}
     >
+
+      {/* --- STATIC BUTTON SEMUA KELAS --- */}
+      <Button
+        onClick={() => handleClick("all")}
+        variant="outlined"
+        sx={{
+          borderRadius: "20px",
+          textTransform: "none",
+          fontWeight: 500,
+          minWidth: { xs: "120px", sm: "150px", md: "200px" },
+          height: { xs: "24px", md: "48px" },
+          whiteSpace: "nowrap",
+          flexShrink: 0,
+
+          color: active === "all" ? "#000" : "#444",
+          background: active === "all"
+            ? "linear-gradient(white, white) padding-box, linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF) border-box"
+            : "white",
+          border: active === "all" ? "4px solid transparent" : "2px solid #ddd",
+          boxShadow: active === "all" ? "0px 2px 8px rgba(0,0,0,0.1)" : "none",
+        }}
+      >
+        Semua Kelas
+      </Button>
+
+      {/* --- dynamic categories button --- */}
       {categories.map((c) => {
         const isActive = active === c.id;
 
@@ -68,7 +98,7 @@ export default function CategoryButtons({ onSelectCategory }) {
               borderRadius: "20px",
               textTransform: "none",
               fontWeight: 500,
-              minWidth: { xs: "120px", sm: "150px", md: "290px" },
+              minWidth: { xs: "120px", sm: "150px", md: "200px" },
               height: { xs: "24px", md: "48px" },
               whiteSpace: "nowrap",
               flexShrink: 0,
@@ -86,7 +116,6 @@ export default function CategoryButtons({ onSelectCategory }) {
                   : "linear-gradient(white, white) padding-box, linear-gradient(90deg, #ccc, #999) border-box",
                 border: "4px solid transparent",
               },
-
               fontSize: { xs: "14px", md: "18px" },
             }}
           >

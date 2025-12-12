@@ -26,10 +26,9 @@ export default function LoginPage() {
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  // =============== SEND OTP ===============
   const handleSendCode = async () => {
     setError("");
-    setLoading(true); // ⏳ tampilkan
+    setLoading(true);
 
     if (!email.trim()) {
       setLoading(false);
@@ -55,28 +54,29 @@ export default function LoginPage() {
         err.response?.data?.message || err.message || "Gagal mengirim kode OTP"
       );
     } finally {
-      setLoading(false); // selesai
+      setLoading(false);
     }
   };
 
-  // =============== GOOGLE LOGIN ===============
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
       const res = await LoginAuth();
-      const backendData = res.data;
+      console.log("LOGIN AUTH RESPONSE:", res);
 
+      const backendData = res?.data;
       const token = res.idToken;
       const role = backendData.roles?.[0]?.name;
-      const email = backendData.email;
 
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
-      localStorage.setItem("email", email);
+      localStorage.setItem("email", backendData.email);
+      localStorage.setItem("user", JSON.stringify(backendData));
 
       if (role === "student") navigate("/dashboard/student");
-      else if (role === "teacher" || role === "instruktor")
-        navigate("/DashboarTeacher");
+      else if (role === "instructor") navigate("/dashboard/instructor");
+      else if (role === "admin") navigate("/dashboard/admin");
+      else if (role === "super_admin") navigate("/dashboard/super-admin");
       else navigate("/forbidden");
     } catch (err) {
       console.error(err);
@@ -101,8 +101,9 @@ export default function LoginPage() {
         }}
       >
         {loading && <Loading text="Mohon tunggu..." fullscreen />}
+
         <Box sx={{display: 'flex'}}>
-                  {/* ==== LEFT IMAGE ==== */}
+ 
         <Grid
           item
           xs={false}
@@ -123,10 +124,10 @@ export default function LoginPage() {
             sx={{
               width: "100%",
               maxWidth: {
-                xs: "220px", // HP kecil
-                sm: "350px", // HP besar & tablet kecil
-                md: "500px", // Laptop kecil
-                lg: "650px", // Laptop besar
+                xs: "220px", 
+                sm: "350px", 
+                md: "500px", 
+                lg: "650px",
               },
               height: "auto",
               display: "flex",
@@ -145,7 +146,6 @@ export default function LoginPage() {
             />
           </Box>
         </Grid>
-        {/* ==== RIGHT FORM ==== */}
         <Grid
           item
           sx={{
@@ -159,7 +159,6 @@ export default function LoginPage() {
             gap: "30px",
           }}
         >
-          {/* Title */}
           <Typography
             fontSize={{ xs: 26, sm: 32, md: 36 }}
             fontWeight={600}
@@ -169,7 +168,6 @@ export default function LoginPage() {
             Masuk untuk mulai belajar
           </Typography>
 
-          {/* Input */}
           <Box
             sx={{
               width: "100%",
@@ -189,12 +187,10 @@ export default function LoginPage() {
             />
           </Box>
 
-          {/* Button Login */}
           <Box sx={{ width: "100%", maxWidth: "480px" }}>
             <GradientButton text="Dapatkan Kode" onClick={handleSendCode} />
           </Box>
 
-          {/* OR Line */}
           <Box
             sx={{
               width: "100%",
@@ -210,7 +206,6 @@ export default function LoginPage() {
             <Divider sx={{ flex: 1 }} />
           </Box>
 
-          {/* Google Login */}
           <Box sx={{ width: "100%", maxWidth: "480px" }}>
             <AuthButton
               text="Login dengan Google"
@@ -219,7 +214,6 @@ export default function LoginPage() {
             />
           </Box>
 
-          {/* Register */}
           <Typography
             sx={{
               color: "#010E0A",

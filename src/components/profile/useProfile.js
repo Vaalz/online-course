@@ -59,17 +59,20 @@ export const useProfile = () => {
   };
 
   const updateProfile = async (payload) => {
-    if (!token) throw new Error("No token");
-    try {
-      const res = await axios.put(`${API_URL}profile/biodata`, payload, {
-        headers: getAuthHeaders(),
-      });
-      setProfile(res.data.data ?? res.data);
-      return res;
-    } catch (err) {
-      setError(err);
-      throw err;
-    }
+    const token = localStorage.getItem("token");
+
+    const fd = new FormData();
+    Object.keys(payload).forEach((key) => {
+      if (payload[key] !== undefined && payload[key] !== null) {
+        fd.append(key, payload[key]);
+      }
+    });
+
+    return axios.put(`${API_URL}profile/biodata`, fd, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   };
 
   // fetch on mount

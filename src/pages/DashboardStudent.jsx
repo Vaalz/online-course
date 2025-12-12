@@ -16,13 +16,15 @@ import NotificationPanel from "../components/NotificationPanel";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CategoryButtons from "../components/MyCategoryButtons";
 
+import { useRef } from "react";
+
 import Loading from "../components/Loading";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
 import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 
-import NavbarDashboard from "../components/layout/DashboardLayout";
+import NavbarDashboard from "../components/layout/Navbar";
 import UserSidebar from "../components/layout/UserSidebar";
 import CardKelas from "../components/CardKelas";
 
@@ -34,6 +36,7 @@ export default function DashboardStudent() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);
   const [courses, setCourses] = useState([]);
+  const sliderRef = useRef(null);
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -99,13 +102,10 @@ export default function DashboardStudent() {
     });
 
     setIsProfileRequired(false);
-    window.location.reload(); // Refresh untuk ambil profil terbaru
   };
 
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
-      {/* NAVBAR */}
-      {/* NAVBAR */}
       <Box
         sx={{
           position: "fixed",
@@ -117,7 +117,6 @@ export default function DashboardStudent() {
         <NavbarDashboard />
       </Box>
 
-      {/* MAIN WRAPPER */}
       <Box
         sx={{
           display: "flex",
@@ -127,7 +126,6 @@ export default function DashboardStudent() {
           pl: { xs: 0, sm: 0, md: "260px", lg: "300px" },
         }}
       >
-        {/* SIDEBAR DESKTOP */}
         {!isMobile && (
           <Box
             sx={{
@@ -144,7 +142,6 @@ export default function DashboardStudent() {
           </Box>
         )}
 
-        {/* MAIN CONTENT */}
         <Box sx={{ flexGrow: 1, overflowX: "hidden" }}>
           <Grid
             container
@@ -163,9 +160,7 @@ export default function DashboardStudent() {
                 pt: "50px",
               }}
             >
-              {/* === LEFT AREA === */}
               <Grid item xs={12} md={8} lg={8}>
-                {/* STATS CARDS — scrollable */}
                 <Box
                   sx={{
                     display: "flex",
@@ -187,7 +182,6 @@ export default function DashboardStudent() {
                   ))}
                 </Box>
 
-                {/* PROGRES BELAJAR */}
                 <Box sx={{ mt: { xs: 3, md: 4 }, width: "100%" }}>
                   <Typography
                     fontSize={{ xs: 17, md: 20 }}
@@ -242,7 +236,6 @@ export default function DashboardStudent() {
                   </Box>
                 </Box>
 
-                {/* START LEARNING */}
                 <Box
                   sx={{
                     mt: { xs: 3, sm: 3, md: 4 },
@@ -261,8 +254,6 @@ export default function DashboardStudent() {
                   MULAI BELAJAR KURSUS YANG ANDA IKUTI
                 </Box>
               </Grid>
-
-              {/* === RIGHT AREA — DESKTOP NOTIFICATION === */}
 
               {!isMobile && (
                 <Box
@@ -303,41 +294,109 @@ export default function DashboardStudent() {
               <CategoryButtons onSelectCategory={setCourses} />
             </Box>
 
-            {/* CARD LIST */}
+            {/* CARD SLIDER */}
             <Box
               sx={{
+                position: "relative",
+                width: "100%",
                 mt: 4,
-                px: { xs: 2, md: 4 },
-                display: "flex",
-                gap: { xs: 2, md: 3 },
-                overflowX: "auto",
-                scrollbarWidth: "none",
-                width: "1500px", // FIX WIDTH UNTUK AREA CARD
-
-                "&::-webkit-scrollbar": { height: 0 },
+                px: { xs: 2, md: 6 },
               }}
             >
-              {courses.length === 0 ? (
-                <Typography sx={{ fontSize: 18, color: "#999" }}>
-                  Tidak ada kelas pada kategori ini
-                </Typography>
-              ) : (
-                courses.map((c) => (
-                  <Box key={c.id} sx={{ minWidth: 280, flexShrink: 0 }}>
-                    <CardKelas
-                      image={c.thumbnail}
-                      title={c.name}
-                      description={c.description}
-                      lessons={c.lessons_count}
-                      creator={c.creator?.full_name}
-                    />
-                  </Box>
-                ))
-              )}
+              {/* BUTTON PREV */}
+              <Box
+                onClick={() =>
+                  sliderRef.current.scrollBy({ left: -300, behavior: "smooth" })
+                }
+                sx={{
+                  position: "absolute",
+                  left: 0,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  zIndex: 10,
+                  width: 40,
+                  height: 40,
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  bgcolor: "white",
+                  boxShadow: "0px 2px 10px rgba(0,0,0,0.2)",
+                  cursor: "pointer",
+                }}
+              >
+                {"<"}
+              </Box>
+
+              {/* WRAPPER HORIZONTAL */}
+              <Box
+                ref={sliderRef}
+                sx={{
+                  display: "flex",
+                  gap: { xs: 2, md: 3 },
+                  overflowX: "auto",
+                  scrollBehavior: "smooth",
+                  scrollbarWidth: "none",
+                  "&::-webkit-scrollbar": { display: "none" },
+                  py: 2,
+                }}
+              >
+                {courses.length === 0 ? (
+                  <Typography sx={{ fontSize: 18, color: "#999" }}>
+                    Tidak ada kelas pada kategori ini
+                  </Typography>
+                ) : (
+                  courses.map((c) => (
+                    <Box
+                      key={c.id}
+                      sx={{
+                        minWidth: { xs: 260, md: 320 },
+                        flexShrink: 0,
+                        scrollSnapAlign: "start",
+                      }}
+                    >
+                      <CardKelas
+                        id={c.id}
+                        image={c.thumbnail}
+                        title={c.name}
+                        description={c.description}
+                        lessons={c.lessons_count}
+                        creator={c.creator?.full_name}
+                        price={c.price}
+                      />
+                    </Box>
+                  ))
+                )}
+              </Box>
+
+              {/* BUTTON NEXT */}
+              <Box
+                onClick={() =>
+                  sliderRef.current.scrollBy({ left: 300, behavior: "smooth" })
+                }
+                sx={{
+                  position: "absolute",
+                  right: 0,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  zIndex: 10,
+                  width: 40,
+                  height: 40,
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  bgcolor: "white",
+                  boxShadow: "0px 2px 10px rgba(0,0,0,0.2)",
+                  cursor: "pointer",
+                }}
+              >
+                {">"}
+              </Box>
             </Box>
           </Grid>
-          {/* MODAL CREATE PROFILE */}
           <CreateProfileDialog
+            keepMounted
             open={isProfileRequired}
             onSubmit={handleCreateProfile}
           />
