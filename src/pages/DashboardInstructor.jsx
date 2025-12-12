@@ -1,24 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
 import {
   Box,
   Grid,
   Typography,
   useMediaQuery,
-  Card,
-  CardMedia,
-  CardContent,
 } from "@mui/material";
-import { useRef } from "react";
 
 import NavbarDashboard from "../components/layout/Navbar";
-import Sidebar from "../components/layout/InstructorSidebar";
+import UserSidebar from "../components/layout/UserSidebar";
 import ProgresStudent from "../components/ProgresStudent";
 import NotificationPanel from "../components/NotificationPanel";
 import Kelas from "../components/CardInstructor";
-
-import UserSidebar from "../components/layout/UserSidebar";
 import { instructorMenu } from "../components/Menu/SidebarMenu/adminMenu";
 
 import Kursus from "../../src/assets/image/Kursus.png";
@@ -42,13 +35,11 @@ function DashboardInstructor() {
       const res = await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}instructor/my-courses`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(res.data.data.courses);
-      setCourses(res.data.data.courses);
+
+      setCourses(res.data.data.courses || []);
     } catch (error) {
       console.error("Gagal mengambil data course:", error);
     }
@@ -63,11 +54,11 @@ function DashboardInstructor() {
       {!isMobile && (
         <Box
           sx={{
-            flexShrink: 0,
             position: "fixed",
             left: 0,
+            top: "80px",
             height: "calc(100vh - 80px)",
-            overflowY: "hidden",
+            overflowY: "auto",
             bgcolor: "#F1FCFA",
             borderRight: "1px solid #E0E0E0",
           }}
@@ -78,14 +69,14 @@ function DashboardInstructor() {
 
       <Box
         sx={{
-          ml: { md: "319px", xs: 0 },
+          ml: { md: `${sidebarWidth}px`, xs: 0 },
           pt: "110px",
           px: 2,
           pb: 5,
         }}
       >
         <Grid container spacing={2}>
-          <Grid size={8}>
+          <Grid item xs={12} md={8}>
             <Box sx={{ display: "flex", gap: 1, mb: 3, height: 80 }}>
               <StatCard icon={Kursus} number="23" title="Kursus Anda" />
               <StatCard icon={Zoom} number="23" title="Sesi Zoom" />
@@ -96,133 +87,79 @@ function DashboardInstructor() {
 
             <Box sx={{ mt: 1.5 }}>
               <SectionContainer title="KELAS KURSUS YANG ANDA MILIKI">
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: 2,
-                    overflowX: "auto",
-                    pb: 1,
-                  }}
-                >
+                <Box sx={{ position: "relative", width: "100%" }}>
                   <Box
+                    onClick={() =>
+                      sliderRef.current?.scrollBy({
+                        left: -300,
+                        behavior: "smooth",
+                      })
+                    }
+                    sx={navButtonStyle("left")}
+                  >
+                    {"<"}
+                  </Box>
+
+                  <Box
+                    ref={sliderRef}
                     sx={{
-                      position: "relative",
-                      width: "100%",
-                      mt: 4,
-                      px: { xs: 2, md: 6 },
+                      display: "flex",
+                      gap: 3,
+                      overflowX: "auto",
+                      scrollBehavior: "smooth",
+                      scrollbarWidth: "none",
+                      "&::-webkit-scrollbar": { display: "none" },
+                      py: 2,
                     }}
                   >
-                    {/* BUTTON PREV */}
-                    <Box
-                      onClick={() =>
-                        sliderRef.current.scrollBy({
-                          left: -300,
-                          behavior: "smooth",
-                        })
-                      }
-                      sx={{
-                        position: "absolute",
-                        left: 0,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        zIndex: 10,
-                        width: 40,
-                        height: 40,
-                        borderRadius: "50%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        bgcolor: "white",
-                        boxShadow: "0px 2px 10px rgba(0,0,0,0.2)",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {"<"}
-                    </Box>
+                    {courses.length === 0 ? (
+                      <Typography sx={{ fontSize: 18, color: "#999" }}>
+                        Tidak ada kelas pada kategori ini
+                      </Typography>
+                    ) : (
+                      courses.map((c) => (
+                        <Box
+                          key={c.id}
+                          sx={{
+                            minWidth: { xs: 260, md: 320 },
+                            flexShrink: 0,
+                          }}
+                        >
+                          <Kelas
+                            id={c.id}
+                            image={c.thumbnail || Kursus}
+                            title={c.name}
+                            description={c.description}
+                            lessons={c.lessons_count}
+                            creator={c.instructor?.full_name}
+                            price={c.price}
+                          />
+                        </Box>
+                      ))
+                    )}
+                  </Box>
 
-                    {/* WRAPPER HORIZONTAL */}
-                    <Box
-                      ref={sliderRef}
-                      sx={{
-                        display: "flex",
-                        gap: { xs: 2, md: 3 },
-                        overflowX: "auto",
-                        scrollBehavior: "smooth",
-                        scrollbarWidth: "none",
-                        "&::-webkit-scrollbar": { display: "none" },
-                        py: 2,
-                      }}
-                    >
-                      {courses.length === 0 ? (
-                        <Typography sx={{ fontSize: 18, color: "#999" }}>
-                          Tidak ada kelas pada kategori ini
-                        </Typography>
-                      ) : (
-                        courses.map((c) => (
-                          <Box
-                            key={c.id}
-                            sx={{
-                              minWidth: { xs: 260, md: 320 },
-                              flexShrink: 0,
-                              scrollSnapAlign: "start",
-                            }}
-                          >
-                            <Kelas
-                              id={c.id}
-                              image={c.thumbnail || Kursus}
-                              title={c.name}
-                              description={c.description}
-                              lessons={c.lessons_count}
-                              creator={c.instructor?.full_name}
-                            />
-                          </Box>
-                        ))
-                      )}
-                    </Box>
-
-                    {/* BUTTON NEXT */}
-                    <Box
-                      onClick={() =>
-                        sliderRef.current.scrollBy({
-                          left: 300,
-                          behavior: "smooth",
-                        })
-                      }
-                      sx={{
-                        position: "absolute",
-                        right: 0,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        zIndex: 10,
-                        width: 40,
-                        height: 40,
-                        borderRadius: "50%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        bgcolor: "white",
-                        boxShadow: "0px 2px 10px rgba(0,0,0,0.2)",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {">"}
-                    </Box>
+                  <Box
+                    onClick={() =>
+                      sliderRef.current?.scrollBy({
+                        left: 300,
+                        behavior: "smooth",
+                      })
+                    }
+                    sx={navButtonStyle("right")}
+                  >
+                    {">"}
                   </Box>
                 </Box>
               </SectionContainer>
             </Box>
           </Grid>
-
-          {/* === KOLOM KANAN (PANEL NOTIFIKASI) === */}
-          {/* Gunakan md={4} agar cukup lebar untuk teks panjang */}
-          <Grid size={4}>
+          <Grid item xs={12} md={4}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-              {/* Bagian Atas: Notifikasi */}
               <Box sx={{ height: 265 }}>
                 <NotificationPanel />
               </Box>
 
-              {/* Bagian Bawah: Riwayat Aktifitas (Sesuai Gambar) */}
               <Box
                 sx={{
                   bgcolor: "white",
@@ -234,11 +171,11 @@ function DashboardInstructor() {
               >
                 <Typography
                   fontWeight="bold"
-                  sx={{ mb: 2, textAlign: "center", height: 387 }}
+                  sx={{ mb: 2, textAlign: "center" }}
                 >
                   RIWAYAT AKTIVITAS
                 </Typography>
-                {/* Masukkan list riwayat disini */}
+
                 <Typography variant="body2" color="text.secondary">
                   Membuat kelas kursus "Judul Kelas" baru...
                 </Typography>
@@ -255,7 +192,7 @@ function StatCard({ icon, number, title }) {
   return (
     <Box
       sx={{
-        flex: 1, // Agar lebar terbagi rata
+        flex: 1,
         border: "1px solid #D9E2E1",
         borderRadius: "12px",
         bgcolor: "white",
@@ -269,14 +206,14 @@ function StatCard({ icon, number, title }) {
         <Box
           component="img"
           src={icon}
-          sx={{ width: "32px", height: "auto", mr: 1 }}
+          sx={{ width: 32, height: "auto", mr: 1 }}
         />
-        <Typography sx={{ fontSize: "28px", fontWeight: "900" }}>
+        <Typography sx={{ fontSize: 28, fontWeight: 900 }}>
           {number}
         </Typography>
       </Box>
       <Typography
-        sx={{ fontWeight: 700, fontSize: "14px", textTransform: "uppercase" }}
+        sx={{ fontWeight: 700, fontSize: 14, textTransform: "uppercase" }}
       >
         {title}
       </Typography>
@@ -309,5 +246,22 @@ function SectionContainer({ title, children }) {
     </Box>
   );
 }
+
+const navButtonStyle = (position) => ({
+  position: "absolute",
+  [position]: 0,
+  top: "50%",
+  transform: "translateY(-50%)",
+  zIndex: 10,
+  width: 40,
+  height: 40,
+  borderRadius: "50%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  bgcolor: "white",
+  boxShadow: "0px 2px 10px rgba(0,0,0,0.2)",
+  cursor: "pointer",
+});
 
 export default DashboardInstructor;

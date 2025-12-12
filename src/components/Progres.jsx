@@ -11,7 +11,7 @@ const students = [
   { name: "USERNAME", img: "https://i.pravatar.cc/150?img=7" },
 ];
 
-export default function ProgresStudent() {
+export default function ProgresStudent({progres}) {
   return (
     <Box
       sx={{
@@ -35,7 +35,7 @@ export default function ProgresStudent() {
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <PeopleAltIcon sx={{ color: "#466EF1" }} />
-          <Typography fontWeight={700} sx={{fontSize: '15px'}}>PROGRES SISWA</Typography>
+          <Typography fontWeight={700} sx={{fontSize: '15px'}}>{progres}</Typography>
         </Box>
 
         <Typography

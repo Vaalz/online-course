@@ -1,45 +1,86 @@
 import React from 'react';
-import { Card, CardMedia, CardContent, Typography } from "@mui/material";
-import Gambar from "../assets/image/Gambar1.png";
+import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
 
-function Kelas({ id, image, title, description, creator }) {
+function Kelas({ id, image, title, description, creator, price }) {
   return (
     <Card
       sx={{
-        width: 285,           // Fixed width
-        height: 350,          // Hug content height sekitar 350px
+        width: 285,
+        height: 350,
         border: "1px solid #E5E7EB",
-        borderRadius: 2,      // 8px
-        flexShrink: 0,        // agar tidak mengecil saat scroll
-        boxShadow: 1,
-        p: "10px 0",          // padding top & bottom 10px
+        borderRadius: 2,
+        flexShrink: 0,
+        boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
+        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
       }}
     >
       <CardMedia
         component="img"
-        height="150"           // Thumbnail tinggi
+        height="150"
         image={image}
         alt={title}
-        sx={{ borderRadius: 2, objectFit: "cover", mb: 1 }}
+        sx={{
+          width: "100%",
+          objectFit: "cover",
+          borderRadius: 2,
+          mb: 1,
+        }}
       />
 
-      <CardContent sx={{ flex: 1, p: 0 }}>
-        <Typography variant="h6" sx={{ fontWeight: 700, fontSize: 18, mb: 0.5 }}>
-          {title}
-        </Typography>
+      <CardContent
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          flexGrow: 1,
+          p: 2,
+        }}
+      >
+        <Box>
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 700,
+              fontSize: 18,
+              lineHeight: "22px",
+              mb: 0.8,
+            }}
+          >
+            {title}
+          </Typography>
 
-        <Typography sx={{ fontSize: 14, color: "#657575", mb: 0.5 }}>
-          {description?.substring(0, 100)}...
-        </Typography>
+          <Typography
+            sx={{
+              fontSize: 14,
+              color: "#657575",
+              lineHeight: "20px",
+              mb: 0.8,
+            }}
+          >
+            {description?.substring(0, 100)}...
+          </Typography>
 
-        <Typography sx={{ fontSize: 12, color: "#999", mb: 1 }}>
-          Oleh: {creator}
-        </Typography>
+          <Typography
+            sx={{
+              fontSize: 12,
+              color: "#999",
+            }}
+          >
+            Oleh: {creator}
+          </Typography>
+        </Box>
 
-        <Typography sx={{ fontWeight: 700, fontSize: 20 }}>
-          Rp0
+        {/* Harga */}
+        <Typography
+          sx={{
+            fontWeight: 700,
+            fontSize: 20,
+            mt: 1.5,
+          }}
+        >
+          Rp {price}
         </Typography>
       </CardContent>
     </Card>

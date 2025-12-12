@@ -39,7 +39,7 @@ import Github from '../assets/image/github.png'
 import Twitter from '../assets/image/twitter.png'
 import Dribbble from '../assets/image/dribbble.png'
 import Facebook from '../assets/image/facebook.png'
-import logo from "../assets/image/Logo.png"
+import logo from "../assets/image/LogoPutih.png"
 
 
 const icons = [

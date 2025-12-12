@@ -20,7 +20,7 @@ export const studentMenu = [
       />
     ),
     text: "HOME",
-    path: "/Manage/student",
+    path: "/manage/course",
   },
   {
     icon: (

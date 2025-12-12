@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "../components/layout/Navbar";
+import Navbar from "../components/layout/DashboardLayout";
 import Sidebar from "../components/layout/UserSidebar";
 import StatCard from "../components/StatCard";
 import NotificationPanel from "../components/NotificationPanel";
+import ProgresStudent from "../components/Progres";
 import { superadminMenu } from "../components/Menu/SidebarMenu/superAdminMenu";
 import styled from "@emotion/styled";
 import { Paper, Box, Grid } from "@mui/material";
-
 
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
@@ -58,7 +58,6 @@ export default function DashboardSuperAdmin() {
 
       <Box
         sx={{
-          width: 319,
           flexShrink: 0,
           position: "fixed",
           top: "80px",
@@ -75,8 +74,8 @@ export default function DashboardSuperAdmin() {
 
       <Box
         sx={{
-          ml: { md: "319px", xs: 0 }, 
-          pt: "110px", 
+          ml: { md: "319px", xs: 0 },
+          pt: "110px",
           px: 3,
           pb: 5,
         }}
@@ -85,7 +84,7 @@ export default function DashboardSuperAdmin() {
           <Grid item xs={12} md={9}>
             <Grid container spacing={2}>
               {statsData.map((stat, i) => (
-                <Grid item xs={12} sm={6} md={3} key={i}>
+                <Grid key={i} item xs={12} sm={6} md={3}>
                   <StatCard
                     icon={stat.icon}
                     value={stat.value}
@@ -95,9 +94,11 @@ export default function DashboardSuperAdmin() {
               ))}
 
               <Grid item xs={12}>
+                <ProgresStudent />
               </Grid>
 
               <Grid item xs={12}>
+                <CardWrapper>Konten Bagian Bawah</CardWrapper>
               </Grid>
             </Grid>
           </Grid>
