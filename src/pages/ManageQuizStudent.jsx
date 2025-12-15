@@ -1,8 +1,6 @@
-// src/pages/QuizDashboard.jsx
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Grid,
   Typography,
   Button,
   CircularProgress,
@@ -50,15 +48,13 @@ export default function QuizDashboard() {
     try {
       setLoading(true);
       setSelectedCategory(id);
-      
+
       if (!id) {
-        // Fetch semua quiz
         const res = await quizService.getMyQuizzes();
         if (res.status) {
           setFilteredQuizzes(res.data.quizzes || []);
         }
       } else {
-        // Fetch quiz by category dari API
         const res = await quizService.getMyQuizzesByCategory(id);
         if (res.status) {
           setFilteredQuizzes(res.data.quizzes || []);
@@ -136,7 +132,7 @@ export default function QuizDashboard() {
               }}
             >
               {filteredQuizzes.map((quiz) => (
-                <Box 
+                <Box
                   key={quiz.id}
                   sx={{
                     width: "100%",
@@ -152,7 +148,7 @@ export default function QuizDashboard() {
         </Box>
       </Box>
 
-      {/* RIGHT - FILTER (FIXED POSITION) */}
+      {/* RIGHT - FILTER */}
       <Box
         sx={{
           width: 320,
@@ -169,14 +165,14 @@ export default function QuizDashboard() {
           boxShadow: "-2px 0 8px rgba(0, 0, 0, 0.05)",
         }}
       >
-        <Typography 
-          fontWeight={800} 
-          fontSize={17} 
+        <Typography
+          fontWeight={800}
+          fontSize={17}
           mb={2.5}
-          sx={{ 
+          sx={{
             textTransform: "uppercase",
             letterSpacing: "0.5px",
-            color: "#1A1A1A"
+            color: "#1A1A1A",
           }}
         >
           FILTER SESUAI KATEGORI
@@ -186,9 +182,9 @@ export default function QuizDashboard() {
           fullWidth
           variant={selectedCategory === null ? "contained" : "outlined"}
           onClick={() => handleCategoryFilter(null)}
-          sx={{ 
-            mb: 1.5, 
-            fontWeight: 700, 
+          sx={{
+            mb: 1.5,
+            fontWeight: 700,
             textTransform: "uppercase",
             fontSize: 12.5,
             py: 1.5,
@@ -200,7 +196,7 @@ export default function QuizDashboard() {
             "&:hover": {
               bgcolor: selectedCategory === null ? "#00A88F" : "#F6FEFD",
               borderColor: "#00BFA6",
-            }
+            },
           }}
         >
           Lihat Semua Kategori
@@ -212,9 +208,9 @@ export default function QuizDashboard() {
             fullWidth
             variant={selectedCategory === cat.id ? "contained" : "outlined"}
             onClick={() => handleCategoryFilter(cat.id)}
-            sx={{ 
-              mb: 1.5, 
-              fontWeight: 700, 
+            sx={{
+              mb: 1.5,
+              fontWeight: 700,
               textTransform: "uppercase",
               fontSize: 12.5,
               py: 1.5,
@@ -226,7 +222,7 @@ export default function QuizDashboard() {
               "&:hover": {
                 bgcolor: selectedCategory === cat.id ? "#00A88F" : "#F6FEFD",
                 borderColor: "#00BFA6",
-              }
+              },
             }}
           >
             {cat.name}
