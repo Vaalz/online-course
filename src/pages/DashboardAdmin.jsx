@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Grid, Typography, Card, CardContent } from "@mui/material"; // Tambahkan Card & CardContent untuk antisipasi konten bawah
 
 import Navbar from "../components/layout/Navbar";
@@ -7,6 +7,8 @@ import StatCard from "../components/StatCard";
 import NotificationPanel from "../components/NotificationPanel";
 import ProgresStudent from "../components/Progres";
 import { AdminMenu } from "../components/Menu/SidebarMenu/AdminMenu";
+import Loading from "../components/Loading";
+
 
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
@@ -36,19 +38,84 @@ const statsData = [
   },
 ];
 
-const progres = {progres: "PROGRES SEMUA SISWA"}
+const progres = { progres: "PROGRES SEMUA SISWA" };
 
-const notifications = [
-  "Saatnya melakukan sesi zoom …",
-  "Anda telah menyelesaikan kuis yang diberikan",
-  "Selesaikan kuis yang tersedia",
-  "Saatnya melakukan sesi zoom …",
-];
 
 export default function DashboardAdmin() {
+  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState(null);
+
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
+  const progres = { progres: "PROGRES SEMUA SISWA" };
+
+
+  const notifications = [
+    "Saatnya melakukan sesi zoom hari ini",
+    "Anda telah menyelesaikan kuis",
+    "Kuis baru tersedia",
+    "Jadwal zoom telah diupdate",
+  ];
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if (!token) return (window.location.href = "/");
+    if (role !== "admin") return (window.location.href = "/forbidden");
+
+    async function checkProfile() {
+      try {
+        const res = await fetch(`${API_URL}profile/mybiodata`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (res.status === 500) {
+          console.log("PROFILE BELUM ADA");
+          setIsProfileRequired(true);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    checkProfile();
+  }, []);
+
+  if (loading) return <Loading text="Memuat dashboard..." />;
+
+  const statsData = [
+    {
+      label: "KURSUS DI IKUTI",
+      value: stats?.enrolled_courses || 0,
+      icon: <MenuBookRoundedIcon sx={{ fontSize: 40, color: "#466EF1" }} />,
+    },
+    {
+      label: "SESI ZOOM DI IKUTI",
+      value: stats?.zoom_sessions || 0,
+      icon: <VideocamRoundedIcon sx={{ fontSize: 40, color: "#466EF1" }} />,
+    },
+    {
+      label: "KUIS DI SELESAIKAN",
+      value: stats?.completed_quizzes || 0,
+      icon: <LightbulbRoundedIcon sx={{ fontSize: 40, color: "#466EF1" }} />,
+    },
+  ];
+
+  const handleCreateProfile = async (payload) => {
+    const token = localStorage.getItem("token");
+
+    await axios.post(`${API_URL}profile/biodata`, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    setIsProfileRequired(false);
+  };
+
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
-            <Box sx={{ position: "fixed", top: 0, width: "100%", zIndex: 1300 }}>
+      <Box sx={{ position: "fixed", top: 0, width: "100%", zIndex: 1300 }}>
         <Navbar />
       </Box>
 
@@ -70,22 +137,22 @@ export default function DashboardAdmin() {
 
       <Box
         sx={{
-          ml: { md: "319px", xs: 0 }, 
+          ml: { md: "319px", xs: 0 },
           pt: "110px",
           px: 3,
           pb: 5,
         }}
       >
         <Grid container spacing={3}>
-              {statsData.map((stat, i) => (
-                <Grid item sx={{mt: 1}}>
-                  <StatCard
-                    icon={stat.icon}
-                    value={stat.value}
-                    label={stat.label}
-                  />
-                </Grid>
-              ))}
+          {statsData.map((stat, i) => (
+            <Grid item sx={{ mt: 1 }}>
+              <StatCard
+                icon={stat.icon}
+                value={stat.value}
+                label={stat.label}
+              />
+            </Grid>
+          ))}
           <Grid size={8}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -105,9 +172,9 @@ export default function DashboardAdmin() {
                     }}
                   >
                     <Typography fontWeight={700} fontSize={16}>
-                        {progres.progres}
+                      {progres.progres}
                     </Typography>
-                    
+
                     <Typography
                       fontSize={14}
                       color="#466EF1"
@@ -124,7 +191,7 @@ export default function DashboardAdmin() {
                         <Box key={i} sx={{ textAlign: "center" }}>
                           <img
                             src="https://i.pravatar.cc/80"
-                            alt={`User ${i + 1}`} 
+                            alt={`User ${i + 1}`}
                             style={{
                               width: 70,
                               height: 70,
@@ -146,23 +213,32 @@ export default function DashboardAdmin() {
               </Grid>
 
               <Grid item xs={12}>
-                <Card sx={{ borderRadius: 3, border: "1px solid #DCE4E3", height: 200, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <CardContent>
-                         <Typography color="text.secondary">Konten Bagian Bawah</Typography>
-                    </CardContent>
+                <Card
+                  sx={{
+                    borderRadius: 3,
+                    border: "1px solid #DCE4E3",
+                    height: 200,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CardContent>
+                    <Typography color="text.secondary">
+                      Konten Bagian Bawah
+                    </Typography>
+                  </CardContent>
                 </Card>
               </Grid>
-              
             </Grid>
           </Grid>
 
           <Grid size={4}>
             <NotificationPanel notifications={notifications} />
           </Grid>
-          
         </Grid>
       </Box>
-      
     </Box>
   );
 }
