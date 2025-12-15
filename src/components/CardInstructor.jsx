@@ -22,10 +22,10 @@ function Kelas({ id, image, title, description, creator, price }) {
         image={image}
         alt={title}
         sx={{
+          p: 1.5, 
           width: "100%",
           objectFit: "cover",
           borderRadius: 2,
-          mb: 1,
         }}
       />
 
@@ -72,7 +72,6 @@ function Kelas({ id, image, title, description, creator, price }) {
           </Typography>
         </Box>
 
-        {/* Harga */}
         <Typography
           sx={{
             fontWeight: 700,

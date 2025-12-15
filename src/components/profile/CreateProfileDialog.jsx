@@ -9,32 +9,22 @@ import {
   Typography,
   styled,
   Avatar,
+  FormControl,
+  OutlinedInput,
+  FormHelperText,
 } from "@mui/material";
 import { useState } from "react";
-import axios from "axios";
 
 export default function CreateProfileDialog({ open, onSubmit }) {
-  const API_URL = import.meta.env.VITE_API_BASE_URL;
-  const token = localStorage.getItem("token");
-
   const StyledTextField = styled(TextField)({
     "& .MuiOutlinedInput-root": {
       backgroundColor: "#F8FCFB",
       borderRadius: 8,
-      "& fieldset": {
-        borderColor: "#E0E0E0",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#00C19D",
-      },
+      "& fieldset": { borderColor: "#E0E0E0" },
     },
   });
 
-  const StyledAvatar = styled(Avatar)({
-    border: "none",
-  });
-
-  const localUser = localStorage.getItem("user");
+  const localUser = JSON.parse(localStorage.getItem("user") || "{}");
 
   const [form, setForm] = useState({
     name: "",
@@ -44,98 +34,79 @@ export default function CreateProfileDialog({ open, onSubmit }) {
     description: "",
     age: "",
     school: "",
-    profile_picture: "",
-    created_at: localUser?.createdAt || new Date().toISOString(),
-    email: localUser?.email || "",
+    profile_picture: null,
+    created_at: localUser.createdAt || new Date().toISOString(),
+    email: localUser.email || "",
   });
 
   const [preview, setPreview] = useState(null);
+  const [errors, setErrors] = useState({});
 
-  // VALIDASI: hanya huruf / hanya angka
+
+  const handleLettersOnly = (e, field, min = 3) => {
+    const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+    setForm((p) => ({ ...p, [field]: value }));
+    setErrors((p) => ({
+      ...p,
+      [field]: value.length < min ? `Minimal ${min} huruf` : "",
+    }));
+  };
+
+  const handleNumberOnly = (e, field, min = 2) => {
+    const value = e.target.value.replace(/[^0-9]/g, "");
+    setForm((p) => ({ ...p, [field]: value }));
+    setErrors((p) => ({
+      ...p,
+      [field]: value.length < min ? `Minimal ${min} digit` : "",
+    }));
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // hanya huruf
-    if (
-      ["name", "firstName", "lastName"].includes(name) &&
-      /[^A-Za-z\s]/.test(value)
-    ) {
-      return;
-    }
-
-    // hanya angka
-    if (["age", "contact"].includes(name) && /[^0-9]/.test(value)) {
-      return;
-    }
-
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm((p) => ({ ...p, [name]: value }));
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const minSize = 10 * 1000;
-    const maxSize = 10 * 1000 * 1000;
-
-    if (file.size < minSize) {
-      alert("Ukuran foto minimal 10KB");
-      return;
-    }
-
-    if (file.size > maxSize) {
-      alert("Ukuran foto maksimal 10MB");
-      return;
-    }
+    if (file.size < 10_000) return alert("Ukuran foto minimal 10KB");
+    if (file.size > 10_000_000) return alert("Ukuran foto maksimal 10MB");
 
     setPreview(URL.createObjectURL(file));
+    setForm((p) => ({ ...p, profile_picture: file }));
+  };
+
+  const onChange = (field) => (e) => {
     setForm((prev) => ({
       ...prev,
-      profile_picture: file,
+      [field]: e.target.value,
     }));
   };
 
-  const handleSubmit = async () => {
-    if (!form.name || !form.age || !form.description) {
-      return alert("Semua field wajib diisi!");
+  const handleSubmit = () => {
+    if (
+      errors.name ||
+      errors.contact ||
+      errors.age ||
+      !form.name ||
+      !form.age ||
+      !form.description
+    ) {
+      return alert("Periksa kembali input Anda");
     }
 
-    const formData = new FormData();
-    formData.append("name", form.name);
-    formData.append("firstName", form.firstName);
-    formData.append("lastName", form.lastName);
-    formData.append("school", form.school);
-    formData.append("description", form.description);
-    formData.append("contact", form.contact);
-    formData.append("age", form.age);
-    formData.append("user_id", localUser.id);
-    formData.append("profile_picture", form.profile_picture);
+    const fd = new FormData();
+    Object.entries(form).forEach(([k, v]) => v && fd.append(k, v));
+    fd.append("user_id", localUser.id);
 
-    onSubmit(formData);
+    onSubmit(fd);
   };
 
+
   return (
-    <Dialog
-      open={open}
-      fullWidth
-      maxWidth="lg"
-      PaperProps={{
-        sx: {
-          borderRadius: "16px",
-          p: 1,
-          bgcolor: "#F6FEFD",
-        },
-      }}
-    >
-      <DialogTitle
-        sx={{
-          textAlign: "center",
-          fontWeight: 800,
-          fontSize: "28px",
-          mb: 2,
-          color: "#333",
-        }}
-      >
+    <Dialog open={open} fullWidth maxWidth="lg">
+      <DialogTitle sx={{ textAlign: "center", fontWeight: 800 }}>
         MASUKAN INFORMASI TENTANG DIRI ANDA
       </DialogTitle>
 
@@ -143,168 +114,107 @@ export default function CreateProfileDialog({ open, onSubmit }) {
         <Grid container spacing={4}>
           <Grid item xs={12} sm={8}>
             <Grid container spacing={3}>
-              <Grid item sm={6} xs={12}>
-                <Typography fontWeight={600} mb={1}>
-                  Username
-                </Typography>
-                <StyledTextField
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  fullWidth
-                  size="small"
-                  placeholder="Masukan nama anda"
-                />
+              <Grid item xs={12} sm={6}>
+                <Typography fontWeight={600}>Username</Typography>
+                <FormControl fullWidth size="small" error={!!errors.name}>
+                  <OutlinedInput
+                    value={form.name}
+                    onChange={(e) => handleLettersOnly(e, "name", 3)}
+                  />
+                  <FormHelperText>{errors.name}</FormHelperText>
+                </FormControl>
               </Grid>
 
-              <Grid item sm={6} xs={12}>
-                <Typography fontWeight={600} mb={1}>
-                  Nama Belakang
-                </Typography>
-                <StyledTextField
-                  name="lastName"
-                  value={form.lastName}
-                  onChange={handleChange}
+              <Grid item xs={12} sm={6}>
+                <Typography fontWeight={600}>Nama Depan</Typography>
+                <OutlinedInput
                   fullWidth
-                  size="small"
-                  placeholder="Masukan nama anda"
-                />
-              </Grid>
-
-              <Grid item sm={6} xs={12}>
-                <Typography fontWeight={600} mb={1}>
-                  Nama Depan
-                </Typography>
-                <StyledTextField
-                  name="firstName"
                   value={form.firstName}
-                  onChange={handleChange}
-                  fullWidth
-                  size="small"
+                  onChange={(e) => handleLettersOnly(e, "firstName", 2)}
                 />
               </Grid>
 
-              <Grid item sm={6} xs={12}>
-                <Typography fontWeight={600} mb={1}>
-                  Usia
-                </Typography>
-                <StyledTextField
-                  name="age"
-                  value={form.age}
-                  onChange={handleChange}
+              <Grid item xs={12} sm={6}>
+                <Typography fontWeight={600}>Nama Belakang</Typography>
+                <OutlinedInput
                   fullWidth
-                  size="small"
-                  placeholder="Contoh: 17"
-                  error={form.age !== "" && isNaN(form.age)}
-                  helperText={
-                    form.age !== "" && isNaN(form.age)
-                      ? "Hanya angka diperbolehkan"
-                      : ""
-                  }
+                  value={form.lastName}
+                  onChange={(e) => handleLettersOnly(e, "lastName", 2)}
                 />
               </Grid>
 
-              <Grid item sm={6} xs={12}>
-                <Typography fontWeight={600} mb={1}>
-                  Sekolah
-                </Typography>
-                <StyledTextField
-                  name="school"
+              <Grid item xs={12} sm={6}>
+                <Typography fontWeight={600}>Usia</Typography>
+                <FormControl fullWidth size="small" error={!!errors.age}>
+                  <OutlinedInput
+                    value={form.age}
+                    onChange={(e) => handleNumberOnly(e, "age", 2)}
+                  />
+                  <FormHelperText>{errors.age}</FormHelperText>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <Typography fontWeight={600}>Contact</Typography>
+                <FormControl fullWidth size="small" error={!!errors.contact}>
+                  <OutlinedInput
+                    value={form.contact}
+                    placeholder="08xxxxxxxxxx"
+                    onChange={(e) => handleNumberOnly(e, "contact", 10)}
+                  />
+                  <FormHelperText>{errors.contact}</FormHelperText>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <Typography fontWeight={600}>Sekolah</Typography>
+                <TextField
+                  fullWidth
+                  size="small"
                   value={form.school}
-                  onChange={handleChange}
-                  fullWidth
-                  size="small"
+                  onChange={onChange("school")}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      backgroundColor: "#F8FCFB",
+                      borderRadius: 2,
+                    },
+                  }}
                 />
               </Grid>
 
-              <Grid item sm={6} xs={12}>
-                <Typography fontWeight={600} mb={1}>
-                  Email
-                </Typography>
-                <StyledTextField
-                  name="email"
-                  value={form.email}
-                  disabled
+              <Grid item xs={12}>
+                <Typography fontWeight={600}>Deskripsi</Typography>
+                <TextField
+                  id="outlined-multiline-static"
                   fullWidth
-                  size="small"
-                />
-              </Grid>
-
-              <Grid item sm={6} xs={12}>
-                <Typography fontWeight={600} mb={1}>
-                  Deskripsi
-                </Typography>
-                <StyledTextField
-                  name="description"
-                  value={form.description}
-                  onChange={handleChange}
                   multiline
-                  minRows={5}
-                  maxRows={10}
-                  fullWidth
-                />
-              </Grid>
-
-              <Grid item sm={6} xs={12}>
-                <Typography fontWeight={600} mb={1}>
-                  Contact
-                </Typography>
-                <StyledTextField
-                  name="contact"
-                  value={form.contact}
-                  onChange={handleChange}
-                  fullWidth
-                  size="small"
-                  placeholder="08xxxxxxxxxx"
-                />
-
-                <Typography fontWeight={600} mt={3}>
-                  Bergabung Pada
-                </Typography>
-                <StyledTextField
-                  value={new Date(form.created_at).toLocaleDateString("id-ID")}
-                  fullWidth
-                  size="small"
-                  disabled
+                  rows={5}
+                  value={form.description}
+                  onChange={onChange("description")}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      backgroundColor: "#F8FCFB",
+                      borderRadius: 2,
+                    },
+                  }}
                 />
               </Grid>
             </Grid>
           </Grid>
 
-          {/* AVATAR */}
           <Grid item xs={12} md={4} textAlign="center">
-            <Box
-              sx={{
-                width: 200,
-                height: 200,
-                mx: "auto",
-                borderRadius: "50%",
-                overflow: "hidden",
-                border: "4px solid #DCE4E3",
-                mb: 2,
-              }}
-            >
-              <img
+            <Box sx={{ width: 200, height: 200, mx: "auto", mb: 2 }}>
+              <Avatar
                 src={preview || "/default-avatar.png"}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                sx={{ width: "100%", height: "100%" }}
               />
             </Box>
 
-            <Button
-              component="label"
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 1,
-                borderRadius: 2,
-                fontWeight: 700,
-                background: "linear-gradient(90deg, #00C89E, #466EF1)",
-              }}
-            >
+            <Button component="label" variant="contained">
               Pilih Foto
               <input
-                type="file"
                 hidden
+                type="file"
                 accept="image/*"
                 onChange={handleFileChange}
               />
@@ -312,18 +222,8 @@ export default function CreateProfileDialog({ open, onSubmit }) {
           </Grid>
         </Grid>
 
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
-          <Button
-            variant="contained"
-            onClick={handleSubmit}
-            sx={{
-              width: 260,
-              borderRadius: 3,
-              fontWeight: 700,
-              background: "#466EF1",
-              textTransform: "none",
-            }}
-          >
+        <Box textAlign="center" mt={4}>
+          <Button variant="contained" onClick={handleSubmit}>
             SIMPAN PROFIL
           </Button>
         </Box>

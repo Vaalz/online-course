@@ -14,6 +14,7 @@ import NavbarDashboard from "../components/layout/Navbar";
 import UserSidebar from "../components/layout/UserSidebar";
 import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 import EditProfileDialog from "../components/profile/EditProfileDialog";
+import CardProfile from "../components/CardProfile";
 
 import ProfileInfo from "../components/profile/ProfileInfo";
 import { useProfile } from "../components/profile/useProfile";
@@ -74,12 +75,12 @@ export default function ProfileStudent() {
       description: form.description,
       age: form.age,
       school: form.school,
-      profile_picture: form.profile_picture_file, 
+      profile_picture: form.profile_picture_file,
     };
 
-    await updateProfile(payload); 
-    await fetchProfile(); 
-    setOpenEdit(false); 
+    await updateProfile(payload);
+    await fetchProfile();
+    setOpenEdit(false);
   };
 
   if (loading) return <Typography sx={{ p: 4 }}>Loading...</Typography>;
@@ -103,59 +104,32 @@ export default function ProfileStudent() {
       <Box
         sx={{
           display: "flex",
-          pt: "80px",
+          pt: "100px",
           pl: { xs: 0, md: "260px", lg: "300px" },
         }}
       >
         {!isMobile && (
           <Box
             sx={{
-              width: { md: "260px", lg: "300px" },
+              flexShrink: 0,
               position: "fixed",
               left: 0,
-              top: "80px",
               height: "calc(100vh - 80px)",
-              borderRight: "1px solid #E0E0E0",
+              overflowY: "hidden",
               bgcolor: "#F1FCFA",
+              borderRight: "1px solid #E0E0E0",
             }}
           >
             <UserSidebar menus={studentMenu} />
           </Box>
         )}
 
-        <Box sx={{ flexGrow: 1, p: { xs: 2, md: 3 } }}>
+        <Box sx={{ flexGrow: 1, p: { xs: 1.5, sm: 2, md: 3 } }}>
           <Grid container spacing={3}>
             <Grid size={8}>
-              <Box sx={{ p: 3, bgcolor: "#fff", borderRadius: 3 }}>
-                <Grid
-                  item
-                  xs={12}
-                  md={4}
-                  display="flex"
-                  justifyContent="center"
-                >
-                  <Box textAlign="center">
-                    <Avatar
-                      src={profile.profile_picture}
-                      sx={{ width: 140, height: 140, mb: 2 }}
-                    />
-                    <Typography fontSize={26} fontWeight={800}>
-                      {profile.name}
-                    </Typography>
-                    <Typography fontSize={18} sx={{ color: "gray" }}>
-                      {profile.description}
-                    </Typography>
-
-                    <Button
-                      variant="contained"
-                      sx={{ mt: 2, borderRadius: 2 }}
-                      onClick={handleEditOpen}
-                    >
-                      Edit Profile
-                    </Button>
-                  </Box>
-                </Grid>
-              </Box>
+              <Grid item xs={12} md={4} sx={{ bgcolor: "#fff" }}>
+                <CardProfile profile={profile} />
+              </Grid>
 
               <Box
                 sx={{
@@ -269,7 +243,7 @@ export default function ProfileStudent() {
         onChange={handleChange}
         onClose={handleCloseEdit}
         onSave={handleSave}
-        onFileChange={handleFileChange} 
+        onFileChange={handleFileChange}
       />
     </Box>
   );

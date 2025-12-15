@@ -8,7 +8,7 @@ import {
   Button,
 } from "@mui/material";
 
-import NavbarDashboard from "../components/layout/DashboardLayout";
+import NavbarDashboard from "../components/layout/Navbar";
 import Sidebar from "../components/layout/UserSidebar";
 import { InstructorMenu } from "../components/Menu/SidebarMenu/InstructorMenu";
 import CardProfile from "../components/CardProfile";
@@ -18,12 +18,10 @@ function EditProfileInstructor() {
 
   return (
     <>
-      {/* NAVBAR */}
       <Box sx={{ position: "fixed", top: 0, width: "100%", zIndex: 1300 }}>
         <NavbarDashboard />
       </Box>
 
-      {/* SIDEBAR */}
       <Box
         sx={{
           flexShrink: 0,
@@ -40,7 +38,6 @@ function EditProfileInstructor() {
         <Sidebar menus={InstructorMenu} />
       </Box>
 
-      {/* MAIN WRAPPER */}
       <Box
         sx={{
           ml: { md: `${sidebarWidth + 20}px`, xs: 0 },
@@ -59,7 +56,6 @@ function EditProfileInstructor() {
           }}
         >
           <Box>
-          {/* PERSONAL INFO */}
           <Box sx={{ my: 2, mx: 2 }}>
             <Typography sx={{ fontSize: "20px", fontWeight: 700 }}>
               PERSONAL INFO
@@ -72,7 +68,6 @@ function EditProfileInstructor() {
             </Typography>
 
             <Box sx={{ display: "flex", gap: 2 }}>
-              {/* LEFT INPUTS */}
               <Box sx={{ py: 3 }}>
                 <Box>
                   <Typography sx={{ fontSize: "16px", fontWeight: 700, py: 1, px: 1.5 }}>
@@ -111,7 +106,6 @@ function EditProfileInstructor() {
                 </Box>
               </Box>
 
-              {/* RIGHT INPUTS */}
               <Box sx={{ py: 3 }}>
                 <Box>
                   <Typography sx={{ fontSize: "16px", fontWeight: 700, py: 1, px: 1.5 }}>
@@ -140,7 +134,6 @@ function EditProfileInstructor() {
             </Box>
           </Box>
 
-          {/* PROFESSIONAL INFO */}
           <Box sx={{ my: 2, mx: 2 }}>
             <Box sx={{ py: "11px" }}>
               <Typography sx={{ fontSize: "20px", fontWeight: 700 }}>
@@ -159,7 +152,6 @@ function EditProfileInstructor() {
             </Box>
 
             <Box sx={{ display: "flex", gap: 2, maxWidth: "60%" }}>
-              {/* PORTOFOLIO */}
               <Box>
                 <Typography sx={{ fontWeight: 700, fontSize: "16px" }}>
                   Portofolio
@@ -186,7 +178,6 @@ function EditProfileInstructor() {
                 />
               </Box>
 
-              {/* BIDANG */}
               <Box sx={{ width: "100%" }}>
                 <Typography sx={{ fontWeight: 700, fontSize: "16px" }}>
                   Bidang
@@ -218,7 +209,6 @@ function EditProfileInstructor() {
                   }}
                 />
 
-                {/* EDIT INFO BUTTON */}
                 <Box
                   sx={{
                     p: "2px",
@@ -257,7 +247,6 @@ function EditProfileInstructor() {
           </Box>
           </Box>
 
-          {/* SERTIFIKAT BOX */}
           <Box
             sx={{
               width: "400px",
