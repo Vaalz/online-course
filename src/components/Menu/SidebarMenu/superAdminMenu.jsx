@@ -43,7 +43,7 @@ export const superadminMenu = [
               sx={{ width: "30px", height: "30px", mr: "20px" }}
           />,
     text: "EDIT PROFILE",
-    path: "/profile",
+    path: "/profile/super-admin",
   },
   {
     icon: <Box 
