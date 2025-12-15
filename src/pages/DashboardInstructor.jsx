@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import {
-  Box,
-  Grid,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 
 import NavbarDashboard from "../components/layout/Navbar";
 import UserSidebar from "../components/layout/UserSidebar";
-import ProgresStudent from "../components/ProgresStudent";
+import ProgresStudent from "../components/Progres";
 import NotificationPanel from "../components/NotificationPanel";
 import Kelas from "../components/CardInstructor";
-import { instructorMenu } from "../components/Menu/SidebarMenu/adminMenu";
+import { InstructorMenu } from "../components/Menu/SidebarMenu/InstructorMenu";
+import Statistik from "../components/StatistikInstructor";
+import Loading from "../components/Loading";
+import CreateProfileDialog from "../components/profile/CreateProfileDialog";
+
 
 import Kursus from "../../src/assets/image/Kursus.png";
 import Zoom from "../../src/assets/image/Zoom2.png";
@@ -23,6 +22,10 @@ function DashboardInstructor() {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const sidebarWidth = 270;
   const sliderRef = useRef(null);
+  const [loading, setLoading] = useState(true);
+  const [isProfileRequired, setIsProfileRequired] = useState(false);
+
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     fetchMyCourses();
@@ -45,6 +48,45 @@ function DashboardInstructor() {
     }
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if (!token) return (window.location.href = "/");
+    if (role !== "instructor") return (window.location.href = "/forbidden");
+
+    async function checkProfile() {
+      try {
+        const res = await fetch(`${API_URL}profile/mybiodata`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (res.status === 500) {
+          console.log("PROFILE BELUM ADA");
+          setIsProfileRequired(true);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    checkProfile();
+  }, []);
+
+  const handleCreateProfile = async (payload) => {
+    const token = localStorage.getItem("token");
+
+    await axios.post(`${API_URL}profile/biodata`, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    setIsProfileRequired(false);
+  };
+
+  if (loading) return <Loading text="Memuat dashboard..." />;
+
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh", p: "3px" }}>
       <Box sx={{ position: "fixed", top: 0, width: "100%", zIndex: 1300 }}>
@@ -63,7 +105,7 @@ function DashboardInstructor() {
             borderRight: "1px solid #E0E0E0",
           }}
         >
-          <UserSidebar menus={instructorMenu} />
+          <UserSidebar menus={InstructorMenu} />
         </Box>
       )}
 
@@ -76,12 +118,8 @@ function DashboardInstructor() {
         }}
       >
         <Grid container spacing={2}>
-          <Grid item xs={12} md={8}>
-            <Box sx={{ display: "flex", gap: 1, mb: 3, height: 80 }}>
-              <StatCard icon={Kursus} number="23" title="Kursus Anda" />
-              <StatCard icon={Zoom} number="23" title="Sesi Zoom" />
-              <StatCard icon={Siswa} number="23" title="Siswa Anda" />
-            </Box>
+          <Grid size={{ xs: 12, md: 8 }}>
+            <Statistik />
 
             <ProgresStudent />
 
@@ -184,39 +222,11 @@ function DashboardInstructor() {
           </Grid>
         </Grid>
       </Box>
-    </Box>
-  );
-}
-
-function StatCard({ icon, number, title }) {
-  return (
-    <Box
-      sx={{
-        flex: 1,
-        border: "1px solid #D9E2E1",
-        borderRadius: "12px",
-        bgcolor: "white",
-        p: 2,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-        <Box
-          component="img"
-          src={icon}
-          sx={{ width: 32, height: "auto", mr: 1 }}
-        />
-        <Typography sx={{ fontSize: 28, fontWeight: 900 }}>
-          {number}
-        </Typography>
-      </Box>
-      <Typography
-        sx={{ fontWeight: 700, fontSize: 14, textTransform: "uppercase" }}
-      >
-        {title}
-      </Typography>
+      <CreateProfileDialog
+        keepMounted
+        open={isProfileRequired}
+        onSubmit={handleCreateProfile}
+      />
     </Box>
   );
 }

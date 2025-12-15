@@ -1,20 +1,18 @@
 import React from "react";
 import { Box, Grid, Typography, Card, CardContent } from "@mui/material"; // Tambahkan Card & CardContent untuk antisipasi konten bawah
 
-import Navbar from "../components/layout/DashboardLayout";
+import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/UserSidebar";
 import StatCard from "../components/StatCard";
 import NotificationPanel from "../components/NotificationPanel";
 import ProgresStudent from "../components/Progres";
 import { AdminMenu } from "../components/Menu/SidebarMenu/AdminMenu";
 
-// Icons
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
 import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
 
-// --- DATA STATISTIK ---
 const statsData = [
   {
     label: "TOTAL KURSUS",
@@ -38,10 +36,8 @@ const statsData = [
   },
 ];
 
-// DATA PROGRES
 const progres = {progres: "PROGRES SEMUA SISWA"}
 
-// --- DATA NOTIFIKASI ---
 const notifications = [
   "Saatnya melakukan sesi zoom …",
   "Anda telah menyelesaikan kuis yang diberikan",
@@ -49,17 +45,13 @@ const notifications = [
   "Saatnya melakukan sesi zoom …",
 ];
 
-// --- FUNGSI UTAMA KOMPONEN ---
 export default function DashboardAdmin() {
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
-      
-      {/* 1. NAVBAR FIXED */}
-      <Box sx={{ position: "fixed", top: 0, width: "100%", zIndex: 1300 }}>
+            <Box sx={{ position: "fixed", top: 0, width: "100%", zIndex: 1300 }}>
         <Navbar />
       </Box>
 
-      {/* 2. SIDEBAR FIXED */}
       <Box
         sx={{
           flexShrink: 0,
@@ -76,11 +68,10 @@ export default function DashboardAdmin() {
         <Sidebar menus={AdminMenu} />
       </Box>
 
-      {/* 3. MAIN CONTENT WRAPPER */}
       <Box
         sx={{
-          ml: { md: "319px", xs: 0 }, // Offset content for sidebar
-          pt: "110px", // Spacing from navbar
+          ml: { md: "319px", xs: 0 }, 
+          pt: "110px",
           px: 3,
           pb: 5,
         }}
@@ -95,13 +86,8 @@ export default function DashboardAdmin() {
                   />
                 </Grid>
               ))}
-          {/* LEFT AREA (Main Content: Stats & Progress) */}
           <Grid size={8}>
             <Grid container spacing={2}>
-              
-              {/* STATS 4 CARD */}
-
-              {/* PROGRESS SEMUA ORANG */}
               <Grid item xs={12}>
                 <Box
                   sx={{
@@ -138,7 +124,7 @@ export default function DashboardAdmin() {
                         <Box key={i} sx={{ textAlign: "center" }}>
                           <img
                             src="https://i.pravatar.cc/80"
-                            alt={`User ${i + 1}`} // Tambahkan alt
+                            alt={`User ${i + 1}`} 
                             style={{
                               width: 70,
                               height: 70,
@@ -159,9 +145,7 @@ export default function DashboardAdmin() {
                 </Box>
               </Grid>
 
-              {/* BAGIAN BAWAH (Konten Tambahan) */}
               <Grid item xs={12}>
-                {/* Placeholder untuk konten seperti Grafik atau Tabel */}
                 <Card sx={{ borderRadius: 3, border: "1px solid #DCE4E3", height: 200, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <CardContent>
                          <Typography color="text.secondary">Konten Bagian Bawah</Typography>
@@ -172,7 +156,6 @@ export default function DashboardAdmin() {
             </Grid>
           </Grid>
 
-          {/* RIGHT AREA (Notifications) */}
           <Grid size={4}>
             <NotificationPanel notifications={notifications} />
           </Grid>

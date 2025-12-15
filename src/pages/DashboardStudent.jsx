@@ -147,6 +147,7 @@ export default function DashboardStudent() {
             container
             columnSpacing={3}
             alignItems="flex-start"
+            width="100%"
             sx={{
               pl: { xs: 1.5, sm: 2, md: 3 },
             }}
@@ -156,8 +157,8 @@ export default function DashboardStudent() {
                 display: "flex",
                 width: "100%",
                 alignItems: "flex-end",
-                px: { xs: 2, md: 4 },
                 pt: "50px",
+              
               }}
             >
               <Grid item xs={12} md={8} lg={8}>
@@ -283,7 +284,6 @@ export default function DashboardStudent() {
             <Box
               sx={{
                 mt: "20px",
-                px: { xs: 2, md: 4 },
                 display: "flex",
                 overflowX: "auto",
                 scrollbarWidth: "auto",
@@ -294,16 +294,13 @@ export default function DashboardStudent() {
               <CategoryButtons onSelectCategory={setCourses} />
             </Box>
 
-            {/* CARD SLIDER */}
             <Box
               sx={{
                 position: "relative",
                 width: "100%",
                 mt: 4,
-                px: { xs: 2, md: 6 },
               }}
             >
-              {/* BUTTON PREV */}
               <Box
                 onClick={() =>
                   sliderRef.current.scrollBy({ left: -300, behavior: "smooth" })
@@ -328,7 +325,6 @@ export default function DashboardStudent() {
                 {"<"}
               </Box>
 
-              {/* WRAPPER HORIZONTAL */}
               <Box
                 ref={sliderRef}
                 sx={{
@@ -369,7 +365,6 @@ export default function DashboardStudent() {
                 )}
               </Box>
 
-              {/* BUTTON NEXT */}
               <Box
                 onClick={() =>
                   sliderRef.current.scrollBy({ left: 300, behavior: "smooth" })

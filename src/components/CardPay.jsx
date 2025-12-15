@@ -28,7 +28,7 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
           alignItems: 'center',
           textAlign: 'center',
           p: '32px',
-          height: '100%',   // flexbox + flexGrow akan mengatur posisi
+          height: '100%',   
           
           '@media (max-width:600px)': {
             p: '20px',
@@ -36,7 +36,6 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
           },
         }}
       >
-        {/* 🧱 Header */}
         <Box
           sx={{
             display: 'flex',
@@ -66,7 +65,6 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
           </Typography>
         </Box>
 
-        {/* 💸 Harga */}
         <Box
           sx={{
             display: 'flex',
@@ -95,14 +93,13 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
           </Typography>
         </Box>
 
-        {/* ✅ Benefit list */}
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             gap: '16px',
             width: '100%',
-            flexGrow: 1,                   // 🔥 membuat tombol turun ke bawah
+            flexGrow: 1,
             justifyContent: 'flex-start',
             
             '@media (max-width:600px)': {
@@ -131,7 +128,6 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
           ))}
         </Box>
 
-        {/* 🔘 Tombol */}
         <Button
           variant="contained"
           sx={{
@@ -147,7 +143,7 @@ function CardPay({ Pack, Description, Price, Benefit = [] }) {
             width: '100%',
             fontSize: { xs: '14px', sm: '16px' },
             py: { xs: 1, sm: 1.5 },
-            mt: 3,            // 🔥 margin bawah jelas terlihat
+            mt: 3,            
           }}
         >
           Get started

@@ -25,13 +25,10 @@ export const useProfile = () => {
       const res = await axios.get(`${API_URL}profile/mybiodata`, {
         headers: getAuthHeaders(),
       });
-      // assuming backend returns object under data.data
       setProfile(res.data.data ?? res.data);
       setIsNewProfile(false);
     } catch (err) {
       console.warn("FETCH PROFILE ERROR:", err.response?.status, err.message);
-
-      // jika backend mengembalikan 404/400 (tidak ada profile) -> treat as new profile
       if (err.response?.status === 404 || err.response?.status === 400) {
         setIsNewProfile(true);
         setProfile(null);
@@ -42,6 +39,10 @@ export const useProfile = () => {
       setLoading(false);
     }
   }, [token]);
+
+
+
+
 
   const createProfile = async (payload) => {
     if (!token) throw new Error("No token");
@@ -57,6 +58,11 @@ export const useProfile = () => {
       throw err;
     }
   };
+
+
+
+
+  
 
   const updateProfile = async (payload) => {
     const token = localStorage.getItem("token");
@@ -75,7 +81,6 @@ export const useProfile = () => {
     });
   };
 
-  // fetch on mount
   useEffect(() => {
     fetchProfile();
   }, [fetchProfile]);

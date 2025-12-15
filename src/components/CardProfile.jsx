@@ -1,7 +1,11 @@
 import React from "react";
 import { Grid, Avatar, Box, Typography } from "@mui/material";
 
-function CardProfile() {
+function CardProfile({ profile }) {
+  const role = localStorage.getItem("role");
+
+  if (!profile) return null;
+
   return (
     <>
       <Grid
@@ -15,9 +19,8 @@ function CardProfile() {
           alignItems: "center",
         }}
       >
-        {/* Avatar */}
         <Avatar
-          src="https://i.pravatar.cc/197"
+          src={profile.profile_picture}
           sx={{
             width: "197px",
             height: "197px",
@@ -26,11 +29,10 @@ function CardProfile() {
           }}
         />
 
-        {/* Text Section */}
         <Box>
           <Box>
             <Typography sx={{ fontWeight: 800, fontSize: "24px" }}>
-              USERNAME
+              {profile.name}
             </Typography>
 
             <Box sx={{ py: 1 }}>
@@ -38,12 +40,11 @@ function CardProfile() {
                 TENTANG SAYA
               </Typography>
               <Typography sx={{ fontWeight: 400, fontSize: "15px" }}>
-                Masukkan Deskripsi Anda
+                {profile.description}
               </Typography>
             </Box>
           </Box>
 
-          {/* Badge */}
           <Box>
             <Typography
               sx={{
@@ -56,7 +57,7 @@ function CardProfile() {
                 fontWeight: 600,
               }}
             >
-              Instructor
+              {role}
             </Typography>
           </Box>
         </Box>
