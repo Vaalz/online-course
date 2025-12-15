@@ -9,6 +9,8 @@ export default function ProfileInfo({ profile, onEdit }) {
         bgcolor: "#fff",
         borderRadius: 3,
         p: 3,
+        height: "100%",
+        justifyItems: "center"
       }}
     >
       <Typography fontSize={20} fontWeight={800} sx={{ mb: 2 }}>
