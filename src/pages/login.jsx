@@ -62,7 +62,6 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const res = await LoginAuth();
-      console.log("LOGIN AUTH RESPONSE:", res);
 
       const backendData = res?.data;
       const token = res.idToken;

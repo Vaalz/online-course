@@ -74,6 +74,7 @@ export default function RegisterPage() {
   };
 
   const handleGoogleLogin = async () => {
+    setLoading(true);
     try {
       const res = await LoginAuth();
 
@@ -93,7 +94,7 @@ export default function RegisterPage() {
       else navigate("/forbidden");
     } catch (err) {
       console.error(err);
-      alert("Register Gagal");
+      alert("Login Google gagal");
     } finally {
       setLoading(false);
     }
