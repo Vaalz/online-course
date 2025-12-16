@@ -58,7 +58,6 @@ function NavbarDashboard() {
               px: { xs: 1, sm: 2 },
             }}
           >
-            {/* LEFT AREA */}
             <Box
               sx={{
                 display: "flex",
@@ -66,7 +65,6 @@ function NavbarDashboard() {
                 gap: { xs: 1, md: 2 },
               }}
             >
-              {/* Mobile Menu */}
               <IconButton
                 sx={{ display: { xs: "flex", md: "none" } }}
                 onClick={() => setOpenDrawer(true)}
@@ -74,7 +72,6 @@ function NavbarDashboard() {
                 <MenuIcon />
               </IconButton>
 
-              {/* Logo */}
               <Box
                 component="img"
                 src={Logo}
@@ -88,7 +85,6 @@ function NavbarDashboard() {
                 onClick={() => navigate("/")}
               />
 
-              {/* Search Desktop */}
               <Box
                 sx={{
                   display: { xs: "none", md: "flex" },
@@ -107,7 +103,6 @@ function NavbarDashboard() {
                 </IconButton>
               </Box>
 
-              {/* Menu Desktop */}
               <Box
                 sx={{
                   display: { xs: "none", md: "flex" },
@@ -132,7 +127,6 @@ function NavbarDashboard() {
               </Box>
             </Box>
 
-            {/* RIGHT ICONS */}
             <Box
               sx={{
                 display: "flex",
@@ -164,7 +158,6 @@ function NavbarDashboard() {
         </Toolbar>
       </AppBar>
 
-      {/* DRAWER MOBILE */}
       <MobileDrawer
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}

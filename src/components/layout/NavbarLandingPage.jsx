@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from "@mui/material/styles";
-import logo from "../assets/image/Logo.png"
+import logo from "../../assets/image/Logo.png";
 import { Height } from "@mui/icons-material";
 
 const handleSearchClick = () => {
@@ -28,7 +28,7 @@ const handleSearchClick = () => {
 
 function Navbar() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md")); // mobile < 960px
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = (open) => () => setDrawerOpen(open);
@@ -40,9 +40,7 @@ function Navbar() {
       <Toolbar>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
           
-          {/* Bagian kiri: Logo + Search */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            {/* LOGO */}
             <Box
             component="img"
               src={logo}
@@ -54,7 +52,6 @@ function Navbar() {
               }}
             />
 
-            {/* SEARCH */}
             <Box
               sx={{
                 display: "flex",
@@ -75,7 +72,6 @@ function Navbar() {
               </IconButton>
             </Box>
 
-            {/* Desktop Menu */}
             {!isMobile && (
               <Grid container spacing={2} sx={{ pl: 4, width: "auto" }}>
                 {menuItems.map((item) => (
@@ -96,7 +92,6 @@ function Navbar() {
             )}
           </Box>
 
-          {/* Desktop Buttons */}
           {!isMobile && (
             <Box sx={{ display: "flex", gap: 2, pr: 8 }}>
               <Button 
@@ -127,14 +122,12 @@ function Navbar() {
             </Box>
           )}
 
-          {/* Mobile Hamburger */}
           {isMobile && (
             <IconButton onClick={toggleDrawer(true)}>
               <MenuIcon />
             </IconButton>
           )}
 
-          {/* Mobile Drawer */}
           <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
             <Box sx={{ width: 250, p: 2 }} role="presentation" onClick={toggleDrawer(false)}>
               <List>
@@ -146,7 +139,6 @@ function Navbar() {
                   </ListItem>
                 ))}
 
-                {/* Tombol Masuk */}
                 <ListItem disablePadding sx={{ mt: 2 }}>
                   <Button
                     component={Link}
@@ -159,7 +151,6 @@ function Navbar() {
                   </Button>
                 </ListItem>
 
-                {/* Tombol Daftar */}
                 <ListItem disablePadding sx={{ mt: 1 }}>
                   <Button
                     fullWidth
