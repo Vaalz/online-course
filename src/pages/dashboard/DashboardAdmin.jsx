@@ -9,7 +9,6 @@ import ProgresStudent from "../../components/Progres";
 import { AdminMenu } from "../../components/Menu/SidebarMenu/AdminMenu";
 import Loading from "../../components/Loading";
 
-
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
@@ -40,14 +39,13 @@ const statsData = [
 
 const progres = { progres: "PROGRES SEMUA SISWA" };
 
-
 export default function DashboardAdmin() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);
+  const [isProfileRequired, setIsProfileRequired] = useState(false);
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
   const progres = { progres: "PROGRES SEMUA SISWA" };
-
 
   const notifications = [
     "Saatnya melakukan sesi zoom hari ini",
@@ -238,6 +236,11 @@ export default function DashboardAdmin() {
             <NotificationPanel notifications={notifications} />
           </Grid>
         </Grid>
+        <CreateProfileDialog
+          keepMounted
+          open={isProfileRequired}
+          onSubmit={handleCreateProfile}
+        />
       </Box>
     </Box>
   );
