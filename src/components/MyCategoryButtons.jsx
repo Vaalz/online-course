@@ -69,7 +69,6 @@ export default function CategoryButtons({ onSelectCategory }) {
     }
   };
 
-  // -------- UI BUTTON STYLE --------
   const buttonStyle = (isActive) => ({
     borderRadius: "20px",
     textTransform: "none",
@@ -106,7 +105,7 @@ export default function CategoryButtons({ onSelectCategory }) {
         "&::-webkit-scrollbar": { display: "none" },
       }}
     >
-      {/* 🔥 STATIC BUTTON "ALL COURSES" */}
+
       <Button
         onClick={() => handleClick("all")}
         sx={buttonStyle(active === "all")}
