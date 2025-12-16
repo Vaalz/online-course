@@ -1,5 +1,5 @@
-import React from 'react'
-import Navbar from '../components/layout/NavbarLandingPage.jsx'
+import React from "react";
+import Navbar from "../components/layout/NavbarLandingPage.jsx";
 import {
   Box,
   Typography,
@@ -14,33 +14,32 @@ import {
   AccordionActions,
   AccordionSummary,
   AccordionDetails,
-} from '@mui/material'
+} from "@mui/material";
 
-import google from '../assets/image/Google.png'
-import microsoft from '../assets/image/Microsoft.png'
-import spotify from '../assets/image/Spotify.png'
-import mailchimp from '../assets/image/Mailchimp.png'
-import airbnb from '../assets/image/Airbnb.png'
-import uber from '../assets/image/Uber.png'
-import StarIcon from '@mui/icons-material/Star'
-import CardKelas from '../components/CardKelas.jsx'
-import Gambar1 from '../assets/image/Gambar1.png'
-import Gambar2 from '../assets/image/Gambar2.png'
-import Gambar3 from '../assets/image/Gambar3.png'
-import Testi from '../components/Testi.jsx'
-import Andi from '../assets/image/Andi.png'
-import Siti from '../assets/image/Siti.png'
-import Budi from '../assets/image/Budi.png'
-import Testi2 from '../components/Testi2.jsx'
-import CardPay from '../components/CardPay.jsx'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import FAQ from '../components/Faq.jsx'
-import Github from '../assets/image/github.png'
-import Twitter from '../assets/image/twitter.png'
-import Dribbble from '../assets/image/dribbble.png'
-import Facebook from '../assets/image/facebook.png'
-import logo from "../assets/image/LogoPutih.png"
-
+import google from "../assets/logo/Google.png";
+import microsoft from "../assets/logo/Microsoft.png";
+import spotify from "../assets/logo/Spotify.png";
+import mailchimp from "../assets/logo/Mailchimp.png";
+import airbnb from "../assets/logo/Airbnb.png";
+import uber from "../assets/logo/Uber.png";
+import StarIcon from "@mui/icons-material/Star";
+import CardKelas from "../components/ui/CardKelas.jsx";
+import Gambar1 from "../assets/image/Gambar1.png";
+import Gambar2 from "../assets/image/Gambar2.png";
+import Gambar3 from "../assets/image/Gambar3.png";
+import Testi from "../components/LandingpageCompt/Testi.jsx";
+import Andi from "../assets/image/Andi.png";
+import Siti from "../assets/image/Siti.png";
+import Budi from "../assets/image/Budi.png";
+import Testi2 from "../components/LandingpageCompt/Testi2.jsx";
+import CardPay from "../components/LandingpageCompt/CardPay.jsx";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FAQ from "../components/LandingpageCompt/Faq.jsx";
+import Github from "../assets/logo/github.png";
+import Twitter from "../assets/logo/twitter.png";
+import Dribbble from "../assets/logo/dribbble.png";
+import Facebook from "../assets/logo/facebook.png";
+import logo from "../assets/logo/LogoPutih.png";
 
 const icons = [
   { src: Github, width: 17, height: 17 },
@@ -56,57 +55,66 @@ function LandingPage() {
 
       {/* Hero Section */}
       <Box sx={{ py: 3 }}>
-        <Box sx={{
-          py: { xs: 6, md: 8 },
-          px: { xs: 3, md: 10 },
-          textAlign: { xs: 'center', md: 'left' },
-        }}>
-          <Typography sx={{
-            fontWeight: 600,
-            fontSize: { xs: '28px', md: '40px' },
-          }}>
-            Tingkatkan Skill<br />Di Industri Digital
+        <Box
+          sx={{
+            py: { xs: 6, md: 8 },
+            px: { xs: 3, md: 10 },
+            textAlign: { xs: "center", md: "left" },
+          }}
+        >
+          <Typography
+            sx={{
+              fontWeight: 600,
+              fontSize: { xs: "28px", md: "40px" },
+            }}
+          >
+            Tingkatkan Skill
+            <br />
+            Di Industri Digital
           </Typography>
 
-          <Typography sx={{ py: 2, color: '#657575' }}>
-            Akses lebih dari 100+ kelas online dengan tutor <br /> profesional. Belajar kapan saja dan dimana saja,<br /> ikuti kelas online dengan Live Q&A dan dapatkan <br /> sertifikat resmi untuk portofolio anda.
+          <Typography sx={{ py: 2, color: "#657575" }}>
+            Akses lebih dari 100+ kelas online dengan tutor <br /> profesional.
+            Belajar kapan saja dan dimana saja,
+            <br /> ikuti kelas online dengan Live Q&A dan dapatkan <br />{" "}
+            sertifikat resmi untuk portofolio anda.
           </Typography>
 
           <Grid
-          container
-          spacing={2}
-          justifyContent={{ xs: 'center', md: 'flex-start' }}
-        >
-          <Grid item>
-            <Button
-              variant="contained"
-              sx={{
-                background: 'linear-gradient(90deg, #11DF9E, #466EF1)',
-                fontWeight: 500,
-                color: 'white',
-                textTransform: 'none',
-                px: 4,
-                py: 1.5,
-              }}
-            >
-              Cari kelas
-            </Button>
-          </Grid>
+            container
+            spacing={2}
+            justifyContent={{ xs: "center", md: "flex-start" }}
+          >
+            <Grid item>
+              <Button
+                variant="contained"
+                sx={{
+                  background: "linear-gradient(90deg, #11DF9E, #466EF1)",
+                  fontWeight: 500,
+                  color: "white",
+                  textTransform: "none",
+                  px: 4,
+                  py: 1.5,
+                }}
+              >
+                Cari kelas
+              </Button>
+            </Grid>
 
-          <Grid item>
-            <Button
-              sx={{
-                textTransform: 'none',
-                color: '#000',
-                border: '1px solid #E5E7EB',
-                px: 4,
-                py: 1.5,
-              }}
-            >
-              Pricing & FAQ
-            </Button>
+            <Grid item>
+              <Button
+                sx={{
+                  textTransform: "none",
+                  color: "#000",
+                  border: "1px solid #E5E7EB",
+                  px: 4,
+                  py: 1.5,
+                }}
+              >
+                Pricing & FAQ
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
         </Box>
       </Box>
 
@@ -129,10 +137,10 @@ function LandingPage() {
                 src={logo}
                 alt={`Logo ${index}`}
                 sx={{
-                  width: '100%',
+                  width: "100%",
                   maxWidth: 120,
-                  mx: 'auto',
-                  display: 'block',
+                  mx: "auto",
+                  display: "block",
                 }}
               />
             </Grid>
@@ -172,16 +180,16 @@ function LandingPage() {
 
         <Grid container spacing={7} justifyContent="center" sx={{ pb: 5 }}>
           {[
-            { color: '#a000dfff', letter: 'A' },
-            { color: '#919191ff', letter: 'B' },
-            { color: '#00ff4cff', letter: 'C' }
+            { color: "#a000dfff", letter: "A" },
+            { color: "#919191ff", letter: "B" },
+            { color: "#00ff4cff", letter: "C" },
           ].map((item, index) => (
             <Grid item key={index}>
               <Box
                 sx={{
-                  background: '#fff',
+                  background: "#fff",
                   maxWidth: 300,
-                  width: '100%',
+                  width: "100%",
                   borderRadius: 2,
                   boxShadow: 2,
                   p: 2,
@@ -201,12 +209,12 @@ function LandingPage() {
                 <Typography
                   variant="h6"
                   fontWeight="bold"
-                  sx={{ fontSize: '1.875rem' }}
+                  sx={{ fontSize: "1.875rem" }}
                 >
                   Lorem Ipsum
                 </Typography>
 
-                <Typography sx={{ fontSize: '1.5rem', pb: 4 }}>
+                <Typography sx={{ fontSize: "1.5rem", pb: 4 }}>
                   <Box
                     component="span"
                     sx={{
@@ -221,12 +229,14 @@ function LandingPage() {
                         "0%": { backgroundPosition: "0% center" },
                         "100%": { backgroundPosition: "200% center" },
                       },
-                      fontWeight: 'bold',
+                      fontWeight: "bold",
                     }}
                   >
                     Lorem ipsum
-                  </Box>{' '}
-                  dolor sit amet consectetur adipisicing elit. Doloremque eaque ipsum unde! Facere rem necessitatibus distinctio laborum molestias enim impedit.
+                  </Box>{" "}
+                  dolor sit amet consectetur adipisicing elit. Doloremque eaque
+                  ipsum unde! Facere rem necessitatibus distinctio laborum
+                  molestias enim impedit.
                 </Typography>
               </Box>
             </Grid>
@@ -238,9 +248,9 @@ function LandingPage() {
       <Box sx={{ py: { xs: 4, md: 8 }, px: { xs: 2, md: 5 } }}>
         <Typography
           sx={{
-            fontWeight: 'bold',
-            fontSize: { xs: '1.75rem', md: '2.5rem' },
-            textAlign: { xs: 'center', md: 'left' },
+            fontWeight: "bold",
+            fontSize: { xs: "1.75rem", md: "2.5rem" },
+            textAlign: { xs: "center", md: "left" },
             mb: { xs: 3, md: 4 },
           }}
         >
@@ -256,15 +266,21 @@ function LandingPage() {
             mb: 4,
           }}
         >
-          {['Programing', 'UI/UX', 'Infrastruktur', 'Backend', 'Cyber Security'].map((label, i) => (
+          {[
+            "Programing",
+            "UI/UX",
+            "Infrastruktur",
+            "Backend",
+            "Cyber Security",
+          ].map((label, i) => (
             <Grid item xs={12} sm={6} md="auto" key={i}>
               <Button
                 fullWidth
                 sx={{
-                  textTransform: 'none',
-                  border: '1px solid #E5E7EB',
-                  color: '#000',
-                  fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
+                  textTransform: "none",
+                  border: "1px solid #E5E7EB",
+                  color: "#000",
+                  fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" },
                   borderRadius: 5,
                   fontWeight: 500,
                   py: { xs: 1, sm: 1.5 },
@@ -292,16 +308,15 @@ function LandingPage() {
         </Grid>
       </Box>
 
-       {/* Testimoni */}
+      {/* Testimoni */}
       <Box sx={{ pb: "96px" }}>
         <Box sx={{ p: { xs: 2, sm: 4, md: 8 } }}>
-          
           <Typography
             sx={{
               fontWeight: "bold",
               fontSize: { xs: "32px", sm: "40px", md: "48px" },
               textAlign: "center",
-              pb: { xs: 4, md: 8 }
+              pb: { xs: 4, md: 8 },
             }}
           >
             Testimoni Pengguna
@@ -313,7 +328,7 @@ function LandingPage() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: { xs: 4, md: 8 } // jarak antar testimoni
+              gap: { xs: 4, md: 8 }, // jarak antar testimoni
             }}
           >
             <Box sx={{ width: "100%", maxWidth: "1000px" }}>
@@ -343,16 +358,17 @@ function LandingPage() {
         </Box>
       </Box>
 
-       {/* pay as u grow */}
-      <Box sx={{ pb: '96px' }}>
-        
+      {/* pay as u grow */}
+      <Box sx={{ pb: "96px" }}>
         {/* Bagian judul */}
-        <Box sx={{ textAlign: 'center' }}>
-          <Typography sx={{ fontSize: '36px', fontWeight: '800', pb: 2 }}>
+        <Box sx={{ textAlign: "center" }}>
+          <Typography sx={{ fontSize: "36px", fontWeight: "800", pb: 2 }}>
             Pay as you grow
           </Typography>
-          <Typography sx={{ fontSize: '20px', color: '#657575' }}>
-            Here at flowbite we focus on markets where technology, innovation, and capital<br />
+          <Typography sx={{ fontSize: "20px", color: "#657575" }}>
+            Here at flowbite we focus on markets where technology, innovation,
+            and capital
+            <br />
             can unlock long-term value and drive economic growth.
           </Typography>
         </Box>
@@ -412,97 +428,95 @@ function LandingPage() {
             />
           </Grid>
         </Grid>
-
       </Box>
 
-       {/* question */}
-       <Box>
-          <Box sx={{p: '32px'}}>
-            <FAQ />
-          </Box>
-       </Box>
+      {/* question */}
+      <Box>
+        <Box sx={{ p: "32px" }}>
+          <FAQ />
+        </Box>
+      </Box>
 
-       {/* Trial */}
-        <Box sx={{pb: 16}}>
-          <Box
+      {/* Trial */}
+      <Box sx={{ pb: 16 }}>
+        <Box
+          sx={{
+            p: "32px",
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            gap: "24px",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography
             sx={{
-              p: '32px',
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '24px',
-              justifyContent: 'center',
-              alignItems: 'center',
+              fontSize: "36px",
+              fontWeight: "800",
             }}
           >
-            <Typography
-              sx={{
-                fontSize: '36px',
-                fontWeight: '800',
-              }}
-            >
-              Start your free trial today
-            </Typography>
+            Start your free trial today
+          </Typography>
 
-            <Typography
-              sx={{
-                fontSize: '20px',
-                color: '#6B7280',
-                fontWeight: '400',
-              }}
-            >
-              Try Flowbite Platform for 30 days. No credit card required.
-            </Typography>
+          <Typography
+            sx={{
+              fontSize: "20px",
+              color: "#6B7280",
+              fontWeight: "400",
+            }}
+          >
+            Try Flowbite Platform for 30 days. No credit card required.
+          </Typography>
 
-            <Button
-              variant="contained"
-              sx={{
-                textTransform: 'none',
-                background: 'linear-gradient(90deg, #11DF9E, #466EF1)',
-                fontWeight: 500,
-                color: 'white',
-                animation: 'gradientMove 3s linear infinite',
-                '@keyframes gradientMove': {
-                  '0%': { backgroundPosition: '0% center' },
-                  '100%': { backgroundPosition: '200% center' },
-                },
-                borderRadius: '8px',
-                py: '12px',
-                px: '20px',
-              }}
-            >
-              Free trial for 30 days
-            </Button>
-          </Box>
+          <Button
+            variant="contained"
+            sx={{
+              textTransform: "none",
+              background: "linear-gradient(90deg, #11DF9E, #466EF1)",
+              fontWeight: 500,
+              color: "white",
+              animation: "gradientMove 3s linear infinite",
+              "@keyframes gradientMove": {
+                "0%": { backgroundPosition: "0% center" },
+                "100%": { backgroundPosition: "200% center" },
+              },
+              borderRadius: "8px",
+              py: "12px",
+              px: "20px",
+            }}
+          >
+            Free trial for 30 days
+          </Button>
         </Box>
+      </Box>
 
-       {/* Footer */}
-       <Box
+      {/* Footer */}
+      <Box
         sx={{
-          background: 'linear-gradient(180deg, #1A3FB9 0%, #0C1C53 100%)',
-          color: 'white',
+          background: "linear-gradient(180deg, #1A3FB9 0%, #0C1C53 100%)",
+          color: "white",
           p: { xs: 3, md: 4 },
-          display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          textAlign: { xs: 'center', md: 'left' },
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: "center",
+          justifyContent: "space-between",
+          textAlign: { xs: "center", md: "left" },
           gap: { xs: 2, md: 0 },
         }}
       >
         {/* Logo */}
         <Box
-          component= "img"
+          component="img"
           src={logo}
-          sx={{width: '70px', height: '50px'}}
+          sx={{ width: "70px", height: "50px" }}
         />
-        
 
         {/* Hak Cipta */}
         <Typography
           sx={{
-            fontSize: { xs: '0.875rem', md: '1rem' },
-            maxWidth: { xs: '90%', md: '100%' },
+            fontSize: { xs: "0.875rem", md: "1rem" },
+            maxWidth: { xs: "90%", md: "100%" },
           }}
         >
           © 2025 Oemah Solution Indonesia, Inc. All rights reserved.
@@ -511,10 +525,10 @@ function LandingPage() {
         {/* Icon Sosial */}
         <Box
           sx={{
-            display: 'flex',
+            display: "flex",
             gap: 2,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           {icons.map((icon, i) => (
@@ -526,18 +540,16 @@ function LandingPage() {
               sx={{
                 width: `${icon.width}px`,
                 height: `${icon.height}px`,
-                cursor: 'pointer',
-                transition: '0.3s',
-                '&:hover': { transform: 'scale(1.1)' },
+                cursor: "pointer",
+                transition: "0.3s",
+                "&:hover": { transform: "scale(1.1)" },
               }}
             />
           ))}
         </Box>
       </Box>
-
     </>
-  )
+  );
 }
 
-export default LandingPage
-
+export default LandingPage;

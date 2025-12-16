@@ -8,8 +8,8 @@ import InputField from "../components/Authcompt/InputField";
 import GradientButton from "../components/Authcompt/GradientButton";
 import LoginAuth from "../services/auth";
 import { sendOtp } from "../services/otp";
-import GambarLogin from "../assets/image/Gambar.png";
-import Loading from "../components/Loading";
+import GambarLogin from "../assets/image/PictureAuth.png";
+import Loading from "../components/ui/Loading";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -101,143 +101,143 @@ export default function LoginPage() {
       >
         {loading && <Loading text="Mohon tunggu..." fullscreen />}
 
-        <Box sx={{display: 'flex'}}>
- 
-        <Grid
-          item
-          xs={false}
-          sx={{
-            display: {
-              xs: "none",
-              sm: "none",
-              md: "flex",
-              lg: "flex",
-              xl: "flex",
-            },
-            justifyContent: "center",
-            alignItems: "center",
-            p: { xs: 0, sm: 0, md: "80px" },
-          }}
-        >
-          <Box
+        <Box sx={{ display: "flex" }}>
+          <Grid
+            item
+            xs={false}
             sx={{
-              width: "100%",
-              maxWidth: {
-                xs: "220px", 
-                sm: "350px", 
-                md: "500px", 
-                lg: "650px",
+              display: {
+                xs: "none",
+                sm: "none",
+                md: "flex",
+                lg: "flex",
+                xl: "flex",
               },
-              height: "auto",
-              display: "flex",
               justifyContent: "center",
+              alignItems: "center",
+              p: { xs: 0, sm: 0, md: "80px" },
             }}
           >
-            <img
-              src={GambarLogin}
-              alt="Gambar Login"
-              style={{
+            <Box
+              sx={{
                 width: "100%",
-                maxWidth: "650px",
+                maxWidth: {
+                  xs: "220px",
+                  sm: "350px",
+                  md: "500px",
+                  lg: "650px",
+                },
                 height: "auto",
-                objectFit: "contain",
+                display: "flex",
+                justifyContent: "center",
               }}
-            />
-          </Box>
-        </Grid>
-        <Grid
-          item
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: { xs: "center", md: "center" },
-            alignItems: "center",
-            px: { xs: 4, sm: 6, md: 8 },
-            py: { xs: 4, md: 0 },
-            backgroundColor: "#fff",
-            gap: "30px",
-          }}
-        >
-          <Typography
-            fontSize={{ xs: 26, sm: 32, md: 36 }}
-            fontWeight={600}
-            textAlign="center"
-            sx={{ color: "#010E0A" }}
-          >
-            Masuk untuk mulai belajar
-          </Typography>
-
-          <Box
+            >
+              <img
+                src={GambarLogin}
+                alt="Gambar Login"
+                style={{
+                  width: "100%",
+                  maxWidth: "650px",
+                  height: "auto",
+                  objectFit: "contain",
+                }}
+              />
+            </Box>
+          </Grid>
+          <Grid
+            item
             sx={{
-              width: "100%",
-              maxWidth: "480px",
               display: "flex",
               flexDirection: "column",
-              gap: "25px",
-            }}
-          >
-            <InputField
-              label="Email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={!!error}
-              helperText={error}
-            />
-          </Box>
-
-          <Box sx={{ width: "100%", maxWidth: "480px" }}>
-            <GradientButton text="Dapatkan Kode" onClick={handleSendCode} />
-          </Box>
-
-          <Box
-            sx={{
-              width: "100%",
-              maxWidth: "480px",
-              display: "flex",
+              justifyContent: { xs: "center", md: "center" },
               alignItems: "center",
+              px: { xs: 4, sm: 6, md: 8 },
+              py: { xs: 4, md: 0 },
+              backgroundColor: "#fff",
+              gap: "30px",
             }}
           >
-            <Divider sx={{ flex: 1 }} />
-            <Typography sx={{ mx: 2, color: "gray", fontSize: "18px" }}>
-              Atau
-            </Typography>
-            <Divider sx={{ flex: 1 }} />
-          </Box>
-
-          <Box sx={{ width: "100%", maxWidth: "480px" }}>
-            <AuthButton
-              text="Login dengan Google"
-              onClick={handleGoogleLogin}
-              icon={<GoogleIcon fontSize="25px" />}
-            />
-          </Box>
-
-          <Typography
-            sx={{
-              color: "#010E0A",
-              fontSize: { xs: "16px", sm: "18px", md: "20px" },
-              textAlign: "center",
-            }}
-          >
-            Belum punya akun?{" "}
             <Typography
-              component="span"
-              fontWeight={400}
-              fontSize={"20px"}
-              sx={{
-                cursor: "pointer",
-                background: "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                display: "inline-block",
-              }}
-              onClick={() => navigate("/register")}
+              fontSize={{ xs: 26, sm: 32, md: 36 }}
+              fontWeight={600}
+              textAlign="center"
+              sx={{ color: "#010E0A" }}
             >
-              Register Disini
+              Masuk untuk mulai belajar
             </Typography>
-          </Typography>
-        </Grid>
+
+            <Box
+              sx={{
+                width: "100%",
+                maxWidth: "480px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "25px",
+              }}
+            >
+              <InputField
+                label="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={!!error}
+                helperText={error}
+              />
+            </Box>
+
+            <Box sx={{ width: "100%", maxWidth: "480px" }}>
+              <GradientButton text="Dapatkan Kode" onClick={handleSendCode} />
+            </Box>
+
+            <Box
+              sx={{
+                width: "100%",
+                maxWidth: "480px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Divider sx={{ flex: 1 }} />
+              <Typography sx={{ mx: 2, color: "gray", fontSize: "18px" }}>
+                Atau
+              </Typography>
+              <Divider sx={{ flex: 1 }} />
+            </Box>
+
+            <Box sx={{ width: "100%", maxWidth: "480px" }}>
+              <AuthButton
+                text="Login dengan Google"
+                onClick={handleGoogleLogin}
+                icon={<GoogleIcon fontSize="25px" />}
+              />
+            </Box>
+
+            <Typography
+              sx={{
+                color: "#010E0A",
+                fontSize: { xs: "16px", sm: "18px", md: "20px" },
+                textAlign: "center",
+              }}
+            >
+              Belum punya akun?{" "}
+              <Typography
+                component="span"
+                fontWeight={400}
+                fontSize={"20px"}
+                sx={{
+                  cursor: "pointer",
+                  background:
+                    "linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  display: "inline-block",
+                }}
+                onClick={() => navigate("/register")}
+              >
+                Register Disini
+              </Typography>
+            </Typography>
+          </Grid>
         </Box>
       </Grid>
     </Box>

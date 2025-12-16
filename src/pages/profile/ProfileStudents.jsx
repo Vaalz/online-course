@@ -14,7 +14,7 @@ import NavbarDashboard from "../../components/layout/Navbar";
 import UserSidebar from "../../components/layout/UserSidebar";
 import { studentMenu } from "../../components/Menu/SidebarMenu/studentMenu";
 import EditProfileDialog from "../../components/profile/EditProfileDialog";
-import CardProfile from "../../components/CardProfile";
+import CardProfile from "../../components/LandingpageCompt/CardProfile";
 import ProfileInfo from "../../components/profile/ProfileInfo";
 import LearningHistoryTable from "../../components/profile/LearningHistoryTable";
 import { useProfile } from "../../components/profile/useProfile";
@@ -36,7 +36,6 @@ export default function ProfileStudent() {
   });
 
   const learningHistory = [];
-
 
   const handleChange = (field) => (e) => {
     const value = e.target ? e.target.value : e;

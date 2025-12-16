@@ -2,10 +2,10 @@ import React from "react";
 
 import { Box,  } from "@mui/material";
 
-import Home from "../../../assets/image/Home.png"
-import Dashboard from "../../../assets/image/Dashboard.png"
-import EditProfile from "../../../assets/image/Profile.png"
-import Zoom from "../../../assets/image/Zoom.png"
+import Home from "../../../assets/icon/Home.png"
+import Dashboard from "../../../assets/icon/Dashboard.png"
+import EditProfile from "../../../assets/icon/Profile.png"
+import Zoom from "../../../assets/icon/Zoom.png"
 
 export const InstructorMenu = [
   {

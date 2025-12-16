@@ -4,7 +4,7 @@ import Sidebar from "../components/layout/UserSidebar";
 import { useParams } from "react-router-dom";
 import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 import { Box, Typography } from "@mui/material";
-import MeetingItem from "../components/MeetingItem";
+import MeetingItem from "../components/ui/MeetingItem";
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;

@@ -4,11 +4,6 @@ import { Box, List, ListItem, ListItemText, ListItemIcon, ListItemButton } from 
 import { useNavigate, useLocation } from "react-router-dom";
 import LogoutButton from "../Authcompt/LogoutButton";
 
-import Home from "../../assets/image/Home.png";
-import Dashboard from "../../assets/image/Dashboard.png";
-import Profile from "../../assets/image/Profile.png";
-import Quiz from "../../assets/image/Quiz.png";
-
 export default function UserSidebar({ menus = [] }) {
   const location = useLocation();
   const navigate = useNavigate();

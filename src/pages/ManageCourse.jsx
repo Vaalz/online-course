@@ -3,8 +3,8 @@ import axios from "axios";
 import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/UserSidebar";
 import { Box, Grid, Paper, Typography } from "@mui/material";
-import CardKelas from "../components/CardKelas";
-import CategoryButtons from "../components/AllCategoryButtons";
+import CardKelas from "../components/ui/CardKelas";
+import CategoryButtons from "../components/ui/AllCategoryButtons";
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 
@@ -166,7 +166,19 @@ export default function ManageCourseStudent() {
                               Tidak ada kelas pada kategori ini
                             </Typography>
                           ) : (
-                            <Grid container spacing={2}>
+                            <Grid
+                              container
+                              spacing={2}
+                              sx={{
+                                display: "grid",
+                                gridTemplateColumns: {
+                                  xs: "1fr",
+                                  sm: "repeat(2, 1fr)",
+                                  md: "repeat(3, 1fr)",
+                                  lg: "repeat(4, 1fr)",
+                                },
+                              }}
+                            >
                               {courses.map((c) => (
                                 <Grid
                                   item

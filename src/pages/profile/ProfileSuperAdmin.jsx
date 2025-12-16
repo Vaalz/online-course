@@ -14,7 +14,7 @@ import NavbarDashboard from "../../components/layout/Navbar";
 import UserSidebar from "../../components/layout/UserSidebar";
 import { superadminMenu } from "../../components/Menu/SidebarMenu/superAdminMenu";
 import EditProfileDialog from "../../components/profile/EditProfileDialog";
-import CardProfile from "../..//components/CardProfile";
+import CardProfile from "../../components/LandingpageCompt/CardProfile";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 

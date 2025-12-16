@@ -1,5 +1,5 @@
 import React from 'react'
-import Centang from '../assets/image/Vector.png'
+import Centang from '../../assets/image/Ceklis.png'
 
 function CentangIcon() {
   return (

@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from "@mui/material/styles";
-import logo from "../../assets/image/Logo.png";
+import logo from "../../assets/logo/Logo.png";
 import { Height } from "@mui/icons-material";
 
 const handleSearchClick = () => {

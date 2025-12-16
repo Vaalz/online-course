@@ -1,15 +1,14 @@
 import React from "react";
 import { Box, Grid, Typography, Card, CardContent } from "@mui/material";
-import Navbar from "../components/layout/DashboardLayout";
+import Navbar from "../../components/layout/Navbar";
 import Sidebar from "../../components/layout/UserSidebar";
-import StatCard from "../../components/StatCard";
-import NotificationPanel from "../../components/NotificationPanel";
-import ProgresStudent from "../../components/Progres";
+import StatCard from "../../components/ui/StatCard";
+import NotificationPanel from "../../components/ui/NotificationPanel";
+import ProgresStudent from "../../components/ui/Progres";
 import { superadminMenu } from "../../components/Menu/SidebarMenu/superAdminMenu";
 import styled from "@emotion/styled";
 import { Paper } from "@mui/material";
 import CreateProfileDialog from "../../components/profile/CreateProfileDialog";
-
 
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
