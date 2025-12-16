@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Grid, Typography, Card, CardContent } from "@mui/material"; // Tambahkan Card & CardContent untuk antisipasi konten bawah
 
-import Navbar from "../components/layout/Navbar";
-import Sidebar from "../components/layout/UserSidebar";
-import StatCard from "../components/StatCard";
-import NotificationPanel from "../components/NotificationPanel";
-import ProgresStudent from "../components/Progres";
-import { AdminMenu } from "../components/Menu/SidebarMenu/AdminMenu";
-import Loading from "../components/Loading";
+import Navbar from "../../components/layout/Navbar";
+import Sidebar from "../../components/layout/UserSidebar";
+import StatCard from "../../components/StatCard";
+import NotificationPanel from "../../components/NotificationPanel";
+import ProgresStudent from "../../components/Progres";
+import { AdminMenu } from "../../components/Menu/SidebarMenu/AdminMenu";
+import Loading from "../../components/Loading";
 
 
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";

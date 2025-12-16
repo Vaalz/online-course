@@ -10,14 +10,14 @@ import {
   Divider,
 } from "@mui/material";
 
-import NavbarDashboard from "../components/layout/Navbar";
-import UserSidebar from "../components/layout/UserSidebar";
-import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
-import EditProfileDialog from "../components/profile/EditProfileDialog";
-import CardProfile from "../components/CardProfile";
+import NavbarDashboard from "../../components/layout/Navbar";
+import UserSidebar from "../../components/layout/UserSidebar";
+import { studentMenu } from "../../components/Menu/SidebarMenu/studentMenu";
+import EditProfileDialog from "../../components/profile/EditProfileDialog";
+import CardProfile from "../../components/CardProfile";
 
-import ProfileInfo from "../components/profile/ProfileInfo";
-import { useProfile } from "../components/profile/useProfile";
+import ProfileInfo from "../../components/profile/ProfileInfo";
+import { useProfile } from "../../components/profile/useProfile";
 
 export default function ProfileStudent() {
   const { profile, loading, updateProfile, fetchProfile } = useProfile();
