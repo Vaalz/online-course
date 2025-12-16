@@ -2,20 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 
-import NavbarDashboard from "../components/layout/Navbar";
-import UserSidebar from "../components/layout/UserSidebar";
-import ProgresStudent from "../components/Progres";
-import NotificationPanel from "../components/NotificationPanel";
-import Kelas from "../components/CardInstructor";
-import { InstructorMenu } from "../components/Menu/SidebarMenu/InstructorMenu";
-import Statistik from "../components/StatistikInstructor";
-import Loading from "../components/Loading";
-import CreateProfileDialog from "../components/profile/CreateProfileDialog";
+import NavbarDashboard from "../../components/layout/Navbar";
+import UserSidebar from "../../components/layout/UserSidebar";
+import ProgresStudent from "../../components/Progres";
+import NotificationPanel from "../../components/NotificationPanel";
+import Kelas from "../../components/CardInstructor";
+import { InstructorMenu } from "../../components/Menu/SidebarMenu/InstructorMenu";
+import Statistik from "../../components/StatistikInstructor";
+import Loading from "../../components/Loading";
+import CreateProfileDialog from "../../components/profile/CreateProfileDialog";
 
-
-import Kursus from "../../src/assets/image/Kursus.png";
-import Zoom from "../../src/assets/image/Zoom2.png";
-import Siswa from "../../src/assets/image/Siswa.png";
+import Kursus from "../../assets/image/Kursus.png";
+import Zoom from "../../assets/image/Zoom2.png";
+import Siswa from "../../assets/image/Siswa.png";
 
 function DashboardInstructor() {
   const [courses, setCourses] = useState([]);

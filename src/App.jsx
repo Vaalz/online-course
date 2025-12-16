@@ -6,16 +6,16 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import VerifyPage from "./pages/verify";
 import "./App.css";
-import DashboardStudent from "./pages/DashboardStudent";
-import DashboardSuperAdmin from "./pages/dasboard/DashboardSuperAdmin";
-import DashboardInstructor from "./pages/DashboardInstructor";
-import Profile from "./pages/Profilestuudents";
+import DashboardStudent from "./pages/dashboard/DashboardStudent";
+import DashboardSuperAdmin from "./pages/dashboard/DashboardSuperAdmin";
+import DashboardInstructor from "./pages/dashboard/DashboardInstructor";
+import Profile from "./pages/profile/ProfileStudents";
 import ManageCourse from "./pages/ManageCourse";
 import { Details } from "@mui/icons-material";
 import DetailCourses from "./pages/DetailCourses";
 import Testi2 from "./pages/ManageQuizStudent";
-import DashboardAdmin from "./pages/DashboardAdmin";
-import EditProfileInstructor from "./pages/EditProfileInstructor";
+import DashboardAdmin from "./pages/dashboard/DashboardAdmin";
+import EditProfileInstructor from "./pages/profile/ProfileInstructor";
 import Profilesuperadmin from "./pages/profile/ProfileSuperAdmin";
 
 function App() {
@@ -31,13 +31,19 @@ function App() {
         <Route path="/dashboard/student" element={<DashboardStudent />} />
         <Route path="/dashboard/instructor" element={<DashboardInstructor />} />
         <Route path="/dashboard/admin" element={<DashboardAdmin />} />
-        <Route path="/dashboard/super-admin" element={<DashboardSuperAdmin />} />
+        <Route
+          path="/dashboard/super-admin"
+          element={<DashboardSuperAdmin />}
+        />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/super-admin" element={<Profilesuperadmin />} />
         <Route path="/course/:id" element={<DetailCourses />} />
         <Route path="/quiz" element={<Testi2 />} />
         <Route path="/manage/course" element={<ManageCourse />} />
-        <Route path="/dashboard/instructor/edit-profile" element={<EditProfileInstructor />} />
+        <Route
+          path="/dashboard/instructor/edit-profile"
+          element={<EditProfileInstructor />}
+        />
       </Routes>
     </>
   );

@@ -10,25 +10,25 @@ import {
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
-import CreateProfileDialog from "../components/profile/CreateProfileDialog";
+import CreateProfileDialog from "../../components/profile/CreateProfileDialog";
 
-import NotificationPanel from "../components/NotificationPanel";
+import NotificationPanel from "../../components/NotificationPanel";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import CategoryButtons from "../components/MyCategoryButtons";
+import CategoryButtons from "../../components/MyCategoryButtons";
 
 import { useRef } from "react";
 
-import Loading from "../components/Loading";
+import Loading from "../../components/Loading";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
-import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
+import { studentMenu } from "../../components/Menu/SidebarMenu/studentMenu";
 
-import NavbarDashboard from "../components/layout/Navbar";
-import UserSidebar from "../components/layout/UserSidebar";
-import CardKelas from "../components/CardKelas";
+import NavbarDashboard from "../../components/layout/Navbar";
+import UserSidebar from "../../components/layout/UserSidebar";
+import CardKelas from "../../components/CardKelas";
 
-import StatCard from "../components/StatCard";
+import StatCard from "../../components/StatCard";
 
 export default function DashboardStudent() {
   const isMobile = useMediaQuery("(max-width: 900px)");
