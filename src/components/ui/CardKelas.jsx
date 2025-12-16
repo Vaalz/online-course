@@ -21,6 +21,7 @@ function CardKelas({ id, image, title, price,description, creator }) {
       <CardMedia
         component="img"
         height="200"
+        maxWidth="180px"
         image={image}
         alt={title}
         sx={{ p: 1.5, borderRadius: 4, objectFit: "cover" }}

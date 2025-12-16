@@ -8,7 +8,6 @@ import {
   TextField,
   MenuItem,
   Button,
-  Drawer,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -17,15 +16,24 @@ import {
 import NavbarDashboard from "../../components/layout/Navbar";
 import Sidebar from "../../components/layout/UserSidebar";
 import { InstructorMenu } from "../../components/Menu/SidebarMenu/InstructorMenu";
-import CardProfile from "../../components/CardProfile";
+import CardProfile from "../../components/LandingpageCompt/CardProfile";
 import { useProfile } from "../../components/profile/useProfile";
+import Loading from "../../components/ui/Loading";
+import PersonalInfoView from "../../components/profile/PersonalInfoView";
+import EditPersonalInfoDialog from "../../components/profile/EditPersonalInfoDialog";
 
-function EditProfileInstructor( onEdit) {
-  const { profile, loading, updateProfile, fetchProfile } = useProfile();
-
+function EditProfileInstructor() {
   const sidebarWidth = 270;
-
   const [openEdit, setOpenEdit] = useState(false);
+  const { profile, loading, updateProfile, fetchProfile } = useProfile();
+  if (loading || !profile) {
+    return <Loading text="Memuat dashboard..." />;
+  }
+
+  const handleSavePersonalInfo = async (data) => {
+    await updateProfile(data);
+    await fetchProfile();
+  };
 
   return (
     <>
@@ -68,136 +76,16 @@ function EditProfileInstructor( onEdit) {
         >
           <Box>
             <Box sx={{ my: 2, mx: 2 }}>
-              <Typography sx={{ fontSize: "17px", fontWeight: 700 }}>
-                PERSONAL INFO
-              </Typography>
-              <Typography
-                sx={{ fontSize: "13px", fontWeight: 400, color: "#00000059" }}
-              >
-                Tambahkan informasi pribadi anda untuk memudahkan pengguna
-                menghubungi anda
-              </Typography>
+              <PersonalInfoView profile={profile} />
 
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <Box sx={{ py: 3 }}>
-                  <Box>
-                    <Typography
-                      sx={{
-                        fontSize: "14px",
-                        fontWeight: 700,
-                        py: 0.5,
-                        px: 1.5,
-                      }}
-                    >
-                      Nama Depan
-                    </Typography>
-                    <TextField
-                      sx={{ borderRadius: "6px", width: "270px" }}
-                      InputLabelProps={{
-                        sx: { fontSize: "8px", height: "10px" },
-                      }}
-                      placeholder="Masukkan nama depan anda"
-                      variant="outlined"
-                      value={profile.name}
-                      disabled
-                    />
-                  </Box>
+              <Button onClick={() => setOpenEdit(true)}>EDIT INFO</Button>
 
-                  <Box>
-                    <Typography
-                      sx={{
-                        fontSize: "14px",
-                        fontWeight: 700,
-                        py: 0.5,
-                        px: 1.5,
-                      }}
-                    >
-                      Contact
-                    </Typography>
-                    <TextField
-                      sx={{ borderRadius: "6px", width: "270px" }}
-                      InputLabelProps={{
-                        sx: { fontSize: "13px", height: "14px" },
-                      }}
-                      placeholder="Masukkan nomor handpone anda"
-                      variant="outlined"
-                      value={profile.contact}
-                      disabled
-                    />
-                  </Box>
-
-                  <Box>
-                    <Typography
-                      sx={{
-                        fontSize: "14px",
-                        fontWeight: 700,
-                        py: 0.5,
-                        px: 1.5,
-                      }}
-                    >
-                      Bergabung Pada
-                    </Typography>
-                    <TextField
-                      sx={{ borderRadius: "6px", width: "270px" }}
-                      InputLabelProps={{
-                        sx: { fontSize: "13px", height: "14px" },
-                      }}
-                      placeholder="12-5-2025"
-                      variant="outlined"
-                      value={profile.created_at}
-                      disabled
-                    />
-                  </Box>
-                </Box>
-
-                <Box sx={{ py: 3 }}>
-                  <Box>
-                    <Typography
-                      sx={{
-                        fontSize: "14px",
-                        fontWeight: 700,
-                        py: 0.5,
-                        px: 1.5,
-                      }}
-                    >
-                      Nama Belakang
-                    </Typography>
-                    <TextField
-                      sx={{ borderRadius: "6px", width: "270px" }}
-                      InputLabelProps={{
-                        sx: { fontSize: "13px", height: "14px" },
-                      }}
-                      placeholder="Masukkan nama depan anda"
-                      variant="outlined"
-                      value={profile.lastName}
-                      disabled
-                    />
-                  </Box>
-
-                  <Box>
-                    <Typography
-                      sx={{
-                        fontSize: "14px",
-                        fontWeight: 700,
-                        py: 0.5,
-                        px: 1.5,
-                      }}
-                    >
-                      Email
-                    </Typography>
-                    <TextField
-                      sx={{ borderRadius: "6px", width: "270px" }}
-                      InputLabelProps={{
-                        sx: { fontSize: "13px", height: "14px" },
-                      }}
-                      placeholder="BayuRmdhn@gmail.com"
-                      variant="outlined"
-                      value={profile.email}
-                      disabled
-                    />
-                  </Box>
-                </Box>
-              </Box>
+              <EditPersonalInfoDialog
+                open={openEdit}
+                onClose={() => setOpenEdit(false)}
+                profile={profile}
+                onSave={handleSavePersonalInfo}
+              />
             </Box>
 
             <Box sx={{ my: 2, mx: 2 }}>

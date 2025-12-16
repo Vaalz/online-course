@@ -10,19 +10,16 @@ import {
   Avatar,
   InputBase,
 } from "@mui/material";
-
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
-
 import MobileDrawer from "./MobileDrawer";
 import { studentMenu } from "../Menu/SidebarMenu/studentMenu";
 import { useProfile } from "../profile/useProfile";
-
-import Sampah from "../../assets/image/Sampah.png";
-import Love from "../../assets/image/Favorite.png";
-import Keranjang from "../../assets/image/Keranjang.png";
-import Logo from "../../assets/image/Logo.png";
+import Sampah from "../../assets/icon/Sampah.png";
+import Love from "../../assets/icon/Favorite.png";
+import Keranjang from "../../assets/icon/Keranjang.png";
+import Logo from "../../assets/logo/Logo.png";
 
 const navbarMenu = ["Kelas", "Langganan", "Tentang Kami"];
 

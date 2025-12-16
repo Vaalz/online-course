@@ -2,11 +2,11 @@ import React from "react";
 
 import { Box,  } from "@mui/material";
 
-import Home from "../../../assets/image/Home.png"
-import Dashboard from "../../../assets/image/Dashboard.png"
-import EditProfile from "../../../assets/image/Profile.png"
-import ManageCourse from "../../../assets/image/ManageCourse.png"
-import Quiz from "../../../assets/image/Quiz.png"
+import Home from "../../../assets/icon/Home.png"
+import Dashboard from "../../../assets/icon/Dashboard.png"
+import EditProfile from "../../../assets/icon/Profile.png"
+import ManageCourse from "../../../assets/icon/ManageCourse.png"
+import Quiz from "../../../assets/icon/Quiz.png"
 
 export const AdminMenu = [
   {

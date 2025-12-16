@@ -6,13 +6,10 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { verifyOtp, resendOtp } from "../services/otp";
 import useResendTimer from "../components/Authcompt/useResendTimer";
-import GambarLogin from "../assets/image/Gambar.png";
-import Loading from "../components/Loading";
-
-// Import Komponen & Service
+import GambarLogin from "../assets/image/PictureAuth.png";
+import Loading from "../components/ui/Loading";
 import GradientButton from "../components/Authcompt/GradientButton";
 import InputField from "../components/Authcompt/InputField";
-// --- Styling (Dipindahkan ke bagian bawah agar komponen utama lebih fokus) ---
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -30,7 +27,6 @@ const GradientText = styled(Typography)(({ theme, clickable = false }) => ({
   fontWeight: clickable ? 600 : 400,
   cursor: clickable ? "pointer" : "default",
 }));
-
 
 export default function VerifyPage() {
   const [code, setCode] = useState("");
@@ -95,7 +91,7 @@ export default function VerifyPage() {
     }
   };
 
-  if (!email) return null; 
+  if (!email) return null;
 
   return (
     <Box sx={{ width: "100%", height: "100vh" }}>
@@ -132,7 +128,7 @@ export default function VerifyPage() {
           <Box
             sx={{
               width: "100%",
-              maxWidth: {xs: "220px", sm: "350px", md: "500px", lg: "650px",},
+              maxWidth: { xs: "220px", sm: "350px", md: "500px", lg: "650px" },
               height: "auto",
               display: "flex",
               justifyContent: "center",

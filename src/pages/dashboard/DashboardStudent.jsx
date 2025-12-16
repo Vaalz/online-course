@@ -12,14 +12,14 @@ import React, { useState, useEffect } from "react";
 
 import CreateProfileDialog from "../../components/profile/CreateProfileDialog";
 
-import NotificationPanel from "../../components/NotificationPanel";
+import NotificationPanel from "../../components/ui/NotificationPanel";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import CategoryButtons from "../../components/MyCategoryButtons";
+import CategoryButtons from "../../components/ui/MyCategoryButtons";
 import { Button } from "@mui/material";
 
 import { useRef } from "react";
 
-import Loading from "../../components/Loading";
+import Loading from "../../components/ui/Loading";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
@@ -27,9 +27,9 @@ import { studentMenu } from "../../components/Menu/SidebarMenu/studentMenu";
 
 import NavbarDashboard from "../../components/layout/Navbar";
 import UserSidebar from "../../components/layout/UserSidebar";
-import CardKelas from "../../components/CardKelas";
+import CardKelas from "../../components/ui/CardKelas";
 
-import StatCard from "../../components/StatCard";
+import StatCard from "../../components/ui/StatCard";
 
 export default function DashboardStudent() {
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -338,7 +338,19 @@ export default function DashboardStudent() {
                     Tidak ada kelas pada kategori ini
                   </Typography>
                 ) : (
-                  <Grid container spacing={2}>
+                  <Grid
+                    container
+                    spacing={2}
+                    sx={{
+                      display: "grid",
+                      gridTemplateColumns: {
+                        xs: "1fr",
+                        sm: "repeat(2, 1fr)",
+                        md: "repeat(3, 1fr)",
+                        lg: "repeat(4, 1fr)",
+                      },
+                    }}
+                  >
                     {courses.map((c) => (
                       <Grid item xs={12} sm={6} md={4} lg={3} key={c.id}>
                         <CardKelas

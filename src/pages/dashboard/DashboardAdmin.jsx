@@ -3,11 +3,11 @@ import { Box, Grid, Typography, Card, CardContent } from "@mui/material"; // Tam
 
 import Navbar from "../../components/layout/Navbar";
 import Sidebar from "../../components/layout/UserSidebar";
-import StatCard from "../../components/StatCard";
-import NotificationPanel from "../../components/NotificationPanel";
-import ProgresStudent from "../../components/Progres";
+import StatCard from "../../components/ui/StatCard";
+import NotificationPanel from "../../components/ui/NotificationPanel";
+import ProgresStudent from "../../components/ui/Progres";
 import { AdminMenu } from "../../components/Menu/SidebarMenu/AdminMenu";
-import Loading from "../../components/Loading";
+import Loading from "../../components/ui/Loading";
 
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";

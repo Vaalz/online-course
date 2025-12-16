@@ -4,10 +4,10 @@ import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
 
-import Home from "../../../assets/image/Home.png";
-import Dashboard from "../../../assets/image/Dashboard.png";
-import Profile from "../../../assets/image/Profile.png";
-import Quiz from "../../../assets/image/Quiz.png";
+import Home from "../../../assets/icon/Home.png";
+import Dashboard from "../../../assets/icon/Dashboard.png";
+import Profile from "../../../assets/icon/Profile.png";
+import Quiz from "../../../assets/icon/Quiz.png";
 
 // Data Menu Sidebar Super Admin
 export const studentMenu = [

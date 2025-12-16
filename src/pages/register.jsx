@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 import AuthButton from "../components/Authcompt/ButtonAuth";
 import InputField from "../components/Authcompt/InputField";
 import GradientButton from "../components/Authcompt/GradientButton";
-import GambarLogin from "../assets/image/Gambar.png";
+import GambarLogin from "../assets/image/PictureAuth.png";
 import LoginAuth from "../services/auth";
-import Loading from "../components/Loading";
+import Loading from "../components/ui/Loading";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "#fff",
@@ -146,9 +146,9 @@ export default function RegisterPage() {
                 width: "100%",
                 maxWidth: {
                   xs: "220px",
-                  sm: "350px", 
-                  md: "500px", 
-                  lg: "650px", 
+                  sm: "350px",
+                  md: "500px",
+                  lg: "650px",
                 },
                 height: "auto",
                 display: "flex",
