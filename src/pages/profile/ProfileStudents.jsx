@@ -1,4 +1,4 @@
-// src/pages/ProfileStudent.jsx
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -15,8 +15,8 @@ import UserSidebar from "../../components/layout/UserSidebar";
 import { studentMenu } from "../../components/Menu/SidebarMenu/studentMenu";
 import EditProfileDialog from "../../components/profile/EditProfileDialog";
 import CardProfile from "../../components/CardProfile";
-
 import ProfileInfo from "../../components/profile/ProfileInfo";
+import LearningHistoryTable from "../../components/profile/LearningHistoryTable";
 import { useProfile } from "../../components/profile/useProfile";
 
 export default function ProfileStudent() {
@@ -34,6 +34,9 @@ export default function ProfileStudent() {
     age: 0,
     school: "",
   });
+
+  const learningHistory = [];
+
 
   const handleChange = (field) => (e) => {
     const value = e.target ? e.target.value : e;
@@ -87,7 +90,6 @@ export default function ProfileStudent() {
   if (!profile)
     return <Typography sx={{ p: 4 }}>Data profil tidak tersedia.</Typography>;
 
-  const safeProfile = profile ?? FALLBACK;
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
       <Box
@@ -131,64 +133,9 @@ export default function ProfileStudent() {
                 <CardProfile profile={profile} />
               </Grid>
 
-              <Box
-                sx={{
-                  mt: 3,
-                  border: "1px solid #DCE4E3",
-                  bgcolor: "#fff",
-                  borderRadius: 3,
-                  p: 3,
-                }}
-              >
-                <Typography
-                  textAlign="center"
-                  fontSize={20}
-                  fontWeight={800}
-                  sx={{ mb: 2 }}
-                >
-                  Riwayat Belajar Kamu
-                </Typography>
-
-                <Grid container sx={{ fontWeight: 700, mb: 1 }}>
-                  <Grid item xs={2}>
-                    No
-                  </Grid>
-                  <Grid item xs={4}>
-                    Nama Kelas
-                  </Grid>
-                  <Grid item xs={3}>
-                    Waktu Mulai
-                  </Grid>
-                  <Grid item xs={3}>
-                    Waktu Selesai
-                  </Grid>
-                </Grid>
-
-                <Divider sx={{ mb: 1 }} />
-
-                {[...Array(10)].map((_, i) => (
-                  <Grid
-                    key={i}
-                    container
-                    sx={{
-                      py: 1,
-                      "&:nth-of-type(odd)": { bgcolor: "#E9F7F4" },
-                    }}
-                  >
-                    <Grid item xs={2}>
-                      0{i + 1}
-                    </Grid>
-                    <Grid item xs={4}>
-                      Materi UI/UX by Bayu
-                    </Grid>
-                    <Grid item xs={3}>
-                      17-10-2025
-                    </Grid>
-                    <Grid item xs={3}>
-                      15-12-2025
-                    </Grid>
-                  </Grid>
-                ))}
+              {/* Komponen Riwayat Belajar */}
+              <Box sx={{ mt: 3 }}>
+                <LearningHistoryTable historyData={learningHistory} />
               </Box>
             </Grid>
 
