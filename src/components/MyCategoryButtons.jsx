@@ -10,63 +10,23 @@ export default function CategoryButtons({ onSelectCategory }) {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    const fetchInitialData = async () => {
+    const fetchCategories = async () => {
       try {
         const res = await axios.get(`${API_URL}course-types`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-
         setCategories(res.data.data || []);
-        fetchAllCourses();
-        setActive("all");
       } catch (err) {
-        console.error("Gagal mengambil data:", err);
-        onSelectCategory([]);
+        console.error(err);
       }
     };
 
-    fetchInitialData();
+    fetchCategories();
   }, []);
 
-  const fetchCourses = async (id) => {
-    try {
-      const res = await axios.get(
-        `${API_URL}mycourses/categories/${id}/courses`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      const courses = res.data?.data?.courses || [];
-      onSelectCategory(courses);
-    } catch (err) {
-      console.error("❌ ERROR MYCOURSES:", err);
-      onSelectCategory([]);
-    }
-  };
-
-  const fetchAllCourses = async () => {
-    try {
-      const res = await axios.get(`${API_URL}my/courses`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      const courses = res.data?.data?.data || [];
-      onSelectCategory(courses);
-    } catch (err) {
-      console.error("❌ ERROR ALL COURSES:", err);
-      onSelectCategory([]);
-    }
-  };
-
-  const handleClick = async (id) => {
+  const handleClick = (id) => {
     setActive(id);
-
-    if (id === "all") {
-      fetchAllCourses();
-    } else {
-      fetchCourses(id);
-    }
+    onSelectCategory(id);
   };
 
   const buttonStyle = (isActive) => ({
@@ -105,7 +65,6 @@ export default function CategoryButtons({ onSelectCategory }) {
         "&::-webkit-scrollbar": { display: "none" },
       }}
     >
-
       <Button
         onClick={() => handleClick("all")}
         sx={buttonStyle(active === "all")}
@@ -113,7 +72,6 @@ export default function CategoryButtons({ onSelectCategory }) {
         Semua Kelas
       </Button>
 
-      {/* 🔥 CATEGORY FROM BACKEND */}
       {categories.map((c) => (
         <Button
           key={c.id}

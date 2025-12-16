@@ -15,6 +15,7 @@ import CreateProfileDialog from "../../components/profile/CreateProfileDialog";
 import NotificationPanel from "../../components/NotificationPanel";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CategoryButtons from "../../components/MyCategoryButtons";
+import { Button } from "@mui/material";
 
 import { useRef } from "react";
 
@@ -37,6 +38,9 @@ export default function DashboardStudent() {
   const [stats, setStats] = useState(null);
   const [courses, setCourses] = useState([]);
   const sliderRef = useRef(null);
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -74,6 +78,28 @@ export default function DashboardStudent() {
     checkProfile();
   }, []);
 
+  const fetchMyCourses = async (pageNumber, category = "all") => {
+    const token = localStorage.getItem("token");
+
+    let url = `${API_URL}my/courses?page=${pageNumber}&limit=10`;
+
+    if (category !== "all") {
+      url = `${API_URL}mycourses/categories/${category}/courses?page=${pageNumber}&limit=10`;
+    }
+
+    const res = await axios.get(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    setCourses(res.data.data.data);
+    setPage(res.data.data.page);
+    setTotalPages(res.data.data.total_pages);
+  };
+
+  useEffect(() => {
+    fetchMyCourses(1, "all");
+  }, []);
+
   if (loading) return <Loading text="Memuat dashboard..." />;
 
   const statsData = [
@@ -102,6 +128,12 @@ export default function DashboardStudent() {
     });
 
     setIsProfileRequired(false);
+  };
+
+  const handleCategorySelect = (categoryId) => {
+    setActiveCategory(categoryId);
+    setPage(1);
+    fetchMyCourses(1, categoryId);
   };
 
   return (
@@ -158,7 +190,6 @@ export default function DashboardStudent() {
                 width: "100%",
                 alignItems: "flex-end",
                 pt: "50px",
-              
               }}
             >
               <Grid item xs={12} md={8} lg={8}>
@@ -291,7 +322,7 @@ export default function DashboardStudent() {
                 whiteSpace: "nowrap",
               }}
             >
-              <CategoryButtons onSelectCategory={setCourses} />
+              <CategoryButtons onSelectCategory={handleCategorySelect} />
             </Box>
 
             <Box
@@ -301,92 +332,58 @@ export default function DashboardStudent() {
                 mt: 4,
               }}
             >
-              <Box
-                onClick={() =>
-                  sliderRef.current.scrollBy({ left: -300, behavior: "smooth" })
-                }
-                sx={{
-                  position: "absolute",
-                  left: 0,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  zIndex: 10,
-                  width: 40,
-                  height: 40,
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  bgcolor: "white",
-                  boxShadow: "0px 2px 10px rgba(0,0,0,0.2)",
-                  cursor: "pointer",
-                }}
-              >
-                {"<"}
-              </Box>
-
-              <Box
-                ref={sliderRef}
-                sx={{
-                  display: "flex",
-                  gap: { xs: 2, md: 3 },
-                  overflowX: "auto",
-                  scrollBehavior: "smooth",
-                  scrollbarWidth: "none",
-                  "&::-webkit-scrollbar": { display: "none" },
-                  py: 2,
-                }}
-              >
+              <Box sx={{ mt: 4, width: "100%" }}>
                 {courses.length === 0 ? (
                   <Typography sx={{ fontSize: 18, color: "#999" }}>
                     Tidak ada kelas pada kategori ini
                   </Typography>
                 ) : (
-                  courses.map((c) => (
-                    <Box
-                      key={c.id}
-                      sx={{
-                        minWidth: { xs: 260, md: 320 },
-                        flexShrink: 0,
-                        scrollSnapAlign: "start",
-                      }}
-                    >
-                      <CardKelas
-                        id={c.id}
-                        image={c.thumbnail}
-                        title={c.name}
-                        description={c.description}
-                        lessons={c.lessons_count}
-                        creator={c.creator?.full_name}
-                        price={c.price}
-                      />
-                    </Box>
-                  ))
+                  <Grid container spacing={2}>
+                    {courses.map((c) => (
+                      <Grid item xs={12} sm={6} md={4} lg={3} key={c.id}>
+                        <CardKelas
+                          id={c.id}
+                          image={c.thumbnail}
+                          title={c.name}
+                          description={c.description}
+                          lessons={c.lessons_count}
+                          creator={c.creator?.full_name}
+                          price={c.price}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
                 )}
               </Box>
 
               <Box
-                onClick={() =>
-                  sliderRef.current.scrollBy({ left: 300, behavior: "smooth" })
-                }
                 sx={{
-                  position: "absolute",
-                  right: 0,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  zIndex: 10,
-                  width: 40,
-                  height: 40,
-                  borderRadius: "50%",
                   display: "flex",
-                  alignItems: "center",
                   justifyContent: "center",
-                  bgcolor: "white",
-                  boxShadow: "0px 2px 10px rgba(0,0,0,0.2)",
-                  cursor: "pointer",
+                  alignItems: "center",
+                  gap: 2,
+                  mt: 3,
                 }}
               >
-                {">"}
+                <Button
+                  variant="outlined"
+                  disabled={page === 1}
+                  onClick={() => fetchMyCourses(page - 1, activeCategory)}
+                >
+                  Prev
+                </Button>
+
+                <Typography>
+                  Page {page} / {totalPages}
+                </Typography>
+
+                <Button
+                  variant="outlined"
+                  disabled={page === totalPages}
+                  onClick={() => fetchMyCourses(page + 1, activeCategory)}
+                >
+                  Next
+                </Button>
               </Box>
             </Box>
           </Grid>
