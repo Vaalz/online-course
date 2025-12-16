@@ -8,7 +8,6 @@ export default function CategoryButtons({ onSelectCategory, onResetPage }) {
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
@@ -38,16 +37,9 @@ export default function CategoryButtons({ onSelectCategory, onResetPage }) {
     }
   };
 
-  const handleClick = async (id) => {
+  const handleClick = (id) => {
     setActive(id);
-    onResetPage();
-
-    if (id === "all") {
-      const res = await axios.get(`${API_URL}courses`);
-      onSelectCategory(res.data.data.data || []);
-    } else {
-      fetchCourses(id);
-    }
+    onSelectCategory(id);
   };
 
   return (
@@ -60,8 +52,6 @@ export default function CategoryButtons({ onSelectCategory, onResetPage }) {
         "&::-webkit-scrollbar": { display: "none" },
       }}
     >
-
-      {/* --- STATIC BUTTON SEMUA KELAS --- */}
       <Button
         onClick={() => handleClick("all")}
         variant="outlined"
@@ -75,9 +65,10 @@ export default function CategoryButtons({ onSelectCategory, onResetPage }) {
           flexShrink: 0,
 
           color: active === "all" ? "#000" : "#444",
-          background: active === "all"
-            ? "linear-gradient(white, white) padding-box, linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF) border-box"
-            : "white",
+          background:
+            active === "all"
+              ? "linear-gradient(white, white) padding-box, linear-gradient(90deg, #11DF9E, #7AC2F5, #0072FF) border-box"
+              : "white",
           border: active === "all" ? "4px solid transparent" : "2px solid #ddd",
           boxShadow: active === "all" ? "0px 2px 8px rgba(0,0,0,0.1)" : "none",
         }}
@@ -85,7 +76,6 @@ export default function CategoryButtons({ onSelectCategory, onResetPage }) {
         Semua Kelas
       </Button>
 
-      {/* --- dynamic categories button --- */}
       {categories.map((c) => {
         const isActive = active === c.id;
 

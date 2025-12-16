@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/UserSidebar";
 import { Box, Grid, Paper, Typography } from "@mui/material";
@@ -7,31 +8,39 @@ import CategoryButtons from "../components/AllCategoryButtons";
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 
-// API
 import BannerImage from "../assets/image/BennerManage.png";
 import { studentMenu } from "../components/Menu/SidebarMenu/studentMenu";
 
 export default function ManageCourseStudent() {
   const [courses, setCourses] = useState([]);
-
-  // PAGINATION STATE
   const [page, setPage] = useState(1);
-  const perPage = 10;
+  const [totalPages, setTotalPages] = useState(1);
+  const [activeCategory, setActiveCategory] = useState("all");
 
-  // HITUNG DATA FINAL YANG DITAMPILKAN
-  const start = (page - 1) * perPage;
-  const end = start + perPage;
-  const displayedCourses = courses.slice(start, end);
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const totalPages = Math.ceil(courses.length / perPage);
+  const fetchCourses = async (pageNumber = 1, category = "all") => {
+    try {
+      let url = `${API_URL}courses?page=${pageNumber}&limit=10`;
 
-  const handleNext = () => {
-    if (page < totalPages) setPage(page + 1);
+      if (category !== "all") {
+        url = `${API_URL}courses/categories/${category}?page=${pageNumber}&limit=10`;
+      }
+
+      const res = await axios.get(url);
+
+      setCourses(res.data.data.data);
+      setPage(res.data.data.page);
+      setTotalPages(res.data.data.total_pages);
+    } catch (err) {
+      console.error("Gagal fetch courses", err);
+      setCourses([]);
+    }
   };
 
-  const handlePrev = () => {
-    if (page > 1) setPage(page - 2);
-  };
+  useEffect(() => {
+    fetchCourses(1, "all");
+  }, []);
 
   return (
     <Box
@@ -40,7 +49,7 @@ export default function ManageCourseStudent() {
         width: "100%",
         minHeight: "100vh",
         overflowX: "hidden",
-        backgroundColor: "#f5f6fa",
+        backgroundColor: "#F6FEFD",
       }}
     >
       <Box
@@ -53,7 +62,6 @@ export default function ManageCourseStudent() {
       >
         <Navbar />
       </Box>
-      {/* SIDEBAR */}
       <Box
         sx={{
           display: { xs: "none", md: "block" },
@@ -70,7 +78,6 @@ export default function ManageCourseStudent() {
         <Sidebar menus={studentMenu} />
       </Box>
 
-      {/* MAIN CONTENT */}
       <Box
         component="main"
         sx={{
@@ -79,20 +86,17 @@ export default function ManageCourseStudent() {
           py: 3,
           width: "100%",
           height: "100vh",
+          pl: { xs: 0, sm: "20px", md: "30px", lg: "50px" },
         }}
       >
-        {/* GRID KONTEN */}
         <Grid
           container
           spacing={2}
           sx={{ flexWrap: "wrap", width: "100%", pt: "120px" }}
         >
-          {/* Card Konten Lebar */}
           <Grid container spacing={2} width={"100%"} height={"100%"}>
-            {/* LEFT CONTENT*/}
             <Grid item sx={{ width: "100%", height: "100%" }}>
               <Grid container spacing={2} maxWidth={"100%"} height={"100%"}>
-                {/* Bagian atas */}
                 <Grid item xs={12} md={8} lg={8} width={"100%"}>
                   <Box
                     sx={{
@@ -118,7 +122,6 @@ export default function ManageCourseStudent() {
                   <Box
                     sx={{ maxWidth: "100%", flexGrow: 1, overflowX: "hidden" }}
                   >
-                    {/* CATEGORY BUTTON */}
                     <Box
                       sx={{
                         display: "flex",
@@ -126,12 +129,14 @@ export default function ManageCourseStudent() {
                       }}
                     >
                       <CategoryButtons
-                        onSelectCategory={setCourses}
-                        onResetPage={() => setPage(1)}
+                        onSelectCategory={(categoryId) => {
+                          setActiveCategory(categoryId);
+                          setPage(1);
+                          fetchCourses(1, categoryId);
+                        }}
                       />
                     </Box>
 
-                    {/* CARD LIST */}
                     <Box
                       sx={{
                         mt: 4,
@@ -149,7 +154,6 @@ export default function ManageCourseStudent() {
                         },
                       }}
                     >
-                      {/* WRAPPER YANG MEMBATASI WIDTH */}
                       <Box
                         sx={{
                           display: "flex",
@@ -157,7 +161,7 @@ export default function ManageCourseStudent() {
                         }}
                       >
                         <Box sx={{ mt: 4, width: "100%" }}>
-                          {displayedCourses.length === 0 ? (
+                          {courses.length === 0 ? (
                             <Typography sx={{ fontSize: 18, color: "#999" }}>
                               Tidak ada kelas pada kategori ini
                             </Typography>
@@ -199,7 +203,7 @@ export default function ManageCourseStudent() {
                       <Button
                         variant="outlined"
                         disabled={page === 1}
-                        onClick={() => setPage(page - 1)}
+                        onClick={() => fetchCourses(page - 1, activeCategory)}
                       >
                         Prev
                       </Button>
@@ -210,8 +214,8 @@ export default function ManageCourseStudent() {
 
                       <Button
                         variant="outlined"
-                        disabled={page === totalPages || totalPages === 0}
-                        onClick={() => setPage(page + 1)}
+                        disabled={page === totalPages}
+                        onClick={() => fetchCourses(page + 1, activeCategory)}
                       >
                         Next
                       </Button>
