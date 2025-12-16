@@ -20,8 +20,7 @@ import { InstructorMenu } from "../../components/Menu/SidebarMenu/InstructorMenu
 import CardProfile from "../../components/CardProfile";
 import { useProfile } from "../../components/profile/useProfile";
 
-
-function EditProfileInstructor() {
+function EditProfileInstructor( onEdit) {
   const { profile, loading, updateProfile, fetchProfile } = useProfile();
 
   const sidebarWidth = 270;
@@ -99,6 +98,8 @@ function EditProfileInstructor() {
                       }}
                       placeholder="Masukkan nama depan anda"
                       variant="outlined"
+                      value={profile.name}
+                      disabled
                     />
                   </Box>
 
@@ -120,6 +121,8 @@ function EditProfileInstructor() {
                       }}
                       placeholder="Masukkan nomor handpone anda"
                       variant="outlined"
+                      value={profile.contact}
+                      disabled
                     />
                   </Box>
 
@@ -141,6 +144,8 @@ function EditProfileInstructor() {
                       }}
                       placeholder="12-5-2025"
                       variant="outlined"
+                      value={profile.created_at}
+                      disabled
                     />
                   </Box>
                 </Box>
@@ -164,6 +169,8 @@ function EditProfileInstructor() {
                       }}
                       placeholder="Masukkan nama depan anda"
                       variant="outlined"
+                      value={profile.lastName}
+                      disabled
                     />
                   </Box>
 
@@ -185,6 +192,8 @@ function EditProfileInstructor() {
                       }}
                       placeholder="BayuRmdhn@gmail.com"
                       variant="outlined"
+                      value={profile.email}
+                      disabled
                     />
                   </Box>
                 </Box>
@@ -286,7 +295,6 @@ function EditProfileInstructor() {
                     }}
                   />
 
-                  {/* EDIT INFO BUTTON */}
                   <Box
                     sx={{
                       p: "2px",

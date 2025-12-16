@@ -9,33 +9,17 @@ export default function CategoryButtons({ onSelectCategory, onResetPage }) {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    const fetchInitialData = async () => {
+    const fetchCategories = async () => {
       try {
         const res = await axios.get(`${API_URL}course-types`);
         setCategories(res.data.data || []);
-
-        // default load semua course
-        const all = await axios.get(`${API_URL}courses`);
-        onSelectCategory(all.data.data.data || []);
       } catch (err) {
-        console.error("Gagal mengambil data:", err);
-        onSelectCategory([]);
+        console.error("Gagal mengambil kategori:", err);
       }
     };
 
-    fetchInitialData();
+    fetchCategories();
   }, []);
-
-  const fetchCourses = async (id) => {
-    try {
-      const res = await axios.get(`${API_URL}courses/categories/${id}`);
-      const courses = res.data?.data?.courses || [];
-      onSelectCategory(courses);
-    } catch (err) {
-      console.error("Gagal mengambil course:", err);
-      onSelectCategory([]);
-    }
-  };
 
   const handleClick = (id) => {
     setActive(id);

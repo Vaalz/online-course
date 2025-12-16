@@ -69,10 +69,6 @@ export default function CreateProfileDialog({ open, onSubmit }) {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
-    if (file.size < 10_000) return alert("Ukuran foto minimal 10KB");
-    if (file.size > 10_000_000) return alert("Ukuran foto maksimal 10MB");
-
     setPreview(URL.createObjectURL(file));
     setForm((p) => ({ ...p, profile_picture: file }));
   };

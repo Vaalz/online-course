@@ -19,7 +19,7 @@ export default function ManageCourseStudent() {
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const fetchCourses = async (pageNumber = 1, category = "all") => {
+  const fetchCourses = async (pageNumber, category = "all") => {
     try {
       let url = `${API_URL}courses?page=${pageNumber}&limit=10`;
 
@@ -167,7 +167,7 @@ export default function ManageCourseStudent() {
                             </Typography>
                           ) : (
                             <Grid container spacing={2}>
-                              {displayedCourses.map((c) => (
+                              {courses.map((c) => (
                                 <Grid
                                   item
                                   xs={12}
