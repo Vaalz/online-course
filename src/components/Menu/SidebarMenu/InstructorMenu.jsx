@@ -38,7 +38,7 @@ export const InstructorMenu = [
               sx={{ width: "30px", height: "30px", mr: "20px" }}
           />,
     text: "Edit Profile",
-    path: "/profile/instructor",
+    path: "/",
   },
 
   {

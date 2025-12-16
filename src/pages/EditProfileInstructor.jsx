@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+
 import {
   Box,
   Grid,
   Typography,
   Avatar,
   TextField,
+  MenuItem,
   Button,
+  Drawer,
+  Dialog,
+  DialogContent,
+  DialogTitle,
 } from "@mui/material";
 
 import NavbarDashboard from "../components/layout/Navbar";
@@ -15,6 +21,8 @@ import CardProfile from "../components/CardProfile";
 
 function EditProfileInstructor() {
   const sidebarWidth = 270;
+
+  const [openEdit, setOpenEdit] = useState(false);
 
   return (
     <>
@@ -43,7 +51,7 @@ function EditProfileInstructor() {
           ml: { md: `${sidebarWidth + 20}px`, xs: 0 },
           pt: "110px",
           px: 1,
-          pb: 5,
+          pb: 3,
         }}
       >
         <CardProfile />
@@ -57,11 +65,11 @@ function EditProfileInstructor() {
         >
           <Box>
           <Box sx={{ my: 2, mx: 2 }}>
-            <Typography sx={{ fontSize: "20px", fontWeight: 700 }}>
+            <Typography sx={{ fontSize: "17px", fontWeight: 700 }}>
               PERSONAL INFO
             </Typography>
             <Typography
-              sx={{ fontSize: "15px", fontWeight: 400, color: "#00000059" }}
+              sx={{ fontSize: "13px", fontWeight: 400, color: "#00000059" }}
             >
               Tambahkan informasi pribadi anda untuk memudahkan pengguna
               menghubungi anda
@@ -70,37 +78,37 @@ function EditProfileInstructor() {
             <Box sx={{ display: "flex", gap: 2 }}>
               <Box sx={{ py: 3 }}>
                 <Box>
-                  <Typography sx={{ fontSize: "16px", fontWeight: 700, py: 1, px: 1.5 }}>
+                  <Typography sx={{ fontSize: "14px", fontWeight: 700, py: 0.5, px: 1.5 }}>
                     Nama Depan
                   </Typography>
                   <TextField
                     sx={{ borderRadius: "6px", width: "270px" }}
-                    InputLabelProps={{ sx: { fontSize: "13px", height: "14px" } }}
-                    label="Masukkan nama depan anda"
+                    InputLabelProps={{ sx: { fontSize: "8px", height: "10px" } }}
+                    placeholder="Masukkan nama depan anda"
                     variant="outlined"
                   />
                 </Box>
 
                 <Box>
-                  <Typography sx={{ fontSize: "16px", fontWeight: 700, py: 1, px: 1.5 }}>
+                  <Typography sx={{ fontSize: "14px", fontWeight: 700, py: 0.5, px: 1.5 }}>
                     Contact
                   </Typography>
                   <TextField
                     sx={{ borderRadius: "6px", width: "270px" }}
                     InputLabelProps={{ sx: { fontSize: "13px", height: "14px" } }}
-                    label="Masukkan nomor handpone anda"
+                    placeholder="Masukkan nomor handpone anda"
                     variant="outlined"
                   />
                 </Box>
 
                 <Box>
-                  <Typography sx={{ fontSize: "16px", fontWeight: 700, py: 1, px: 1.5 }}>
+                  <Typography sx={{ fontSize: "14px", fontWeight: 700, py: 0.5, px: 1.5 }}>
                     Bergabung Pada
                   </Typography>
                   <TextField
                     sx={{ borderRadius: "6px", width: "270px" }}
                     InputLabelProps={{ sx: { fontSize: "13px", height: "14px" } }}
-                    label="12-5-2025"
+                    placeholder="12-5-2025"
                     variant="outlined"
                   />
                 </Box>
@@ -108,25 +116,25 @@ function EditProfileInstructor() {
 
               <Box sx={{ py: 3 }}>
                 <Box>
-                  <Typography sx={{ fontSize: "16px", fontWeight: 700, py: 1, px: 1.5 }}>
+                  <Typography sx={{ fontSize: "14px", fontWeight: 700, py: 0.5, px: 1.5 }}>
                     Nama Belakang
                   </Typography>
                   <TextField
                     sx={{ borderRadius: "6px", width: "270px" }}
                     InputLabelProps={{ sx: { fontSize: "13px", height: "14px" } }}
-                    label="Masukkan nama depan anda"
+                    placeholder="Masukkan nama depan anda"
                     variant="outlined"
                   />
                 </Box>
 
                 <Box>
-                  <Typography sx={{ fontSize: "16px", fontWeight: 700, py: 1, px: 1.5 }}>
+                  <Typography sx={{ fontSize: "14px", fontWeight: 700, py: 0.5, px: 1.5 }}>
                     Email
                   </Typography>
                   <TextField
                     sx={{ borderRadius: "6px", width: "270px" }}
                     InputLabelProps={{ sx: { fontSize: "13px", height: "14px" } }}
-                    label="BayuRmdhn@gmail.com"
+                    placeholder="BayuRmdhn@gmail.com"
                     variant="outlined"
                   />
                 </Box>
@@ -180,7 +188,7 @@ function EditProfileInstructor() {
 
               <Box sx={{ width: "100%" }}>
                 <Typography sx={{ fontWeight: 700, fontSize: "16px" }}>
-                  Bidang
+                    Bidang
                 </Typography>
                 <TextField
                   placeholder="Masukan bidang keahlian yang anda miliki"
@@ -194,21 +202,33 @@ function EditProfileInstructor() {
                       width: "270px",
                       display: "flex",
                       alignItems: "center",
+
                       "& textarea": {
                         padding: 0,
                         marginTop: "4px",
                         textAlign: "center",
                       },
-                      "& textarea::placeholder": { fontSize: "12px", color: "#9BA6A5" },
+
+                      "& textarea::placeholder": {
+                        fontSize: "12px",
+                        color: "#9BA6A5",
+                      },
                     },
                   }}
                   sx={{
-                    "& .MuiOutlinedInput-root fieldset": { borderColor: "#C9D3D1" },
-                    "& .MuiOutlinedInput-root:hover fieldset": { borderColor: "#AEB9B8" },
-                    "& .MuiOutlinedInput-root.Mui-focused fieldset": { borderColor: "#8AA3A0" },
+                    "& .MuiOutlinedInput-root fieldset": {
+                      borderColor: "#C9D3D1",
+                    },
+                    "& .MuiOutlinedInput-root:hover fieldset": {
+                      borderColor: "#AEB9B8",
+                    },
+                    "& .MuiOutlinedInput-root.Mui-focused fieldset": {
+                      borderColor: "#8AA3A0",
+                    },
                   }}
                 />
 
+                {/* EDIT INFO BUTTON */}
                 <Box
                   sx={{
                     p: "2px",
@@ -221,28 +241,37 @@ function EditProfileInstructor() {
                 >
                   <Box
                     sx={{
-                      px: 2,
-                      py: 1,
-                      borderRadius: "10px",
-                      bgcolor: "white",
-                      width: "120px",
-                      height: "40px",
+                      p: "2px",
+                      borderRadius: "50px",
+                      background: "linear-gradient(90deg, #466EF1, #11DF9E)",
+                      display: "inline-block",
                     }}
                   >
-                    <Typography
+                    <Button
+                      variant="contained"
+                      onClick={() => setOpenEdit(true)}
                       sx={{
-                        fontSize: "15px",
+                        px: 3,
+                        py: 1,
+                        borderRadius: "48px",
+                        bgcolor: "white",
+                        color: "#000",
                         fontWeight: 700,
-                        textAlign: "center",
-                        display: "flex",
-                        justifyContent: "center",
+                        fontSize: "14px",
+                        textTransform: "uppercase",
+                        boxShadow: "none",
+                        "&:hover": {
+                          bgcolor: "#f0f0f0",
+                          boxShadow: "none",
+                        },
                       }}
                     >
                       EDIT INFO
-                    </Typography>
+                    </Button>
                   </Box>
                 </Box>
-              </Box>
+
+            </Box>
             </Box>
           </Box>
           </Box>
@@ -296,7 +325,7 @@ function EditProfileInstructor() {
                     py: 1,
                     borderRadius: "8px",
                     bgcolor: "white",
-                    color: "#11DF9E",
+                    color: "#000",
                     fontWeight: 700,
                     fontSize: "14px",
                     textTransform: "uppercase",
@@ -309,6 +338,147 @@ function EditProfileInstructor() {
                 >
                   TAMBAH SERTIFIKAT
                 </Button>
+                <Dialog
+                  open={openEdit}
+                  onClose={() => setOpenEdit(false)}
+                  maxWidth="md"
+                  fullWidth
+                  PaperProps={{
+                    sx: {
+                      borderRadius: "20px",
+                      p: 2,
+                      bgcolor: "#F8FFFE",
+                    },
+                  }}
+                >
+                  <DialogTitle
+                    sx={{ fontWeight: 700, fontSize: "18px", pb: 1 }}
+                  >
+                    MASUKAN INFORMASI TENTANG DIRI ANDA
+                  </DialogTitle>
+
+                  <DialogContent>
+                    <Box sx={{display: 'flex'}}>
+                      <Box sx={{ display: "flex", gap: 3 }}>
+                      {/* LEFT FORM */}
+                      <Box sx={{ flex: 1 }}>
+                        <Box>
+                          <Typography>Nama Depan</Typography>
+                          <TextField fullWidth label="Nama Depan" sx={{ mb: 2 }} />
+                        </Box>
+                        <Box>
+                          <Typography>Username</Typography>
+                          <TextField fullWidth label="Username" sx={{ mb: 2 }} />
+                        </Box>
+                        <Box>
+                          <Typography>Email</Typography>
+                          <TextField fullWidth label="Email" sx={{ mb: 2 }} />
+                        </Box>
+                        <Box>
+                          <Typography>Portofolio</Typography>
+                          <TextField
+                            fullWidth
+                            multiline
+                            rows={4}
+                            label="Portofolio"
+                            sx={{ mb: 2 }}
+                          />
+                        </Box>
+                      </Box>
+
+                      {/* RIGHT FORM */}
+                      <Box sx={{ flex: 1 }}>
+                        <Box>
+                          <Typography>Nama Belakang</Typography>
+                          <TextField fullWidth label="Nama Belakang" sx={{ mb: 2 }} />
+                        </Box>
+                        <Box>
+                          <Typography>Contact</Typography>
+                          <TextField fullWidth label="Contact" sx={{ mb: 2 }} />
+                        </Box>
+                        <Box>
+                          <Typography>Bergabung Pada</Typography>
+                          <TextField fullWidth label="Bergabung Pada" sx={{ mb: 2 }} />
+                        </Box>
+                        <Box>
+                          <Typography>Deskripsi</Typography>
+                          <TextField
+                            fullWidth
+                            multiline
+                            rows={4}
+                            label="Deskripsi"
+                            sx={{ mb: 2 }}
+                          />
+                        </Box>
+                      </Box>
+                    </Box>
+
+                    <Box sx={{mx: 2}}>
+                      <Box sc={{display: 'flex', justifyContent: 'center',}}>
+                        <Avatar
+                          src="https://i.pravatar.cc/197"
+                          sx={{
+                            width: "180px",
+                            height: "180px",
+                            mx: "20px",
+                            my: "30px",
+                          }}
+                        />
+                      </Box>
+                      <Typography>Photo Profile</Typography>
+                      <Box>
+                        <Box sx={{width: '300px', height: '40px', border: '1px solid #D9D9D9', borderRadius: '10px'}}>
+                          <Typography
+                            sx={{
+                              background: "linear-gradient(90deg, #466EF1, #11DF9E)",
+                              color: "#fff",
+                              textAlign: "center",
+                              borderRadius: "10px",
+                              height: '100%',
+                              width: "100px",
+                              py: 1,
+                              fontWeight: 600,
+                            }}
+                          >
+                            Chose File
+                          </Typography>
+                        </Box>
+                        <Typography sx={{pt: 1}}>Bidang</Typography>
+                        <TextField
+                          select
+                          placeholder= 'Masukan bidang keahlian yang sesuai dengan anda'
+                          fullWidth
+                        >
+                          <MenuItem value="frontend">Frontend</MenuItem>
+                          <MenuItem value="backend">Backend</MenuItem>
+                          <MenuItem value="uiux">UI / UX</MenuItem>
+                        </TextField>
+                      </Box>
+                    </Box>
+                    </Box>
+
+                    {/* ACTION BUTTON */}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        gap: 2,
+                        mt: 3,
+                      }}
+                    >
+                      <Button
+                        variant="outlined"
+                        onClick={() => setOpenEdit(false)}
+                      >
+                        BATAL
+                      </Button>
+                      <Button variant="contained">
+                        SIMPAN
+                      </Button>
+                    </Box>
+                  </DialogContent>
+                </Dialog>
+
               </Box>
             </Box>
           </Box>
