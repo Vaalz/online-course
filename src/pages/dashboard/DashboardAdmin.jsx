@@ -12,74 +12,20 @@ import Loading from "../../components/ui/Loading";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
-import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
+import {useDashboardAdmin} from "./hooks/useDashboardAdmin";
+import CreateProfileDialog from "../../components/profile/CreateProfileDialog";
 
-const statsData = [
-  {
-    label: "TOTAL KURSUS",
-    value: 23,
-    icon: <MenuBookRoundedIcon sx={{ fontSize: 40, color: "#466EF1" }} />,
-  },
-  {
-    label: "TOTAL SESI ZOOM",
-    value: 23,
-    icon: <VideocamRoundedIcon sx={{ fontSize: 40, color: "#466EF1" }} />,
-  },
-  {
-    label: "TOTAL SISWA",
-    value: 23,
-    icon: <PeopleAltRoundedIcon sx={{ fontSize: 40, color: "#466EF1" }} />,
-  },
-  {
-    label: "TOTAL QUIZ",
-    value: 23,
-    icon: <LightbulbRoundedIcon sx={{ fontSize: 40, color: "#466EF1" }} />,
-  },
-];
-
-const progres = { progres: "PROGRES SEMUA SISWA" };
 
 export default function DashboardAdmin() {
-  const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState(null);
-  const [isProfileRequired, setIsProfileRequired] = useState(false);
+  const { loading, stats, isProfileRequired, handleCreateProfile } = useDashboardAdmin();
 
-  const API_URL = import.meta.env.VITE_API_BASE_URL;
   const progres = { progres: "PROGRES SEMUA SISWA" };
-
   const notifications = [
     "Saatnya melakukan sesi zoom hari ini",
     "Anda telah menyelesaikan kuis",
     "Kuis baru tersedia",
     "Jadwal zoom telah diupdate",
   ];
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
-
-    if (!token) return (window.location.href = "/");
-    if (role !== "admin") return (window.location.href = "/forbidden");
-
-    async function checkProfile() {
-      try {
-        const res = await fetch(`${API_URL}profile/mybiodata`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (res.status === 500) {
-          console.log("PROFILE BELUM ADA");
-          setIsProfileRequired(true);
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    checkProfile();
-  }, []);
 
   if (loading) return <Loading text="Memuat dashboard..." />;
 
@@ -100,16 +46,6 @@ export default function DashboardAdmin() {
       icon: <LightbulbRoundedIcon sx={{ fontSize: 40, color: "#466EF1" }} />,
     },
   ];
-
-  const handleCreateProfile = async (payload) => {
-    const token = localStorage.getItem("token");
-
-    await axios.post(`${API_URL}profile/biodata`, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    setIsProfileRequired(false);
-  };
 
   return (
     <Box sx={{ bgcolor: "#F6FEFD", minHeight: "100vh" }}>
